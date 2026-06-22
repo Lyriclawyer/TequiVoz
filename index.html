@@ -312,7 +312,7 @@
             </div>
 
             <!-- VISTA DE MÉTRICAS -->
-            <div id="vista-scouter-analytics">
+            <div id="vista-scouter-analytics" class="space-y-8">
                 <!-- Selector de Secciones en Dashboard (Editable para dirigencia, bloqueado/adaptado para secciones) -->
                 <div id="selector-secciones-dash" class="flex flex-wrap gap-2 mb-8 bg-gray-100 p-1.5 rounded-2xl max-w-2xl">
                     <button id="dash-btn-Manada" onclick="seleccionarSeccionDashboard('Manada')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-yellow-600 shadow-sm border border-yellow-200">Manada</button>
@@ -321,8 +321,8 @@
                     <button id="dash-btn-Clan" onclick="seleccionarSeccionDashboard('Clan')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-rose-600">Clan</button>
                 </div>
 
-                <!-- Grid Analítico -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Grid Analítico Principal -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     
                     <!-- Tarjeta 1: Gráfico Reactivo a Respuestas -->
                     <div class="glass-panel rounded-3xl p-6 shadow-lg md:col-span-2 text-left">
@@ -374,8 +374,70 @@
 
                 </div>
 
+                <!-- ================= SECCIÓN DE EVALUACIÓN DE KPIs HÍBRIDOS (80% IA + 20% Humano) ================= -->
+                <div class="glass-panel rounded-[32px] p-6 md:p-8 shadow-xl text-left">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider">Módulo de Co-creación Híbrido</span>
+                        <h3 class="text-2xl font-extrabold text-slate-800">Evaluador de KPIs Scouts</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-8 font-medium">La plataforma calcula dinámicamente las pre-calificaciones cuantitativas (80%) cruzando las respuestas en tiempo real de los jóvenes. Complementa con el contexto de sábado (20%) para oficializar tu diagnóstico.</p>
+
+                    <!-- Grid de Tacómetros de KPIs scouts -->
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                        <!-- KPI 1: ISP -->
+                        <div id="kpi-card-isp" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.P. (Programa)</span>
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-isp">0%</div>
+                            <span class="text-[9px] font-bold text-slate-500 mt-2">Divertido y Retador</span>
+                        </div>
+                        <!-- KPI 2: ICS -->
+                        <div id="kpi-card-ics" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.C.S. (Cohesión)</span>
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-ics">0%</div>
+                            <span class="text-[9px] font-bold text-slate-500 mt-2">Hermandad de Sección</span>
+                        </div>
+                        <!-- KPI 3: IAP -->
+                        <div id="kpi-card-iap" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.A.P. (Avance)</span>
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-iap">0%</div>
+                            <span class="text-[9px] font-bold text-slate-500 mt-2">Crecimiento Educativo</span>
+                        </div>
+                        <!-- KPI 4: ISG -->
+                        <div id="kpi-card-isg" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.G. (Seguridad)</span>
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-isg">0%</div>
+                            <span class="text-[9px] font-bold text-slate-500 mt-2">Espacio Seguro</span>
+                        </div>
+                        <!-- KPI 5: IVE -->
+                        <div id="kpi-card-ive" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.V.E. (Economía)</span>
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-ive">0%</div>
+                            <span class="text-[9px] font-bold text-slate-500 mt-2">Viabilidad Financiera</span>
+                        </div>
+                    </div>
+
+                    <!-- Input Cualitativo de Scouter y Registro -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Columna izquierda: Contextualización Humana -->
+                        <div class="space-y-4">
+                            <label class="text-xs font-extrabold text-gray-500 uppercase block tracking-wider">Contexto Cualitativo de la Actividad (20%)</label>
+                            <textarea id="scouter-context-note" rows="3" class="w-full rounded-2xl border border-gray-200 focus:border-indigo-500 p-4 font-semibold outline-none transition-apple bg-white resize-none text-sm" placeholder="Registra notas claves del sábado (ej. 'Lluvia moderada en gran juego', 'Exámenes escolares mermaron asistencia')..."></textarea>
+                            <button onclick="validarDiagnosticoSemanal()" class="w-full py-3.5 rounded-xl bg-appleDark hover:bg-black text-white text-sm font-bold transition-apple shadow-lg flex items-center justify-center gap-2 active:scale-95">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Validar Diagnóstico Semanal
+                            </button>
+                        </div>
+                        <!-- Columna derecha: Historial de Diagnósticos Cofirmados -->
+                        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                            <label class="text-xs font-extrabold text-gray-500 uppercase block tracking-wider mb-4">Registro Histórico de Reportes Semanales</label>
+                            <div id="reportes-validados-lista" class="space-y-3 max-h-[180px] overflow-y-auto no-scrollbar">
+                                <p class="text-xs text-gray-400 italic text-center py-6">Aún no se ha validado ningún reporte semanal de KPIs para esta sección.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- RECOMENDACIÓN IA DINÁMICA -->
-                <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden text-left mb-8">
+                <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden text-left">
                     <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12">
                         <i class="fa-solid fa-brain text-[200px]"></i>
                     </div>
@@ -530,6 +592,9 @@
             p9: "", // Equidad
             p10: "" // Idea Loca
         };
+
+        // Estado local de Reportes Semanales de KPIs Validados por Scouters
+        let reportesValidadosHistorico = JSON.parse(localStorage.getItem('tequivoz_reportes_kpi_validados')) || [];
 
         // Banco de preguntas predeterminado y altamente personalizado para cada sección
         const bancoPreguntasPredeterminado = {
@@ -1049,10 +1114,11 @@
             document.getElementById('editor-nombre-seccion-activa').innerText = seccion;
             actualizarDashboardSeccionUI();
             inicializarWixEditorPreguntas();
+            renderReportesValidadosLista();
         }
         window.seleccionarSeccionDashboard = seleccionarSeccionDashboard;
 
-        // Recalcular métricas a partir del histórico y generar Plan de Acción Pedagógico
+        // Recalcular métricas a partir del histórico y generar Plan de Acción Pedagógico e Indicadores KPIs
         function actualizarDashboardSeccionUI() {
             const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
             const totalSurveys = [...surveysList, ...localFallback];
@@ -1075,11 +1141,18 @@
                 document.getElementById('ia-diagnostico').innerText = `Aún no se registran datos para la sección de ${activeDashboardSection}. Las recomendaciones de IA se generarán cuando ingreses la primera encuesta.`;
                 document.getElementById('ia-accion').innerText = "Incentiva a los scouts de tu sección a dejar su huella digital en TequiVoz.";
                 document.getElementById('ia-sugerencias-container').classList.add('hidden');
+
+                // Reiniciar KPI Cards
+                setKPICardValue("isp", 0);
+                setKPICardValue("ics", 0);
+                setKPICardValue("iap", 0);
+                setKPICardValue("isg", 0);
+                setKPICardValue("ive", 0);
                 return;
             }
 
             // Calcular promedios
-            let funSum = 0, supportSum = 0, teamworkSum = 0, progressionSum = 0, safetySum = 0, economySum = 0;
+            let funSum = 0, supportSum = 0, teamworkSum = 0, progressionSum = 0, safetySum = 0, economySum = 0, p9Sum = 0;
             let countAburrida = 0, countRegular = 0, countDivertida = 0, countExcelente = 0;
             let countSupervivencia = 0, countServicio = 0, countExtremo = 0;
             let sugerenciasCambio = [];
@@ -1104,6 +1177,9 @@
                 else if (s.p8 === "Bien") safetySum += 7;
                 else safetySum += 4;
 
+                if (s.p9 === "Excelente") p9Sum += 10;
+                else p9Sum += 4;
+
                 economySum += Number(s.p5 || 3);
 
                 if (s.p6 === "Supervivencia") countSupervivencia++;
@@ -1120,6 +1196,7 @@
             const avgTeamwork = (teamworkSum / total) * 10;
             const avgProgression = (progressionSum / total) * 10;
             const avgSafety = (safetySum / total) * 10;
+            const avgP9 = (p9Sum / total) * 10;
             const avgEconomy = (economySum / total).toFixed(1);
 
             let maxP1Val = Math.max(countAburrida, countRegular, countDivertida, countExcelente);
@@ -1138,6 +1215,25 @@
             document.getElementById('dash-preferencia-actividades').innerText = favAct;
 
             actualizarBarrasGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
+
+            // CALCULAR KPIs DEL MODELO HÍBRIDO EN TIEMPO REAL (80% Analítica de Base de Datos)
+            // ISP = Promedio de Diversión (P1) y Desempeño de Dirigentes (P2)
+            const kpiISP = Math.round((avgFun + avgSupport) / 2);
+            // ICS = Promedio de Sinergia de Patrulla (P3) e Inclusión (P9)
+            const kpiICS = Math.round((avgTeamwork + avgP9) / 2);
+            // IAP = Avance de Progresión (P4)
+            const kpiIAP = Math.round(avgProgression);
+            // ISG = Gestión de Riesgos y Seguridad (P8)
+            const kpiISG = Math.round(avgSafety);
+            // IVE = Viabilidad Económica (Mapeado inverso de P5: 1 es 100%, 5 es 0% viable)
+            const kpiIVE = Math.round(((5 - (economySum / total)) / 4) * 100);
+
+            // Actualizar Tarjetas de KPIs en el DOM
+            setKPICardValue("isp", kpiISP);
+            setKPICardValue("ics", kpiICS);
+            setKPICardValue("iap", kpiIAP);
+            setKPICardValue("isg", kpiISG);
+            setKPICardValue("ive", kpiIVE);
 
             // Generar Reporte Automatizado de IA exclusivo por rama
             document.getElementById('ia-subtitle-seccion').innerText = `Análisis Pedagógico de ${activeDashboardSection}`;
@@ -1204,6 +1300,100 @@
             }
         }
 
+        // Helper para pintar tarjetas de KPIs con colores dinámicos tipo tacómetro
+        function setKPICardValue(kpiId, val) {
+            const card = document.getElementById(`kpi-card-${kpiId}`);
+            const valContainer = document.getElementById(`kpi-val-${kpiId}`);
+            if (!card || !valContainer) return;
+
+            valContainer.innerText = `${val}%`;
+
+            // Limpiar clases de colores
+            card.className = "border rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-all duration-300 ";
+            valContainer.className = "w-16 h-16 rounded-full flex items-center justify-center border-4 text-lg font-black transition-all duration-300 ";
+
+            if (val < 60) {
+                // Rojo: Crítico
+                card.classList.add("bg-rose-50", "border-rose-200", "text-rose-900");
+                valContainer.classList.add("border-rose-400", "text-rose-600", "bg-white");
+            } else if (val < 80) {
+                // Amarillo: Alerta
+                card.classList.add("bg-amber-50", "border-amber-200", "text-amber-900");
+                valContainer.classList.add("border-amber-400", "text-amber-600", "bg-white");
+            } else {
+                // Verde: Saludable
+                card.classList.add("bg-emerald-50", "border-emerald-200", "text-emerald-900");
+                valContainer.classList.add("border-emerald-400", "text-emerald-600", "bg-white");
+            }
+        }
+
+        // FUSIONAR MÉTRICAS (80% IA) Y APORTE DE SCOUTER (20% sabiduría humana)
+        function validarDiagnosticoSemanal() {
+            const notaContexto = document.getElementById('scouter-context-note').value.trim();
+            if (notaContexto === "") {
+                lanzarAlert("Falta Contexto", "Por favor ingresa una breve nota de contexto para enriquecer las métricas de la IA.");
+                return;
+            }
+
+            // Obtener valores de KPIs activos del DOM
+            const ispVal = document.getElementById('kpi-val-isp').innerText;
+            const icsVal = document.getElementById('kpi-val-ics').innerText;
+            const iapVal = document.getElementById('kpi-val-iap').innerText;
+            const isgVal = document.getElementById('kpi-val-isg').innerText;
+            const iveVal = document.getElementById('kpi-val-ive').innerText;
+
+            const nuevoReporte = {
+                rama: activeDashboardSection,
+                fecha: new Date().toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+                isp: ispVal,
+                ics: icsVal,
+                iap: iapVal,
+                isg: isgVal,
+                ive: iveVal,
+                contexto: notaContexto
+            };
+
+            reportesValidadosHistorico.unshift(nuevoReporte);
+            localStorage.setItem('tequivoz_reportes_kpi_validados', JSON.stringify(reportesValidadosHistorico));
+
+            lanzarAlert("¡Reporte Semanal Guardado! ⚜️", `Fusión de co-creación exitosa. El diagnóstico oficial para la sección de ${activeDashboardSection} ha quedado registrado en el histórico.`);
+            document.getElementById('scouter-context-note').value = "";
+            renderReportesValidadosLista();
+        }
+        window.validarDiagnosticoSemanal = validarDiagnosticoSemanal;
+
+        // Renderizar listado de reportes validados
+        function renderReportesValidadosLista() {
+            const listContainer = document.getElementById('reportes-validados-lista');
+            if (!listContainer) return;
+
+            const filtrados = reportesValidadosHistorico.filter(r => r.rama === activeDashboardSection);
+
+            if (filtrados.length === 0) {
+                listContainer.innerHTML = `<p class="text-xs text-gray-400 italic text-center py-6">Aún no se ha validado ningún reporte de KPIs semanales para la sección de ${activeDashboardSection}.</p>`;
+                return;
+            }
+
+            listContainer.innerHTML = filtrados.map((rep, idx) => `
+                <div class="p-4 bg-white rounded-xl border border-gray-100 shadow-sm space-y-2">
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <span class="text-[10px] font-black text-indigo-600 capitalize">${rep.fecha}</span>
+                        <span class="text-[9px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded">Guardado</span>
+                    </div>
+                    <div class="grid grid-cols-5 gap-1 text-center font-black text-[9px] text-slate-700 bg-slate-50 py-1.5 rounded">
+                        <div>ISP: <span class="text-emerald-600 block">${rep.isp}</span></div>
+                        <div>ICS: <span class="text-indigo-600 block">${rep.ics}</span></div>
+                        <div>IAP: <span class="text-amber-600 block">${rep.iap}</span></div>
+                        <div>ISG: <span class="text-rose-600 block">${rep.isg}</span></div>
+                        <div>IVE: <span class="text-sky-600 block">${rep.ive}</span></div>
+                    </div>
+                    <div class="text-[11px] text-gray-500 font-medium leading-relaxed italic bg-gray-50/50 p-2 rounded border border-dashed">
+                        "<b>Nota Scouter:</b> ${rep.contexto}"
+                    </div>
+                </div>
+            `).join('');
+        }
+
         function actualizarBarrasGrafica(fun, support, teamwork, progression, safety) {
             document.getElementById('chart-fun').style.height = `${fun}%`;
             document.getElementById('chart-fun').innerText = `${Math.round(fun)}%`;
@@ -1233,6 +1423,7 @@
                 btnEditor.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple";
                 vistaAnalytics.classList.remove('hidden');
                 vistaEditor.classList.add('hidden');
+                actualizarDashboardSeccionUI();
             } else {
                 btnEditor.className = "pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple";
                 btnAnalytics.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple";

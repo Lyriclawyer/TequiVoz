@@ -138,12 +138,11 @@
         <div class="blob w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-duration: 35s;"></div>
     </div>
 
-    <!-- -->
     <!-- CABECERA FLOTANTE DE APPLE -->
     <nav class="glass-nav fixed top-0 left-0 w-full z-50 transition-apple px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-4">
-            <!-- 1ra Imagen: Logo de Grupo 1 Tequihua sin modificaciones -->
-            <img src="Logo 1.png" alt="Logo Grupo 1 Tequihua" class="h-14 w-auto drop-shadow-md">
+        <div class="flex items-center gap-4 cursor-pointer hover:opacity-90 transition-apple" onclick="regresarAlInicio()">
+            <!-- 1ra Imagen: Logo de Grupo 1 Tequihua sin modificaciones (Clickable para volver al inicio) -->
+            <img src="Logo 1.png" alt="Logo Grupo 1 Tequihua" class="h-14 w-auto drop-shadow-md hover:scale-105 transition-apple">
             <div>
                 <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-800 to-indigo-950 bg-clip-text text-transparent">TequiVoz</span>
                 <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest leading-none">Grupo 1 SLP</p>
@@ -482,7 +481,7 @@
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar una sola norma o acuerdo de nuestro Consejo de Clan, ¿cuál sería?", placeholder: "Escribe tu propuesta o reforma para el Consejo de Clan..." },
                 { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Gestión impecable de riesgos físicos y un espacio seguro de expresión." } ] },
                 { id: 9, type: "grid_2", title: "¿Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." } ] },
-                { id: 10, type: "textarea", title: "Para finalizar, propón una idea loca, innovadora o juego que nunca se haya hecho en el Grupo:", placeholder: "¡Ejemplo: Un rally de supervivencia de 24 horas con retos de impacto social!" }
+                { id: 10, type: "textarea", title: "Para finalizar, propón una idea loca, innovadora o juego que nunca se haya hecho en el Grupo:", placeholder: "¡Ejemplo: Un juego de rol de supervivencia de 24 horas con retos de impacto social!" }
             ]
         };
 
@@ -515,7 +514,7 @@
                     await signInAnonymously(auth);
                 }
             } catch (e) {
-                console.warn("Utilizando persistencia in-memory o sandbox de pruebas debido a restricción de claves.");
+                console.warn("Utilizando persistencia local de seguridad debido a límites de red del sandbox.");
             }
         }
         await authenticateUser();
@@ -552,7 +551,7 @@
 
             // Ocultar botón de portal scouter de la barra si estamos dentro de la encuesta o de administración
             const scouterBtn = document.getElementById('btn-portal-scouter-nav');
-            if (idSeccion === 'contenedor-encuesta' || idSeccion === 'panel-scouter') {
+            if (idSeccion === 'contenedor-encuesta' || idSeccion === 'panel-scouter' || idSeccion === 'puerta-autenticacion') {
                 scouterBtn.classList.add('hidden');
             } else {
                 scouterBtn.classList.remove('hidden');
@@ -828,55 +827,55 @@
         window.regresarAlInicio = regresarAlInicio;
 
         async function procesarEncuestaCompleta() {
-            try {
-                // Generar objeto final con validación de valores por defecto
-                const docData = {
-                    rama: respuestasSesion.rama,
-                    p1: respuestasSesion.p1 || "Divertida",
-                    p2: Number(respuestasSesion.p2 || 5),
-                    p3: respuestasSesion.p3 || "Fuerte",
-                    p4: respuestasSesion.p4 || "Si",
-                    p5: Number(respuestasSesion.p5 || 3),
-                    p6: respuestasSesion.p6 || "Supervivencia",
-                    p7: respuestasSesion.p7 || "",
-                    p8: respuestasSesion.p8 || "Bien",
-                    p9: respuestasSesion.p9 || "Excelente",
-                    p10: respuestasSesion.p10 || "",
-                    timestamp: new Date().toISOString()
-                };
+            // Deshabilitar botón para evitar envíos múltiples
+            const btnSig = document.getElementById('btn-siguiente');
+            if (btnSig) {
+                btnSig.disabled = true;
+                btnSig.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
+            }
 
-                // Guardado en la nube con Firestore
-                await addDoc(surveysCollectionRef, docData);
+            // Asegurar lectura final de textarea
+            const txtArea = document.getElementById('texto-textarea-dinamico');
+            if (txtArea) {
+                respuestasSesion.p10 = txtArea.value;
+            }
 
-                lanzarAlert("¡Aventura Completada! ⛺", `Tu registro para la sección de ${seccionActiva} ha sido enviado de manera segura a la base de datos de TequiVoz. La página se reiniciará para limpiar tus respuestas.`);
-                
-                // Reiniciar de forma absoluta el navegador para evitar residuos de cookies, caché o contraseñas
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
+            // Generar objeto final con validación de valores por defecto
+            const docData = {
+                rama: respuestasSesion.rama,
+                p1: respuestasSesion.p1 || "Divertida",
+                p2: Number(respuestasSesion.p2 || 5),
+                p3: respuestasSesion.p3 || "Fuerte",
+                p4: respuestasSesion.p4 || "Si",
+                p5: Number(respuestasSesion.p5 || 3),
+                p6: respuestasSesion.p6 || "Supervivencia",
+                p7: respuestasSesion.p7 || "",
+                p8: respuestasSesion.p8 || "Bien",
+                p9: respuestasSesion.p9 || "Excelente",
+                p10: respuestasSesion.p10 || "",
+                timestamp: new Date().toISOString()
+            };
 
-            } catch (e) {
-                console.error("Error al guardar en la base de datos:", e);
-                lanzarAlert("Guardado de Emergencia", "No se detectó conexión estable con Firestore, tus respuestas se han guardado de manera local de forma segura.");
-                
-                // Fallback LocalStorage seguro en caso de fallos de red sandbox
+            const guardarLocalmente = () => {
                 const localData = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
-                localData.push({
-                    rama: respuestasSesion.rama,
-                    p1: respuestasSesion.p1 || "Divertida",
-                    p2: Number(respuestasSesion.p2 || 5),
-                    p3: respuestasSesion.p3 || "Fuerte",
-                    p4: respuestasSesion.p4 || "Si",
-                    p5: Number(respuestasSesion.p5 || 3),
-                    p6: respuestasSesion.p6 || "Supervivencia",
-                    p7: respuestasSesion.p7 || "",
-                    p8: respuestasSesion.p8 || "Bien",
-                    p9: respuestasSesion.p9 || "Excelente",
-                    p10: respuestasSesion.p10 || "",
-                    timestamp: new Date().toISOString()
-                });
+                localData.push(docData);
                 localStorage.setItem('tequivoz_fallback', JSON.stringify(localData));
+            };
 
+            try {
+                // Envío asíncrono seguro a Firestore con timeout de 2 segundos para evitar bloqueos
+                const firestoreSavePromise = addDoc(surveysCollectionRef, docData);
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout de conexión")), 2000));
+                
+                await Promise.race([firestoreSavePromise, timeoutPromise]);
+
+                lanzarAlert("¡Aventura Completada! ⛺", `Tu registro para la sección de ${seccionActiva} ha sido enviado de manera segura a la base de datos de TequiVoz.`);
+            } catch (e) {
+                console.warn("Fallo o timeout de Firestore, guardando en local storage como contingencia:", e);
+                guardarLocalmente();
+                lanzarAlert("¡Aventura Completada! ⛺", "Tu registro ha sido guardado de manera local de forma segura temporalmente.");
+            } finally {
+                // Reiniciar y limpiar completamente la sesión después de 3 segundos
                 setTimeout(() => {
                     window.location.reload();
                 }, 3000);
@@ -1136,7 +1135,7 @@
                 mostrarSeccion('panel-scouter');
                 document.body.style.backgroundColor = '#f5f5f7'; // fondo gris claro tipo Apple admin
             } else {
-                lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta. Pista: Tequihua1");
+                lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta.");
             }
         }
         window.validarCredenciales = validarCredenciales;

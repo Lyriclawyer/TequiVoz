@@ -138,6 +138,7 @@
         <div class="blob w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-duration: 35s;"></div>
     </div>
 
+    <!-- -->
     <!-- CABECERA FLOTANTE DE APPLE -->
     <nav class="glass-nav fixed top-0 left-0 w-full z-50 transition-apple px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
@@ -150,7 +151,7 @@
         </div>
         
         <div class="flex items-center gap-4">
-            <button onclick="mostrarModalAutenticar()" class="px-5 py-2.5 rounded-full bg-appleDark text-white text-sm font-semibold hover:bg-black transition-apple shadow-lg hover:shadow-xl active:scale-95 flex items-center gap-2">
+            <button id="btn-portal-scouter-nav" onclick="mostrarModalAutenticar()" class="px-5 py-2.5 rounded-full bg-appleDark text-white text-sm font-semibold hover:bg-black transition-apple shadow-lg hover:shadow-xl active:scale-95 flex items-center gap-2">
                 <i class="fa-solid fa-user-shield"></i> Portal Scouter
             </button>
         </div>
@@ -239,195 +240,9 @@
                     </div>
                 </div>
 
-                <!-- Bloques Dinámicos de Preguntas -->
+                <!-- Bloques Dinámicos de Preguntas (Se inyectan desde JS) -->
                 <div id="formulario-preguntas">
-                    
-                    <!-- P1: Diversómetro -->
-                    <div class="pregunta-tarjeta block">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 01</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Qué tan divertida estuvo la actividad del sábado pasado?</h2>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <button onclick="registrarP(1, 'Aburrida', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center btn-respuesta">
-                                <span class="text-4xl block mb-3">😴</span>
-                                <span class="font-bold text-sm text-gray-600">Poco divertida</span>
-                            </button>
-                            <button onclick="registrarP(1, 'Regular', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center btn-respuesta">
-                                <span class="text-4xl block mb-3">😐</span>
-                                <span class="font-bold text-sm text-gray-600">Regular</span>
-                            </button>
-                            <button onclick="registrarP(1, 'Divertida', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center btn-respuesta">
-                                <span class="text-4xl block mb-3">😀</span>
-                                <span class="font-bold text-sm text-gray-600">Divertida</span>
-                            </button>
-                            <button onclick="registrarP(1, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center btn-respuesta">
-                                <span class="text-4xl block mb-3">🤩</span>
-                                <span class="font-bold text-sm text-gray-600">¡Épica!</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- P2: Relación Dirigentes -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 02</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Cómo evaluarías el entusiasmo y apoyo de tus Dirigentes (Scouters) hoy?</h2>
-                        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-6">
-                            <input type="range" min="1" max="10" value="5" id="slider-p2" oninput="actualizarFeedbackSlider(this.value)" class="apple-range mb-4">
-                            <div class="flex justify-between font-bold text-xs text-gray-400">
-                                <span>Falta Dinamismo 🧭</span>
-                                <span>¡Estuvieron Increíbles! 🌟</span>
-                            </div>
-                        </div>
-                        <p class="text-center font-extrabold text-indigo-600 text-lg" id="feedback-slider-p2">Calificación: 5 - Neutro</p>
-                    </div>
-
-                    <!-- P3: Sinergia de Patrulla -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 03</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Cómo se siente la comunicación y el trabajo en equipo dentro de tu Patrulla / Seisena?</h2>
-                        <div class="flex flex-col gap-4">
-                            <button onclick="registrarP(3, 'Fuerte', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4 btn-respuesta">
-                                <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600"><i class="fa-solid fa-hands-holding"></i></div>
-                                <div>
-                                    <span class="block text-gray-700">Gran Unión</span>
-                                    <span class="text-xs text-gray-400 font-normal">Nos apoyamos en cada reto, hay confianza total.</span>
-                                </div>
-                            </button>
-                            <button onclick="registrarP(3, 'Division', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4 btn-respuesta">
-                                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600"><i class="fa-solid fa-bolt"></i></div>
-                                <div>
-                                    <span class="block text-gray-700">Leve División</span>
-                                    <span class="text-xs text-gray-400 font-normal">Hay desacuerdos ocasionales o subgrupos formados.</span>
-                                </div>
-                            </button>
-                            <button onclick="registrarP(3, 'FaltaIntegracion', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4 btn-respuesta">
-                                <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600"><i class="fa-solid fa-circle-exclamation"></i></div>
-                                <div>
-                                    <span class="block text-gray-700">Falta Integración</span>
-                                    <span class="text-xs text-gray-400 font-normal">Se siente exclusión o apatía en las dinámicas de grupo.</span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- P4: Avance y Progresión -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 04</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Sientes que las actividades de hoy aportaron a tu progresión personal o insignias?</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <button onclick="registrarP(4, 'Si', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
-                                <span class="text-3xl">🏅</span>
-                                <span class="text-gray-700">¡Sí, totalmente!</span>
-                                <p class="text-xs font-normal text-gray-400">Aprendí nuevas técnicas y reforcé habilidades.</p>
-                            </button>
-                            <button onclick="registrarP(4, 'Medias', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
-                                <span class="text-3xl">⏳</span>
-                                <span class="text-gray-700">A medias</span>
-                                <p class="text-xs font-normal text-gray-400">Hubo algo de aprendizaje pero falto práctica real.</p>
-                            </button>
-                            <button onclick="registrarP(4, 'No', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
-                                <span class="text-3xl">❌</span>
-                                <span class="text-gray-700">No aportó</span>
-                                <p class="text-xs font-normal text-gray-400">Sentí que repetimos los mismos temas de siempre.</p>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- P5: Economía de Eventos -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 05</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Qué tan accesibles sientes los costos de los eventos y campamentos programados?</h2>
-                        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-6">
-                            <input type="range" min="1" max="5" value="3" id="slider-p5" oninput="actualizarFeedbackP5(this.value)" class="apple-range mb-4">
-                            <div class="flex justify-between font-bold text-xs text-gray-400">
-                                <span>Accesibles / Fáciles de Costear 🪙</span>
-                                <span>Muy Caros / Difícil Participar 💸</span>
-                            </div>
-                        </div>
-                        <p class="text-center font-extrabold text-indigo-600 text-lg" id="feedback-slider-p5">Escala: 3 - Balanceado</p>
-                    </div>
-
-                    <!-- P6: Preferencias de Actividades -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 06</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Qué tipo de actividades te gustaría que propusiéramos con mayor frecuencia en los Consejos?</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <button onclick="registrarP(6, 'Supervivencia', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3 btn-respuesta">
-                                <span class="text-4xl">🌲</span>
-                                <span class="text-gray-700">Técnicas de Supervivencia</span>
-                                <span class="text-xs text-gray-400 font-normal">Campismo, pionerismo avanzado y orientación.</span>
-                            </button>
-                            <button onclick="registrarP(6, 'Servicio', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3 btn-respuesta">
-                                <span class="text-4xl">❤️</span>
-                                <span class="text-gray-700">Servicio Comunitario</span>
-                                <span class="text-xs text-gray-400 font-normal">Ecología, voluntariado social y apoyo humanitario.</span>
-                            </button>
-                            <button onclick="registrarP(6, 'Extremo', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3 btn-respuesta">
-                                <span class="text-4xl">🧗</span>
-                                <span class="text-gray-700">Juegos de Acecho / Extremos</span>
-                                <span class="text-xs text-gray-400 font-normal">Grandes estrategias, retos de destreza física.</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- P7: El Gran Cambio -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 07</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">Si pudieras cambiar o mejorar una sola regla de nuestras actividades habituales, ¿cuál sería?</h2>
-                        <div class="relative">
-                            <textarea id="texto-p7" rows="4" class="w-full rounded-2xl border-2 border-gray-200 focus:border-indigo-500 bg-white p-5 font-medium outline-none transition-apple shadow-inner resize-none" placeholder="Escribe aquí tu propuesta constructiva..."></textarea>
-                        </div>
-                    </div>
-
-                    <!-- P8: Seguridad de Campo -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 08</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Cómo consideras la seguridad y los protocolos durante los campamentos o salidas externas?</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <button onclick="registrarP(8, 'Inseguro', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
-                                <span class="text-3xl">⚠️</span>
-                                <span class="text-gray-700">Deficiente</span>
-                                <p class="text-xs font-normal text-gray-400">Hay descuidos o falta de información sobre riesgos.</p>
-                            </button>
-                            <button onclick="registrarP(8, 'Bien', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
-                                <span class="text-3xl">👍</span>
-                                <span class="text-gray-700">Buena</span>
-                                <p class="text-xs font-normal text-gray-400">Me siento seguro en la mayoría de las dinámicas.</p>
-                            </button>
-                            <button onclick="registrarP(8, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
-                                <span class="text-3xl">🛡️</span>
-                                <span class="text-gray-700">Excelente</span>
-                                <p class="text-xs font-normal text-gray-400">Monitoreo constante, botiquín y zonas delimitadas.</p>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- P9: Inclusión y Respeto -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 09</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Sientes que existe un ambiente inclusivo y equitativo en el trato de todos en tu sección?</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <button onclick="registrarP(9, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
-                                <span class="text-3xl">✨</span>
-                                <span class="text-gray-700">Siempre hay respeto</span>
-                                <p class="text-xs font-normal text-gray-400">Se escuchan todas las opiniones sin importar el género o rango.</p>
-                            </button>
-                            <button onclick="registrarP(9, 'Excluyente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
-                                <span class="text-3xl">💬</span>
-                                <span class="text-gray-700">A veces hay exclusión</span>
-                                <p class="text-xs font-normal text-gray-400">Siento favoritismos o rechazo de ciertos integrantes.</p>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- P10: Idea Loca -->
-                    <div class="pregunta-tarjeta hidden">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 10</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">Para finalizar, propón una idea loca, innovadora o juego que nunca se haya hecho en el Grupo:</h2>
-                        <div class="relative">
-                            <textarea id="texto-p10" rows="4" class="w-full rounded-2xl border-2 border-gray-200 focus:border-indigo-500 bg-white p-5 font-medium outline-none transition-apple shadow-inner resize-none" placeholder="¡Ejemplo: Un juego de rol de espionaje nocturno con sensores o supervivencia total!"></textarea>
-                        </div>
-                    </div>
-
+                    <!-- Aquí se renderiza la pregunta actual dinámicamente -->
                 </div>
 
                 <!-- Botones de Navegación del Prototipo -->
@@ -446,10 +261,10 @@
         <!-- ================= PUERTA DE AUTENTICACIÓN ADM ================= -->
         <section id="puerta-autenticacion" class="hidden transition-apple w-full max-w-md mx-auto text-center">
             <div class="glass-panel rounded-[32px] p-8 shadow-2xl">
-                <!-- FaceID simulator -->
-                <div class="relative w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                <!-- FaceID simulator con Logo de Grupo 1 en su interior -->
+                <div class="relative w-28 h-28 mx-auto mb-6 flex items-center justify-center bg-white rounded-full p-2 border border-gray-100 shadow-md">
                     <div id="biometric-ring" class="absolute inset-0 border-4 border-gray-200 rounded-full transition-all duration-[2s]"></div>
-                    <i id="biometric-icon" class="fa-solid fa-face-id text-gray-300 text-5xl"></i>
+                    <img src="Logo 1.png" alt="Logo Grupo 1 Tequihua" class="w-20 h-20 object-contain z-10 rounded-full">
                 </div>
                 <h3 class="text-xl font-extrabold mb-2">Acceso Scouters & Representantes</h3>
                 <p class="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-6">Confirmación de Privacidad</p>
@@ -572,6 +387,11 @@
             </div>
         </section>
 
+        <!-- CRÉDITOS -->
+        <footer class="mt-16 pb-8 text-center text-[10px] font-semibold text-gray-400 tracking-wide uppercase opacity-75">
+            Plataforma diseñada y desarrollada por Rafael Magaña Rangel
+        </footer>
+
     </main>
 
     <!-- MODAL ALERT REEMPLAZO DE ALERT() -->
@@ -602,16 +422,68 @@
         // Estado actual de respuestas
         let respuestasSesion = {
             rama: "",
-            p1: "", // Diversidad (Aburrida, Regular, Divertida, Excelente)
+            p1: "", // Diversidad
             p2: 5,  // Desempeño Dirigentes (1-10)
-            p3: "", // Sinergia (Fuerte, Division, FaltaIntegracion)
-            p4: "", // Progresión (Si, Medias, No)
+            p3: "", // Sinergia
+            p4: "", // Progresión
             p5: 3,  // Economía (1-5)
-            p6: "", // Áreas (Supervivencia, Servicio, Extremo)
+            p6: "", // Áreas de preferencia
             p7: "", // Texto libre cambio
-            p8: "", // Seguridad (Inseguro, Bien, Excelente)
-            p9: "", // Equidad (Excelente, Excluyente)
+            p8: "", // Seguridad
+            p9: "", // Equidad
             p10: "" // Idea Loca
+        };
+
+        // Banco de preguntas personalizado para cada sección
+        const bancoPreguntas = {
+            Manada: [
+                { id: 1, type: "select", title: "¿Qué tan divertida estuvo la actividad de la Manada el sábado pasado?", options: [ { val: "Aburrida", icon: "😴", text: "Poco divertida" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Divertida" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épica!" } ] },
+                { id: 2, type: "range", title: "¿Cómo calificarías el entusiasmo y apoyo de tus Viejos Lobos (Scouters de Manada) hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
+                { id: 3, type: "list", title: "¿Cómo se siente la comunicación y el trabajo en equipo dentro de tu Seisena?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Gran Unión", desc: "Nos apoyamos en todo, hay confianza total en la selva." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Leve División", desc: "Hay algunos desacuerdos pequeños entre nosotros." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta Integración", desc: "A veces jugamos de manera separada o excluida." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que los juegos de hoy te ayudaron a conseguir tus huellas o insignias de progresión?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí nuevas técnicas y reforcé habilidades." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de aprendizaje pero faltó más práctica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que repetimos lo mismo del sábado anterior." } ] },
+                { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de los eventos y campamentos de Manada?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
+                { id: 6, type: "grid", title: "¿Qué tipo de actividades o cacerías te gustaría realizar más seguido en la Manada?", options: [ { val: "Supervivencia", icon: "🌲", title: "Grandes Cacerías", desc: "Seguimiento de pistas, rastreo y cabuyería básica." }, { val: "Servicio", icon: "❤️", title: "Buenas Acciones", desc: "Ayuda a la comunidad, ecología y cuidado animal." }, { val: "Extremo", icon: "🧗", title: "Juegos del Libro de la Selva", desc: "Estrategia física, destrezas y retos de agilidad." } ] },
+                { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de la Manada para el próximo sábado, ¿cuál sería?", placeholder: "Escribe aquí tu propuesta constructiva para la selva..." },
+                { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y el cuidado de los Viejos Lobos durante nuestras salidas?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Faltó cuidado o información sobre los límites del juego." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro con Akela y Baloo cuidándome." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Zonas delimitadas, botiquín y cuidado constante." } ] },
+                { id: 9, type: "grid_2", title: "¿Sientes que existe un ambiente inclusivo y equitativo en el trato de todos en la Manada?", options: [ { val: "Excelente", icon: "✨", title: "Siempre hay respeto", desc: "Todos los lobatos somos escuchados por igual." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o rechazo en ocasiones." } ] },
+                { id: 10, type: "textarea", title: "Para finalizar, propón un juego loco de selva que te gustaría hacer con toda la Manada:", placeholder: "¡Ejemplo: Una búsqueda del tesoro de Shere Khan con mapas secretos!" }
+            ],
+            Tropa: [
+                { id: 1, type: "select", title: "¿Qué tan divertidos y desafiantes estuvieron los juegos y bases de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótonos" }, { val: "Regular", icon: "😐", text: "Regulares" }, { val: "Divertida", icon: "😀", text: "Desafiantes" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épicos!" } ] },
+                { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo, preparación y apoyo de tus Scouters de Tropa hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
+                { id: 3, type: "list", title: "¿Cómo se siente la mística, el espíritu y la convivencia interna dentro de tu Patrulla?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Cohesión", desc: "Trabajamos como un solo bloque, mística y apoyo al 100%." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Roces Internos", desc: "Hay desacuerdos de liderazgo o divisiones menores." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se siente apatía o exclusión en el consejo de patrulla." } ] },
+                { id: 4, type: "grid", title: "¿Las actividades de hoy aportaron a tus etapas de progresión (Pistas, Senda, Rumbo)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí o reforcé especialidades técnicas." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Faltó vincularlo con mi carpeta o práctica real." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que no avanzamos en nuestra progresión scout." } ] },
+                { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las excursiones y campamentos de Tropa?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
+                { id: 6, type: "grid", title: "¿Qué tipo de dinámicas o técnicas scouts te gustaría practicar más en los ciclos de programa?", options: [ { val: "Supervivencia", icon: "🌲", title: "Pionerismo y Campismo", desc: "Construcciones con nudos complejos, refugios y orientación." }, { val: "Servicio", icon: "❤️", title: "Servicios Técnicos", desc: "Apoyo a la comunidad, primeros auxilios avanzados y ecología." }, { val: "Extremo", icon: "🧗", title: "Juegos de Acecho", desc: "Estrategias nocturnas, retos físicos y deportes de aventura." } ] },
+                { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de nuestra Tropa o Corte de Honor, ¿cuál sería?", placeholder: "Escribe tu sugerencia constructiva para la Corte de Honor..." },
+                { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y los protocolos de riesgo durante los campamentos o excursiones?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Falta de botiquín o supervisión directa en las bases críticas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Monitoreo constante, botiquín visible y zonas seguras." } ] },
+                { id: 9, type: "grid_2", title: "¿Consideras que existe un ambiente inclusivo y de equidad en el trato de todos en la Tropa?", options: [ { val: "Excelente", icon: "✨", title: "Excelente ambiente", desc: "Todos los scouts y patrullas son tomados en cuenta por igual." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o diferencias de rango marcadas." } ] },
+                { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego nocturno o idea loca para el próximo campamento de Tropa:", placeholder: "¡Ejemplo: Un juego de rol de espionaje nocturno con claves secretas y linternas!" }
+            ],
+            Comunidad: [
+                { id: 1, type: "select", title: "¿Qué tanto te retó y entusiasmó el proyecto o actividad de la Comunidad hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Sin reto" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Retador" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épico!" } ] },
+                { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo y el rol de asesores de tus Scouters de Comunidad hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
+                { id: 3, type: "list", title: "¿Cómo marcha la sinergia, la planeación y el trabajo interno dentro de tu Equipo?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Unión Fuerte", desc: "Excelente distribución de tareas y apoyo mutuo constante." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Desorganización", desc: "Dificultad para ponernos de acuerdo o apatía temporal." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Equipo", desc: "Se siente recarga de trabajo en pocos integrantes o exclusión." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que la actividad de hoy aporta a tu progresión de caminante (Búsqueda, Encuentro, Desafío)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Fortalece mis competencias y proyectos personales." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que las juntas se volvieron muy teóricas." } ] },
+                { id: 5, type: "range", title: "¿Qué tan accesibles o viables ves los presupuestos para los proyectos de Comunidad?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
+                { id: 6, type: "grid", title: "¿En qué área de proyectos te gustaría que la Comunidad de Caminantes se enfocara más?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición y Supervivencia", desc: "Retos de montaña, campamento sin huella y cartografía avanzada." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Acción social real, voluntariado ecológico y proyectos comunitarios." }, { val: "Extremo", icon: "🧗", title: "Desafíos Físicos", desc: "Deportes de aventura, rapel, orientación y juegos extremos." } ] },
+                { id: 7, type: "textarea", title: "Si pudieras proponer o modificar un artículo del reglamento interno de la Comunidad, ¿cuál sería?", placeholder: "Escribe tu propuesta constructiva para el Congreso de Comunidad..." },
+                { id: 8, type: "grid", title: "¿Cómo consideras la gestión de riesgos y seguridad durante las expediciones y campamentos?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Se descuidaron algunos aspectos de seguridad o rutas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro con la planeación de la Jefatura." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Análisis previo de riesgos, equipamiento y monitoreo constante." } ] },
+                { id: 9, type: "grid_2", title: "¿Sientes que la Comunidad es un espacio de verdadera inclusión, respeto y equidad?", options: [ { val: "Excelente", icon: "✨", title: "Siempre inclusivo", desc: "Todos los caminantes y equipos son valorados y respetados." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o rechazo en ocasiones." } ] },
+                { id: 10, type: "textarea", title: "Para finalizar, propón una expedición o proyecto loco que te gustaría realizar en este ciclo de programa:", placeholder: "¡Ejemplo: Una expedición de alta montaña con vivac en la cumbre!" }
+            ],
+            Clan: [
+                { id: 1, type: "select", title: "¿Qué tan enriquecedora e inspiradora fue la jornada o debate del Clan el día de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótona" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Inspiradora" }, { val: "Excelente", icon: "🤩", text: "¡Trascendente!" } ] },
+                { id: 2, type: "range", title: "¿Cómo evalúas el nivel de acompañamiento y consejería de tus Sinodales/Scouters de Clan hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
+                { id: 3, type: "list", title: "¿Cómo marcha la mística, el apoyo mutuo y la verdadera hermandad dentro de la comunidad de Clan?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Unión", desc: "Excelente integración, apoyo mutuo en proyectos y plan de vida." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Distanciamiento", desc: "Falta de participación en debates o distanciamiento entre rovers." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se sienten grupos herméticos o apatía generalizada." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la realidad de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
+                { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las actividades regionales o nacionales de Clan?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
+                { id: 6, type: "grid", title: "¿Qué tipo de proyectos de impacto o servicio social te gustaría que el Clan organizara?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición Extrema", desc: "Retos de alta montaña, supervivencia pura y autonomía." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Voluntariado social, ecología de impacto y desarrollo comunitario." }, { val: "Extremo", icon: "🧗", title: "Servicios Técnicos", desc: "Apoyo en desastres naturales, primeros auxilios avanzados y capacitación." } ] },
+                { id: 7, type: "textarea", title: "Si pudieras proponer o modificar una sola norma o acuerdo de nuestro Consejo de Clan, ¿cuál sería?", placeholder: "Escribe tu propuesta o reforma para el Consejo de Clan..." },
+                { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Gestión impecable de riesgos físicos y un espacio seguro de expresión." } ] },
+                { id: 9, type: "grid_2", title: "¿Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." } ] },
+                { id: 10, type: "textarea", title: "Para finalizar, propón una idea loca, innovadora o juego que nunca se haya hecho en el Grupo:", placeholder: "¡Ejemplo: Un rally de supervivencia de 24 horas con retos de impacto social!" }
+            ]
         };
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'tequivoz-gpo1';
@@ -664,6 +536,29 @@
             console.error("Error al sincronizar datos en tiempo real:", error);
         });
 
+        // Ruteador centralizado de vistas para evitar solapamientos
+        function mostrarSeccion(idSeccion) {
+            const secciones = ['pantalla-inicio', 'contenedor-encuesta', 'puerta-autenticacion', 'panel-scouter'];
+            secciones.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (id === idSeccion) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+
+            // Ocultar botón de portal scouter de la barra si estamos dentro de la encuesta o de administración
+            const scouterBtn = document.getElementById('btn-portal-scouter-nav');
+            if (idSeccion === 'contenedor-encuesta' || idSeccion === 'panel-scouter') {
+                scouterBtn.classList.add('hidden');
+            } else {
+                scouterBtn.classList.remove('hidden');
+            }
+        }
+
         function lanzarAlert(titulo, mensaje) {
             document.getElementById('custom-alert-title').innerText = titulo;
             document.getElementById('custom-alert-message').innerText = mensaje;
@@ -675,10 +570,14 @@
         }
         window.cerrarAlert = cerrarAlert;
 
-        // Iniciar flujo de preguntas
+        // Iniciar flujo de preguntas con banco de datos personalizado
         function empezarEncuesta(rama) {
             seccionActiva = rama;
-            respuestasSesion.rama = rama;
+            // Inicializar respuestas para la sesión de forma limpia
+            respuestasSesion = {
+                rama: rama,
+                p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: ""
+            };
             preguntaActual = 0;
 
             const body = document.body;
@@ -707,9 +606,7 @@
             }
 
             document.getElementById('badge-seccion-activa').innerText = rama;
-
-            document.getElementById('pantalla-inicio').classList.add('hidden');
-            document.getElementById('contenedor-encuesta').classList.remove('hidden');
+            mostrarSeccion('contenedor-encuesta');
 
             renderPreguntaActiva();
         }
@@ -717,16 +614,121 @@
 
         // Renderizado del Prototipo de Preguntas
         function renderPreguntaActiva() {
-            const tarjetas = document.querySelectorAll('.pregunta-tarjeta');
-            tarjetas.forEach((t, i) => {
-                if(i === preguntaActual) {
-                    t.classList.remove('hidden');
-                    t.classList.add('block');
-                } else {
-                    t.classList.remove('block');
-                    t.classList.add('hidden');
-                }
-            });
+            const container = document.getElementById('formulario-preguntas');
+            const listaPreguntas = bancoPreguntas[seccionActiva];
+            const q = listaPreguntas[preguntaActual];
+
+            // Renderizar contenido dinámicamente según el tipo de pregunta
+            let html = "";
+            const numLabel = `Pregunta 0${q.id}`.slice(-10);
+
+            if (q.type === "select") {
+                html = `
+                    <div class="pregunta-tarjeta block">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            ${q.options.map(opt => {
+                                const selectedClass = (respuestasSesion.p1 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
+                                return `
+                                    <button onclick="registrarP(1, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 shadow-sm hover:shadow-md transition-apple text-center btn-respuesta ${selectedClass}">
+                                        <span class="text-4xl block mb-3">${opt.icon}</span>
+                                        <span class="font-bold text-sm text-gray-600">${opt.text}</span>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (q.type === "range") {
+                const currentVal = respuestasSesion[`p${q.id}`] || q.def;
+                html = `
+                    <div class="pregunta-tarjeta block">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
+                        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-6">
+                            <input type="range" min="${q.min}" max="${q.max}" value="${currentVal}" id="slider-dinamico" oninput="actualizarFeedbackRango(${q.id}, this.value)" class="apple-range mb-4">
+                            <div class="flex justify-between font-bold text-xs text-gray-400">
+                                <span>${q.left}</span>
+                                <span>${q.right}</span>
+                            </div>
+                        </div>
+                        <p class="text-center font-extrabold text-indigo-600 text-lg" id="feedback-slider-dinamico">Calificación: ${currentVal}</p>
+                    </div>
+                `;
+            } else if (q.type === "list") {
+                html = `
+                    <div class="pregunta-tarjeta block">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
+                        <div class="flex flex-col gap-4">
+                            ${q.options.map(opt => {
+                                const selectedClass = (respuestasSesion.p3 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
+                                return `
+                                    <button onclick="registrarP(3, '${opt.val}', this)" class="p-5 rounded-2xl border-2 hover:border-indigo-500 text-left font-bold transition-apple flex items-center gap-4 btn-respuesta ${selectedClass}">
+                                        <div class="w-10 h-10 rounded-full bg-${opt.color}-100 flex items-center justify-center text-${opt.color}-600"><i class="fa-solid ${opt.icon}"></i></div>
+                                        <div>
+                                            <span class="block text-gray-700">${opt.title}</span>
+                                            <span class="text-xs text-gray-400 font-normal">${opt.desc}</span>
+                                        </div>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (q.type === "grid") {
+                html = `
+                    <div class="pregunta-tarjeta block">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            ${q.options.map(opt => {
+                                const selectedClass = (respuestasSesion[`p${q.id}`] === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
+                                return `
+                                    <button onclick="registrarP(${q.id}, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta ${selectedClass}">
+                                        <span class="text-3xl">${opt.icon}</span>
+                                        <span class="text-gray-700">${opt.title}</span>
+                                        <p class="text-xs font-normal text-gray-400">${opt.desc}</p>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (q.type === "grid_2") {
+                html = `
+                    <div class="pregunta-tarjeta block">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${q.options.map(opt => {
+                                const selectedClass = (respuestasSesion.p9 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
+                                return `
+                                    <button onclick="registrarP(9, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta ${selectedClass}">
+                                        <span class="text-3xl">${opt.icon}</span>
+                                        <span class="text-gray-700">${opt.title}</span>
+                                        <p class="text-xs font-normal text-gray-400">${opt.desc}</p>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (q.type === "textarea") {
+                const currentText = respuestasSesion[`p${q.id}`] || "";
+                html = `
+                    <div class="pregunta-tarjeta block">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
+                        <div class="relative">
+                            <textarea id="texto-textarea-dinamico" rows="4" oninput="registrarTextoDinamico(${q.id}, this.value)" class="w-full rounded-2xl border-2 border-gray-200 focus:border-indigo-500 bg-white p-5 font-medium outline-none transition-apple shadow-inner resize-none" placeholder="${q.placeholder}">${currentText}</textarea>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
 
             // Actualizar número de contador
             document.getElementById('contador-progreso').innerText = `Pregunta ${preguntaActual + 1} de ${totalPreguntas}`;
@@ -770,38 +772,41 @@
             }
         }
         window.registrarP = registrarP;
+        window.guardarRespuesta = registrarP; // Alias para compatibilidad
 
-        // Feedback visual slider P2
-        function actualizarFeedbackSlider(val) {
-            respuestasSesion.p2 = parseInt(val);
-            let texto = "";
-            if (val <= 3) texto = "Falta Dinamismo 🧭";
-            else if (val <= 6) texto = "Neutro / Regular";
-            else if (val <= 8) texto = "¡Muy bueno y amigable! 👍";
-            else texto = "¡Excelente, Leyendas! 🌟";
-            document.getElementById('feedback-slider-p2').innerText = `Calificación: ${val} - ${texto}`;
+        function registrarTextoDinamico(id, val) {
+            respuestasSesion[`p${id}`] = val;
         }
-        window.actualizarFeedbackSlider = actualizarFeedbackSlider;
+        window.registrarTextoDinamico = registrarTextoDinamico;
 
-        // Feedback visual slider P5
-        function actualizarFeedbackP5(val) {
-            respuestasSesion.p5 = parseInt(val);
-            let texto = "";
-            if (val <= 2) texto = "Excelente / Muy accesible";
-            else if (val == 3) texto = "Moderado / Balanceado";
-            else texto = "Muy caro / Requiere esfuerzo para costearlo";
-            document.getElementById('feedback-slider-p5').innerText = `Calificación: ${val} - ${texto}`;
+        function actualizarFeedbackRango(id, val) {
+            respuestasSesion[`p${id}`] = parseInt(val);
+            const feedbackEl = document.getElementById('feedback-slider-dinamico');
+            if (feedbackEl) {
+                let extra = "";
+                if (id === 2) {
+                    if (val <= 3) extra = "- Falta Dinamismo 🧭";
+                    else if (val <= 6) extra = "- Neutro / Regular";
+                    else if (val <= 8) extra = "- ¡Muy bueno y amigable! 👍";
+                    else extra = "- ¡Excelente, Leyendas! 🌟";
+                } else if (id === 5) {
+                    if (val <= 2) extra = "- Excelente / Muy accesible 🪙";
+                    else if (val == 3) extra = "- Moderado / Balanceado";
+                    else extra = "- Muy caro / Difícil participar 💸";
+                }
+                feedbackEl.innerText = `Calificación: ${val} ${extra}`;
+            }
         }
-        window.actualizarFeedbackP5 = actualizarFeedbackP5;
+        window.actualizarFeedbackRango = actualizarFeedbackRango;
 
         // Controladores de navegación de encuesta
         function cambiarP(direccion) {
-            // Guardar valores de inputs abiertos si estamos en las preguntas 7 u 10
-            if (preguntaActual === 6) {
-                respuestasSesion.p7 = document.getElementById('texto-p7').value;
-            }
-            if (preguntaActual === 9) {
-                respuestasSesion.p10 = document.getElementById('texto-p10').value;
+            // Asegurar el guardado del textarea actual antes de saltar de pantalla
+            const txtArea = document.getElementById('texto-textarea-dinamico');
+            if (txtArea) {
+                const qList = bancoPreguntas[seccionActiva];
+                const q = qList[preguntaActual];
+                respuestasSesion[`p${q.id}`] = txtArea.value;
             }
 
             preguntaActual += direccion;
@@ -817,23 +822,21 @@
 
         // Retornar a la vista Home
         function regresarAlInicio() {
-            document.getElementById('contenedor-encuesta').classList.add('hidden');
-            document.getElementById('puerta-autenticacion').classList.add('hidden');
-            document.getElementById('panel-scouter').classList.add('hidden');
-            document.getElementById('pantalla-inicio').classList.remove('hidden');
+            mostrarSeccion('pantalla-inicio');
             document.body.style.backgroundColor = '#f4f7f6';
         }
         window.regresarAlInicio = regresarAlInicio;
 
         async function procesarEncuestaCompleta() {
             try {
+                // Generar objeto final con validación de valores por defecto
                 const docData = {
                     rama: respuestasSesion.rama,
                     p1: respuestasSesion.p1 || "Divertida",
-                    p2: Number(respuestasSesion.p2),
+                    p2: Number(respuestasSesion.p2 || 5),
                     p3: respuestasSesion.p3 || "Fuerte",
                     p4: respuestasSesion.p4 || "Si",
-                    p5: Number(respuestasSesion.p5),
+                    p5: Number(respuestasSesion.p5 || 3),
                     p6: respuestasSesion.p6 || "Supervivencia",
                     p7: respuestasSesion.p7 || "",
                     p8: respuestasSesion.p8 || "Bien",
@@ -842,19 +845,38 @@
                     timestamp: new Date().toISOString()
                 };
 
-                // Subida en la nube con Firestore
+                // Guardado en la nube con Firestore
                 await addDoc(surveysCollectionRef, docData);
 
                 lanzarAlert("¡Aventura Completada! ⛺", `Tu registro para la sección de ${seccionActiva} ha sido enviado de manera segura a la base de datos de TequiVoz. La página se reiniciará para limpiar tus respuestas.`);
                 
-                // Reiniciar todo de manera absoluta refrescando la página para no guardar contraseñas o datos residuales
+                // Reiniciar de forma absoluta el navegador para evitar residuos de cookies, caché o contraseñas
                 setTimeout(() => {
                     window.location.reload();
                 }, 3000);
 
             } catch (e) {
                 console.error("Error al guardar en la base de datos:", e);
-                lanzarAlert("Error de Conexión", "No pudimos conectar con el servidor, reintentando de modo local.");
+                lanzarAlert("Guardado de Emergencia", "No se detectó conexión estable con Firestore, tus respuestas se han guardado de manera local de forma segura.");
+                
+                // Fallback LocalStorage seguro en caso de fallos de red sandbox
+                const localData = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
+                localData.push({
+                    rama: respuestasSesion.rama,
+                    p1: respuestasSesion.p1 || "Divertida",
+                    p2: Number(respuestasSesion.p2 || 5),
+                    p3: respuestasSesion.p3 || "Fuerte",
+                    p4: respuestasSesion.p4 || "Si",
+                    p5: Number(respuestasSesion.p5 || 3),
+                    p6: respuestasSesion.p6 || "Supervivencia",
+                    p7: respuestasSesion.p7 || "",
+                    p8: respuestasSesion.p8 || "Bien",
+                    p9: respuestasSesion.p9 || "Excelente",
+                    p10: respuestasSesion.p10 || "",
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('tequivoz_fallback', JSON.stringify(localData));
+
                 setTimeout(() => {
                     window.location.reload();
                 }, 3000);
@@ -862,7 +884,7 @@
         }
 
         function cerrarSesionScouter() {
-            // Refrescar para garantizar limpieza absoluta de contraseñas de scouters y variables
+            // Refrescar para garantizar la limpieza absoluta de variables en sesión
             window.location.reload();
         }
         window.cerrarSesionScouter = cerrarSesionScouter;
@@ -886,8 +908,12 @@
         window.seleccionarSeccionDashboard = seleccionarSeccionDashboard;
 
         function actualizarDashboardSeccionUI() {
+            // Combinar los datos de Firestore con los registros locales en caché por si no hay conexión estable
+            const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
+            const totalSurveys = [...surveysList, ...localFallback];
+
             // Filtrar las respuestas de la sección elegida
-            const filteredSurveys = surveysList.filter(s => s.rama === activeDashboardSection);
+            const filteredSurveys = totalSurveys.filter(s => s.rama === activeDashboardSection);
             const total = filteredSurveys.length;
 
             document.getElementById('dash-seccion').innerText = activeDashboardSection;
@@ -895,7 +921,7 @@
             document.getElementById('dash-total-registros').innerText = total;
 
             if (total === 0) {
-                // Si no hay respuestas aún, ponemos valores por defecto
+                // Si no hay respuestas aún, ponemos valores por defecto para evitar NaN
                 document.getElementById('dash-promedio-diversion').innerText = "Sin Datos";
                 document.getElementById('dash-promedio-economia').innerText = "Sin Datos";
                 document.getElementById('dash-preferencia-actividades').innerText = "Sin Datos";
@@ -935,7 +961,7 @@
                 else { funSum += 3; countAburrida++; }
 
                 // Soporte Dirigentes
-                supportSum += s.p2 || 5;
+                supportSum += Number(s.p2 || 5);
 
                 // Sinergia Patrulla
                 if (s.p3 === "Fuerte") teamworkSum += 10;
@@ -953,7 +979,7 @@
                 else safetySum += 4;
 
                 // Economía
-                economySum += s.p5 || 3;
+                economySum += Number(s.p5 || 3);
 
                 // Preferencias
                 if (s.p6 === "Supervivencia") countSupervivencia++;
@@ -1001,27 +1027,54 @@
             let diagnostico = "";
             let accion = "";
 
-            if (avgFun < 70) {
-                diagnostico += `ALERTA DE DINAMISMO EN ${activeDashboardSection.toUpperCase()}: Los scouts reportan insatisfacción o monotonía en los programas de sábado. `;
-                accion += "• Reestructurar los ciclos de programa para evitar las explicaciones teóricas extensas. Cambiar el local por salidas scouts cortas de campo. ";
-            } else {
-                diagnostico += `EXCELENTE SALUD CREATIVA: El promedio de diversión en ${activeDashboardSection} es del ${Math.round(avgFun)}%. `;
-                accion += "• Continuar con el esquema actual de dinámicas de integración elástica que mantienen a los muchachos entretenidos. ";
-            }
-
-            if (avgTeamwork < 70) {
-                diagnostico += "TENSIONES INTERNAS DETECTADAS: Se identifica una baja cohesión dentro de los subgrupos (patrullas/seisenas/equipos). ";
-                accion += "• Programar urgentemente 'Raid Cooperativos de Cuerdas' en donde ninguna patrulla pueda avanzar individualmente sin cooperar con otra. ";
-            }
-
-            if (avgSupport < 70) {
-                diagnostico += "BRECHA DE ACOMPAÑAMIENTO: Los muchachos sienten falta de soporte u oídos sordos en sus propuestas por parte de los dirigentes. ";
-                accion += `• Es vital abrir mayor liderazgo directo. Sugerimos realizar un 'Consejo Extraordinario de ${activeDashboardSection}' para aprobar sus ideas locas directamente. `;
-            }
-
-            if (avgProgression < 70) {
-                diagnostico += "FALTA DE SENTIDO DE RETO: Los integrantes de la sección sienten que no están avanzando en su progresión personal. ";
-                accion += "• Rediseñar las carpetas de insignias y realizar un rally de técnicas específicas en donde los scouts puedan firmar especialidades atrasadas. ";
+            if (activeDashboardSection === "Manada") {
+                if (avgFun < 75) {
+                    diagnostico += "ALERTA DE FANTASÍA Y JUEGO EN LA MANADA: Los lobatos reportan monotonía en las actividades del cubil. ";
+                    accion += "• Reestructurar los ciclos del libro de la selva para evitar que Akela o Baloo hagan explicaciones muy largas. Incrementar los juegos en movimiento. ";
+                } else {
+                    diagnostico += "SALUD DE FANTASÍA ÓPTIMA: Los lobatos se sienten integrados y entusiasmados con el marco simbólico del juego. ";
+                    accion += "• Continuar implementando historias del libro de la selva como disparador de las cacerías de los sábados. ";
+                }
+                if (avgTeamwork < 75) {
+                    diagnostico += "FALTA COHESIÓN EN SEISENAS: Se identifican algunas seisenas con baja integración o roces durante el juego libre. ";
+                    accion += "• Planificar urgentemente 'Juegos de Cuerdas de Confianza' donde los lobatos tengan que cooperar de forma obligatoria para cruzar un río imaginario. ";
+                }
+            } else if (activeDashboardSection === "Tropa") {
+                if (avgFun < 70) {
+                    diagnostico += "ALERTA DE RETO TÉCNICO EN LA TROPA: Los scouts reportan que los juegos de bases se sienten muy repetitivos o fáciles. ";
+                    accion += "• Elevar la dificultad técnica de las construcciones, pionerismo y claves. Sustituir dinámicas pasivas por un rally de supervivencia. ";
+                } else {
+                    diagnostico += "ESPÍRITU DE TROPA ALTO: El dinamismo de las patrullas y actividades técnicas está respondiendo al sentido de aventura. ";
+                    accion += "• Incentivar las competencias interpatrullas cortas para calentar el ambiente antes del juego de acecho. ";
+                }
+                if (avgTeamwork < 70) {
+                    diagnostico += "TENSIÓN EN LA CORTE DE HONOR / PATRULLAS: Se identifican problemas de liderazgo o desacuerdos internos marcados en las patrullas. ";
+                    accion += "• Citar a una Corte de Honor extraordinaria. Trabajar en el empoderamiento del Guía y Subguía mediante un taller de liderazgo práctico. ";
+                }
+            } else if (activeDashboardSection === "Comunidad") {
+                if (avgFun < 70) {
+                    diagnostico += "FALTA DE SENTIDO DE DESAFÍO EN LA COMUNIDAD: Los caminantes expresan insatisfacción con el nivel de reto de los proyectos. ";
+                    accion += "• Fomentar que la planeación nazca enteramente del Congreso de Comunidad. Evitar que la jefatura imponga las metas del ciclo. ";
+                } else {
+                    diagnostico += "MÍSTICA DE COMUNIDAD FUERTE: Excelente entusiasmo con los proyectos autogestivos de los equipos. ";
+                    accion += "• Continuar con el soporte del asesor de manera sutil pero constante para canalizar los desafíos con sinodales. ";
+                }
+                if (avgProgression < 70) {
+                    diagnostico += "FALTA DE ORIENTACIÓN EN PROGRESIÓN (BÚSQUEDA/DESAFÍO): Los caminantes sienten que no avanzan en su ruta personal. ";
+                    accion += "• Realizar un taller exprés de carpetas y insignias, conectando cada proyecto actual con retos específicos de progresión personal. ";
+                }
+            } else if (activeDashboardSection === "Clan") {
+                if (avgFun < 70) {
+                    diagnostico += "ALERTA DE RUTINA EN EL CLAN DE ROVERS: El Clan reporta juntas monótonas o excesivamente teóricas en el local de grupo. ";
+                    accion += "• Modificar la agenda del sábado. Trasladar los debates del consejo fuera del local y planificar un raid de alta montaña o servicio de impacto real. ";
+                } else {
+                    diagnostico += "COMUNIDAD DE CLAN INSPIRADORA: Se percibe un excelente ambiente de debate, hermandad y acompañamiento rovers. ";
+                    accion += "• Fortalecer el desarrollo de la ruta personal y el plan de vida de cada rover con ayuda de sinodales externos. ";
+                }
+                if (avgProgression < 70) {
+                    diagnostico += "ESTANCAMIENTO EN RUTA ROVER: Los integrantes sienten que el Clan no les da herramientas para su plan de vida personal. ";
+                    accion += "• Programar sesiones de revisión individual de la carta de clan y vincular proyectos con sus metas profesionales y personales reales. ";
+                }
             }
 
             document.getElementById('ia-diagnostico').innerText = diagnostico;
@@ -1034,6 +1087,7 @@
                 listContainer.innerHTML = "";
                 sugerenciasCambio.slice(-3).forEach(txt => {
                     const item = document.createElement('p');
+                    item.className = "text-gray-300 text-xs italic font-medium";
                     item.innerText = `• "${txt}"`;
                     listContainer.appendChild(item);
                 });
@@ -1061,19 +1115,15 @@
 
         // Autenticación con animación FaceID / Password
         function mostrarModalAutenticar() {
-            document.getElementById('pantalla-inicio').classList.add('hidden');
-            document.getElementById('puerta-autenticacion').classList.remove('hidden');
+            mostrarSeccion('puerta-autenticacion');
             
             // Animación biometría simulada
             const ring = document.getElementById('biometric-ring');
-            const icon = document.getElementById('biometric-icon');
             
             ring.classList.add('border-emerald-500');
-            icon.classList.add('text-emerald-500');
             
             setTimeout(() => {
                 ring.classList.remove('border-emerald-500');
-                icon.classList.remove('text-emerald-500');
             }, 2000);
         }
         window.mostrarModalAutenticar = mostrarModalAutenticar;
@@ -1083,9 +1133,7 @@
             if (pass === 'Tequihua1') {
                 // Sincronizar gráficos del dashboard de scouter de la sección inicial (Manada)
                 seleccionarSeccionDashboard('Manada');
-
-                document.getElementById('puerta-autenticacion').classList.add('hidden');
-                document.getElementById('panel-scouter').classList.remove('hidden');
+                mostrarSeccion('panel-scouter');
                 document.body.style.backgroundColor = '#f5f5f7'; // fondo gris claro tipo Apple admin
             } else {
                 lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta. Pista: Tequihua1");

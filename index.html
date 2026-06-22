@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TequiVoz - Grupo 1 Tequihua</title>
+    <style>
+        :root {
+            --color-principal: #1b4332;
+            --color-secundario: #40916c;
+            --color-acento: #ffb703;
+            --color-fondo: #f4f7f6;
+            --color-texto: #2d3142;
+            --color-manada: #ffcc00;
+            --color-tropa: #2a9d8f;
+            --color-comunidad: #1d3557;
+            --color-clan: #e63946;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            overflow-x: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* --- BIENVENIDA --- */
+        .pantalla-inicio {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .titulo-principal {
+            font-size: 3rem;
+            color: var(--color-principal);
+            margin-bottom: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitulo {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .contenedor-ramas {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        @media (min-width: 600px) {
+            .contenedor-ramas { grid-template-columns: repeat(4, 1fr); max-width: 800px; }
+        }
+
+        .btn-rama {
+            padding: 20px 10px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-rama:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .manada { background-color: var(--color-manada); color: #333; }
+        .tropa { background-color: var(--color-tropa); }
+        .comunidad { background-color: var(--color-comunidad); }
+        .clan { background-color: var(--color-clan); }
+
+        /* --- MAPA DE AVENTURA (PROGRESO) --- */
+        .contenedor-aventura {
+            display: none;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .sendero-progreso {
+            width: 100%;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .linea-progreso {
+            height: 100%;
+            width: 0%;
+            background: var(--color-secundario);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        .scout-avatar {
+            position: absolute;
+            top: -15px;
+            left: 0%;
+            font-size: 24px;
+            transition: left 0.4s ease;
+            transform: translateX(-50%);
+        }
+
+        /* --- PREGUNTAS --- */
+        .pregunta-card {
+            display: none;
+            animation: sliderIn 0.5s forwards;
+        }
+
+        .pregunta-card.activa {
+            display: block;
+        }
+
+        @keyframes sliderIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .pregunta-texto {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--color-principal);
+            margin-bottom: 25px;
+        }
+
+        /* Diseños de Inputs Interactivos */
+        .opciones-emoji {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .btn-emoji {
+            font-size: 2.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-emoji:hover, .btn-emoji.seleccionado {
+            transform: scale(1.3);
+        }
+
+        .rango-personalizado {
+            width: 100%;
+            margin: 20px 0;
+            accent-color: var(--color-secundario);
+        }
+
+        .etiquetas-rango {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .opciones-botones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-opcion {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-opcion:hover, .btn-opcion.seleccionado {
+            background: #e8f5e9;
+            border-color: var(--color-secundario);
+            color: var(--color-principal);
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            resize: none;
+            font-size: 1rem;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-secundario);
+        }
+
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-sig { background-color: var(--color-secundario); color: white; }
+        .btn-ant { background-color: #ccc; color: #333; }
+
+        /* --- SECCIÓN ACCESO SCOUT / ADM --- */
+        .zona-scouter {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .btn-scouter-login {
+            background: none;
+            border: none;
+            color: #888;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .panel-scouter {
+            display: none;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .grid-analisis {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .grid-analisis { grid-template-columns: 1fr 2fr; }
+        }
+
+        .ia-recomendacion {
+            background: #e8f0fe;
+            border-left: 5px solid #1a73e8;
+            padding: 20px;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .ia-tag {
+            background: #1a73e8;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .grafica-simulada {
+            background: #f8f9fa;
+            border: 1px dashed #ccc;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .barra {
+            width: 40px;
+            background: var(--color-secundario);
+            border-radius: 5px 5px 0 0;
+            text-align: center;
+            color: white;
+            font-size: 0.8rem;
+            padding-top: 5px;
+            transition: height 1s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. PANTALLA DE INICIO / BIENVENIDA -->
+    <div id="pantalla-inicio" class="pantalla-inicio">
+        <h1 class="titulo-principal">TequiVoz ⛺</h1>
+        <p class="subtitulo">¡Tu voz le da rumbo a nuestra próxima gran aventura! Elige tu sección:</p>
+        
+        <div class="contenedor-ramas">
+            <button class="btn-rama manada" onclick="iniciarEncuesta('Manada')">Manada</button>
+            <button class="btn-rama tropa" onclick="iniciarEncuesta('Tropa')">Tropa</button>
+            <button class="btn-rama comunidad" onclick="iniciarEncuesta('Comunidad')">Comunidad</button>
+            <button class="btn-rama clan" onclick="iniciarEncuesta('Clan')">Clan</button>
+        </div>
+
+        <div class="zona-scouter">
+            <button class="btn-scouter-login" onclick="accesoScouter()">Acceso Scouters / Representantes</button>
+        </div>
+    </div>
+
+    <!-- 2. CONTENEDOR DE LA ENCUESTA (EL JUEGO/AVENTURA) -->
+    <div id="contenedor-aventura" class="contenedor-aventura">
+        
+        <!-- El Sendero de Progreso -->
+        <div class="sendero-progreso">
+            <div id="linea-progreso" class="linea-progreso"></div>
+            <div id="scout-avatar" class="scout-avatar">⛺</div>
+        </div>
+
+        <!-- Formulario de Preguntas -->
+        <div id="formulario-preguntas">
+            
+            <!-- P1: Cerrada Emoji -->
+            <div class="pregunta-card activa">
+                <p class="pregunta-texto">1. ¿Qué tan divertida estuvo la actividad del sábado pasado?</p>
+                <div class="opciones-emoji">
+                    <button class="btn-emoji" onclick="guardarRespuesta(1, 'Aburrida')">😴</button>
+                    <button class="btn-emoji" onclick="guardarRespuesta(1, 'Regular')">😐</button>
+                    <button class="btn-emoji" onclick="guardarRespuesta(1, 'Divertida')">😀</button>
+                    <button class="btn-emoji" onclick="guardarRespuesta(1, 'Épica')">🤩</button>
+                </div>
+            </div>
+
+            <!-- P2: Slider Dinámico -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">2. Califica el desempeño de tus Dirigentes/Scouters el día de hoy:</p>
+                <input type="range" min="1" max="10" value="5" class="rango-personalizado" id="p2-input" onchange="guardarRespuesta(2, this.value)">
+                <div class="etiquetas-rango">
+                    <span>Falta Dinamismo 🧭</span>
+                    <span>¡Estuvieron Increíbles! ⭐</span>
+                </div>
+            </div>
+
+            <!-- P3: Opción Múltiple -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">3. ¿Cómo sientes que es la comunicación y el ambiente dentro de tu Patrulla/Equipo/Seisena?</p>
+                <div class="opciones-botones">
+                    <button class="btn-opcion" onclick="guardarRespuesta(3, 'Muy unidos')">🤝 Nos apoyamos en todo y hay confianza.</button>
+                    <button class="btn-opcion" onclick="guardarRespuesta(3, 'Hay división')">⚡ Hay pequeños desacuerdos o grupitos.</button>
+                    <button class="btn-opcion" onclick="guardarRespuesta(3, 'Falta integración')">⛺ Casi no nos integramos bien.</button>
+                </div>
+            </div>
+
+            <!-- P4: Cerrada Sí/No -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">4. ¿Sientes que estás avanzando o aprendiendo nuevas técnicas scouts con los ciclos de programa actuales?</p>
+                <div class="opciones-botones">
+                    <button class="btn-opcion" onclick="guardarRespuesta(4, 'Sí')">💪 ¡Sí! Siento que domino más retos y competencias.</button>
+                    <button class="btn-opcion" onclick="guardarRespuesta(4, 'A medias')">⏳ Más o menos, nos hace falta salir más a campo.</button>
+                    <button class="btn-opcion" onclick="guardarRespuesta(4, 'No')">❌ No, siento que repetimos siempre lo mismo.</button>
+                </div>
+            </div>
+
+            <!-- P5: Slider Dinámico -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">5. ¿Qué tan pesados o equilibrados sientes los costos de los eventos y campamentos programados?</p>
+                <input type="range" min="1" max="5" value="3" class="rango-personalizado" onchange="guardarRespuesta(5, this.value)">
+                <div class="etiquetas-rango">
+                    <span>Muy Accesibles 🪙</span>
+                    <span>Muy Difícil Costearlos 💸</span>
+                </div>
+            </div>
+
+            <!-- P6: Opción Múltiple -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">6. ¿Qué tipo de actividades te gustaría que los Representantes Juveniles propongamos más en los consejos?</p>
+                <div class="opciones-botones">
+                    <button class="btn-opcion" onclick="guardarRespuesta(6, 'Supervivencia')">🌲 Campismo Salvaje y Supervivencia</button>
+                    <button class="btn-opcion" onclick="guardarRespuesta(6, 'Servicio Social')">❤️ Servicio Comunitario y Ecología</button>
+                    <button class="btn-opcion" onclick="guardarRespuesta(6, 'Deportes Extremos')">🧗 Juegos de Gran Acecho y Deportes Extremos</button>
+                </div>
+            </div>
+
+            <!-- P7: Abierta -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">7. Si pudieras cambiar una sola regla o dinámica del grupo para el próximo sábado, ¿cuál sería?</p>
+                <textarea placeholder="Escribe aquí tu propuesta constructiva scout..." oninput="guardarRespuesta(7, this.value)"></textarea>
+            </div>
+
+            <!-- P8: Emojis -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">8. ¿Cómo calificarías la seguridad y los protocolos en las actividades externas?</p>
+                <div class="opciones-emoji">
+                    <button class="btn-emoji" onclick="guardarRespuesta(8, 'Inseguro')">⚠️</button>
+                    <button class="btn-emoji" onclick="guardarRespuesta(8, 'Bien')">👍</button>
+                    <button class="btn-emoji" onclick="guardarRespuesta(8, 'Excelente/Protegido')">🛡️</button>
+                </div>
+            </div>
+
+            <!-- P9: Opción Múltiple -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">9. ¿Consideras que la equidad e inclusión se aplican correctamente en el trato diario del grupo?</p>
+                <div class="opciones-botones">
+                    <button class="btn-opcion" onclick="guardarRespuesta(9, 'Excelente')">✨ Excelente, todos jugamos y aportamos por igual.</button>
+                    <button class="btn-opcion" onclick="guardarRespuesta(9, 'A veces se excluye')">💬 A veces se le da prioridad solo a unos cuantos.</button>
+                </div>
+            </div>
+
+            <!-- P10: Abierta de cierre -->
+            <div class="pregunta-card">
+                <p class="pregunta-texto">10. ¡Último reto! Déjanos una sugerencia libre o idea loca para el próximo campamento de grupo:</p>
+                <textarea placeholder="¡Haz volar tu creatividad scout aquí!" oninput="guardarRespuesta(10, this.value)"></textarea>
+            </div>
+
+        </div>
+
+        <!-- Navegación de la Aventura -->
+        <div class="navegacion">
+            <button id="btn-anterior" class="btn-nav btn-ant" onclick="cambiarPregunta(-1)" disabled>Anterior</button>
+            <button id="btn-siguiente" class="btn-nav btn-sig" onclick="cambiarPregunta(1)">Siguiente</button>
+        </div>
+    </div>
+
+    <!-- 3. PANEL SCOUTER (DASHBOARD CON IA INTEGRADA) -->
+    <div id="panel-scouter" class="panel-scouter">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2>Panel de Control - TequiVoz Admin</h2>
+            <button class="btn-nav btn-ant" onclick="cerrarPanel()">Cerrar Panel</button>
+        </div>
+        <p>Monitoreo continuo y análisis estratégico del Grupo 1 Tequihua.</p>
+
+        <div class="grid-analisis">
+            <!-- Gráfica Simulada -->
+            <div>
+                <h3>Satisfacción General por Ramas</h3>
+                <br>
+                <div class="grafica-simulada">
+                    <div class="barra" style="height: 85%; background: var(--color-manada);">85%</div>
+                    <div class="barra" style="height: 60%; background: var(--color-tropa);">60%</div>
+                    <div class="barra" style="height: 75%; background: var(--color-comunidad);">75%</div>
+                    <div class="barra" style="height: 90%; background: var(--color-clan);">90%</div>
+                </div>
+                <div style="display:flex; justify-content:space-around; font-size:0.8rem; margin-top:5px;">
+                    <span>Manada</span><span>Tropa</span><span>Comun.</span><span>Clan</span>
+                </div>
+            </div>
+
+            <!-- Recomendación Estratégica IA -->
+            <div class="ia-recomendacion">
+                <span class="ia-tag">⚡ RECOMENDACIÓN IA PARA REPRESENTANTES</span>
+                <h4>Análisis de Alertas Detectadas (Tropa en 60%):</h4>
+                <p style="margin-top:10px; line-height: 1.5; font-size: 0.95rem;">
+                    Las respuestas de la <strong>Tropa</strong> reflejan una tendencia crítica de desconexión en la pregunta 3 (Conflictos internos en patrulla) y pregunta 4 (Falta de dinamismo de técnicas). 
+                    <br><br>
+                    <strong>Plan de Acción Recomendado:</strong> Implementar urgentemente un <em>"Raid de Patrullas Extremo"</em> enfocado en supervivencia autónoma el próximo sábado, delegando la planeación del menú y estrategia a los Guías de Patrulla para renovar su liderazgo y mitigar la fricción interna.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ramaSeleccionada = "";
+        let preguntaActual = 0;
+        const totalPreguntas = 10;
+        let respuestas = {};
+
+        function iniciarEncuesta(rama) {
+            ramaSeleccionada = rama;
+            document.getElementById('pantalla-inicio').style.display = 'none';
+            document.getElementById('contenedor-aventura').style.display = 'block';
+            
+            // Adaptar visualmente según la rama elegida
+            if(rama === 'Manada') document.body.style.backgroundColor = '#fffbeb';
+            if(rama === 'Tropa') document.body.style.backgroundColor = '#f0fdf4';
+            if(rama === 'Comunidad') document.body.style.backgroundColor = '#f0f4f8';
+            if(rama === 'Clan') document.body.style.backgroundColor = '#fff5f5';
+
+            actualizarProgreso();
+        }
+
+        function cambiarPregunta(direccion) {
+            const cards = document.querySelectorAll('.pregunta-card');
+            cards[preguntaActual].classList.remove('activa');
+
+            preguntaActual += direccion;
+
+            if (preguntaActual >= totalPreguntas) {
+                alert("¡Excelente aventura! Tus datos han quedado guardados en el registro del TequiVoz.");
+                reiniciarTodo();
+                return;
+            }
+
+            cards[preguntaActual].classList.add('activa');
+            
+            // Control de botones de navegación
+            document.getElementById('btn-anterior').disabled = (preguntaActual === 0);
+            if(preguntaActual === totalPreguntas - 1) {
+                document.getElementById('btn-siguiente').innerText = "Terminar Desafío";
+            } else {
+                document.getElementById('btn-siguiente').innerText = "Siguiente";
+            }
+
+            actualizarProgreso();
+        }
+
+        function actualizarProgreso() {
+            const porcentaje = (preguntaActual / (totalPreguntas - 1)) * 100;
+            document.getElementById('linea-progreso').style.width = porcentaje + '%';
+            document.getElementById('scout-avatar').style.left = porcentaje + '%';
+        }
+
+        function guardarRespuesta(numeroPregunta, valor) {
+            respuestas[`p${numeroPregunta}`] = valor;
+            // Si es un botón de opción o emoji, marcar visualmente la selección
+            const contenedor = document.querySelectorAll('.pregunta-card')[preguntaActual];
+            const botones = contenedor.querySelectorAll('.btn-emoji, .btn-opcion');
+            botones.forEach(btn => btn.classList.remove('seleccionado'));
+            
+            // Efecto sutil si se selecciona un elemento clicable
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add('seleccionado');
+            }
+        }
+
+        function reiniciarTodo() {
+            preguntaActual = 0;
+            respuestas = {};
+            document.getElementById('contenedor-aventura').style.display = 'none';
+            document.getElementById('pantalla-inicio').style.display = 'flex';
+            document.body.style.backgroundColor = 'var(--color-fondo)';
+            const cards = document.querySelectorAll('.pregunta-card');
+            cards.forEach(c => c.classList.remove('activa'));
+            cards[0].classList.add('activa');
+            document.getElementById('btn-anterior').disabled = true;
+            document.getElementById('btn-siguiente').innerText = "Siguiente";
+        }
+
+        function accesoScouter() {
+            const pass = prompt("Ingresa la clave de acceso de Scouters / Representantes:");
+            // Clave demo simple para que la pruebes de inmediato
+            if (pass === "Tequihua1") { 
+                document.getElementById('pantalla-inicio').style.display = 'none';
+                document.getElementById('panel-scouter').style.display = 'block';
+            } else {
+                alert("Clave incorrecta. Inténtalo de nuevo.");
+            }
+        }
+
+        function cerrarPanel() {
+            document.getElementById('panel-scouter').style.display = 'none';
+            document.getElementById('pantalla-inicio').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

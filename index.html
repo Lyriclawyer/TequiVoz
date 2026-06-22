@@ -6,576 +6,679 @@
     <title>TequiVoz - Grupo 1 Tequihua</title>
     <style>
         :root {
-            --color-principal: #1b4332;
-            --color-secundario: #40916c;
-            --color-acento: #ffb703;
-            --color-fondo: #f4f7f6;
-            --color-texto: #2d3142;
-            --color-manada: #ffcc00;
-            --color-tropa: #2a9d8f;
-            --color-comunidad: #1d3557;
-            --color-clan: #e63946;
+            --color-principal: #6a1b9a;
+            --color-borde: #111111;
+            --color-fondo: #fcf8f2;
+            --color-manada: #ffd166;
+            --color-tropa: #06d6a0;
+            --color-comunidad: #118ab2;
+            --color-clan: #ef476f;
+            --sombra-neo: 5px 5px 0px #111111;
+            --sombra-neo-hover: 2px 2px 0px #111111;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Fredoka', 'Comic Sans MS', 'Segoe UI', sans-serif;
         }
 
         body {
             background-color: var(--color-fondo);
-            color: var(--color-texto);
-            overflow-x: hidden;
-            transition: background 0.5s ease;
+            color: #111;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* --- BIENVENIDA --- */
+        /* --- LOGO ESTILO RETRO / INTERACTIVO --- */
+        .badge-tequihua {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid var(--color-borde);
+            background: #111;
+            position: relative;
+            box-shadow: var(--sombra-neo);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: flotar 3s ease-in-out infinite;
+        }
+
+        .cuadrante-container {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: absolute;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .cuadrante { transition: transform 0.2s; }
+        .cuadrante.c-amarillo { background: var(--color-manada); }
+        .cuadrante.c-verde { background: var(--color-tropa); }
+        .cuadrante.c-azul { background: var(--color-comunidad); }
+        .cuadrante.c-rojo { background: var(--color-clan); }
+
+        .flor-de-lis-digital {
+            width: 70px;
+            height: 70px;
+            background: #7b2cbf;
+            border: 3px solid var(--color-borde);
+            border-radius: 50%;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            box-shadow: 2px 2px 0 #111;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        /* --- CONTENEDORES PRINCIPALES --- */
+        .tarjeta-pop {
+            background: #ffffff;
+            border: 3px solid var(--color-borde);
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 640px;
+            width: 100%;
+            box-shadow: var(--sombra-neo);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
         .pantalla-inicio {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
         }
 
-        .titulo-principal {
-            font-size: 3rem;
-            color: var(--color-principal);
-            margin-bottom: 10px;
-            font-weight: 800;
+        .titulo-app {
+            font-size: 2.5rem;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            -webkit-text-stroke: 1px #111;
+            color: #111;
+            margin-bottom: 5px;
+            letter-spacing: -1px;
         }
 
-        .subtitulo {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #555;
-        }
-
-        .contenedor-ramas {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            max-width: 500px;
-            width: 100%;
-        }
-
-        @media (min-width: 600px) {
-            .contenedor-ramas { grid-template-columns: repeat(4, 1fr); max-width: 800px; }
-        }
-
-        .btn-rama {
-            padding: 20px 10px;
-            border: none;
-            border-radius: 15px;
+        .subtitulo-app {
             font-size: 1.1rem;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .btn-rama:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-
-        .manada { background-color: var(--color-manada); color: #333; }
-        .tropa { background-color: var(--color-tropa); }
-        .comunidad { background-color: var(--color-comunidad); }
-        .clan { background-color: var(--color-clan); }
-
-        /* --- MAPA DE AVENTURA (PROGRESO) --- */
-        .contenedor-aventura {
-            display: none;
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            position: relative;
-        }
-
-        .sendero-progreso {
-            width: 100%;
-            height: 12px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            position: relative;
-            margin-bottom: 40px;
-        }
-
-        .linea-progreso {
-            height: 100%;
-            width: 0%;
-            background: var(--color-secundario);
-            border-radius: 10px;
-            transition: width 0.4s ease;
-        }
-
-        .scout-avatar {
-            position: absolute;
-            top: -15px;
-            left: 0%;
-            font-size: 24px;
-            transition: left 0.4s ease;
-            transform: translateX(-50%);
-        }
-
-        /* --- PREGUNTAS --- */
-        .pregunta-card {
-            display: none;
-            animation: sliderIn 0.5s forwards;
-        }
-
-        .pregunta-card.activa {
-            display: block;
-        }
-
-        @keyframes sliderIn {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .pregunta-texto {
-            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 30px;
             font-weight: 600;
-            color: var(--color-principal);
+        }
+
+        /* --- BOTONES ESTILO ARCADE DE SECCIONES --- */
+        .grid-arcade-ramas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            width: 100%;
             margin-bottom: 25px;
         }
 
-        /* Diseños de Inputs Interactivos */
-        .opciones-emoji {
+        .btn-arcade {
+            padding: 22px 15px;
+            border: 3px solid var(--color-borde);
+            border-radius: 20px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #111;
+            cursor: pointer;
+            box-shadow: var(--sombra-neo);
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-arcade::after {
+            content: '';
+            position: absolute;
+            top: 5px; left: 8px; right: 8px; height: 35%;
+            background: rgba(255,255,255,0.4);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .btn-arcade:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px #111;
+        }
+
+        .btn-arcade:active {
+            transform: translate(3px, 3px);
+            box-shadow: 2px 2px 0px #111;
+        }
+
+        .b-manada { background: var(--color-manada); }
+        .b-tropa { background: var(--color-tropa); }
+        .b-comunidad { background: var(--color-comunidad); color: white; }
+        .b-clan { background: var(--color-clan); color: white; }
+
+        /* --- SENDERO DE CUERDA (PROGRESO JUEGO) --- */
+        .contenedor-juego {
+            display: none;
+        }
+
+        .cuerda-progreso {
+            width: 100%;
+            height: 16px;
+            background: #e9d8a6;
+            border: 3px solid var(--color-borde);
+            border-radius: 10px;
+            position: relative;
+            margin: 20px 0 45px 0;
+            box-shadow: 3px 3px 0 #111;
+        }
+
+        .linea-nudos {
+            height: 100%;
+            width: 0%;
+            background: #9b5de5;
+            border-radius: 6px;
+            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .scout-token {
+            position: absolute;
+            top: -24px;
+            left: 0%;
+            font-size: 28px;
+            transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateX(-50%);
+            filter: drop-shadow(2px 2px 0px #000);
+        }
+
+        .salto-anim {
+            animation: brincarToken 0.4s ease;
+        }
+
+        @keyframes brincarToken {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px) scale(1.2); }
+        }
+
+        /* --- TARJETAS DE PREGUNTAS --- */
+        .pregunta-bloque {
+            display: none;
+            text-align: left;
+            animation: aparecerCard 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .pregunta-bloque.activa { display: block; }
+
+        @keyframes aparecerCard {
+            from { opacity: 0; transform: scale(0.92) translateY(15px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .texto-pregunta {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        /* --- INPUTS POP INTERACTIVOS --- */
+        .emojis-row {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             margin: 20px 0;
         }
 
-        .btn-emoji {
-            font-size: 2.5rem;
-            background: none;
-            border: none;
+        .emoji-card-btn {
+            font-size: 2.8rem;
+            background: white;
+            border: 3px solid var(--color-borde);
+            padding: 10px;
+            border-radius: 18px;
             cursor: pointer;
-            transition: transform 0.2s;
+            box-shadow: 4px 4px 0 #111;
+            transition: all 0.15s;
         }
 
-        .btn-emoji:hover, .btn-emoji.seleccionado {
+        .emoji-card-btn:hover {
+            transform: scale(1.15) translateY(-4px);
+            box-shadow: 6px 6px 0 #111;
+            background: #fff3b0;
+        }
+
+        .emoji-card-btn.seleccionado {
+            background: #f15bb5;
+            transform: scale(1.1) translate(2px, 2px);
+            box-shadow: 2px 2px 0 #111;
+        }
+
+        .slider-pop {
+            width: 100%;
+            height: 15px;
+            -webkit-appearance: none;
+            background: #e5e5e5;
+            border: 3px solid var(--color-borde);
+            border-radius: 10px;
+            outline: none;
+            box-shadow: 3px 3px 0 #111;
+        }
+
+        .slider-pop::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #fee440;
+            border: 3px solid var(--color-borde);
+            cursor: pointer;
+            box-shadow: 2px 2px 0 #111;
+            transition: transform 0.1s;
+        }
+
+        .slider-pop::-webkit-slider-thumb:active {
             transform: scale(1.3);
         }
 
-        .rango-personalizado {
-            width: 100%;
-            margin: 20px 0;
-            accent-color: var(--color-secundario);
-        }
-
-        .etiquetas-rango {
-            display: flex;
-            justify-content: space-between;
-            color: #777;
-            font-size: 0.9rem;
-        }
-
-        .opciones-botones {
+        .opciones-verticales {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .btn-opcion {
-            padding: 15px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
+        .opcion-bloque-btn {
+            padding: 16px;
+            background: white;
+            border: 3px solid var(--color-borde);
+            border-radius: 16px;
             text-align: left;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            box-shadow: 4px 4px 0 #111;
+            transition: all 0.1s;
         }
 
-        .btn-opcion:hover, .btn-opcion.seleccionado {
-            background: #e8f5e9;
-            border-color: var(--color-secundario);
-            color: var(--color-principal);
+        .opcion-bloque-btn:hover {
+            background: #f0fdf4;
+            transform: translateY(-2px);
+            box-shadow: 5px 5px 0 #111;
         }
 
-        textarea {
+        .opcion-bloque-btn.seleccionado {
+            background: #00f5d4;
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #111;
+        }
+
+        textarea.input-texto-pop {
             width: 100%;
-            height: 120px;
+            height: 110px;
+            border: 3px solid var(--color-borde);
+            border-radius: 16px;
             padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            resize: none;
-            font-size: 1rem;
-        }
-
-        textarea:focus {
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: inset 3px 3px 0px rgba(0,0,0,0.1), 4px 4px 0 #111;
             outline: none;
-            border-color: var(--color-secundario);
         }
 
-        .navegacion {
+        textarea.input-texto-pop:focus {
+            background: #fffbf0;
+            border-color: #9b5de5;
+        }
+
+        /* --- BOTONES NAVEGACIÓN --- */
+        .barra-navegacion {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 35px;
         }
 
-        .btn-nav {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
+        .btn-nav-pop {
+            padding: 14px 28px;
+            border: 3px solid var(--color-borde);
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 900;
             cursor: pointer;
-            transition: background 0.2s;
+            box-shadow: var(--sombra-neo);
+            transition: all 0.1s;
         }
 
-        .btn-sig { background-color: var(--color-secundario); color: white; }
-        .btn-ant { background-color: #ccc; color: #333; }
-
-        /* --- SECCIÓN ACCESO SCOUT / ADM --- */
-        .zona-scouter {
-            margin-top: 50px;
-            text-align: center;
+        .btn-nav-pop:active {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0 #111;
         }
 
-        .btn-scouter-login {
+        .btn-izq { background: #e0e0e0; }
+        .btn-der { background: #00f5d4; }
+
+        .btn-scouter-link {
+            margin-top: 25px;
             background: none;
             border: none;
-            color: #888;
+            font-weight: 700;
             text-decoration: underline;
             cursor: pointer;
-            font-size: 0.9rem;
+            color: #555;
         }
 
-        .panel-scouter {
+        /* --- DASHBOARD SCOUT / IA --- */
+        .panel-scouter-pop {
             display: none;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
+            max-width: 850px;
+            width: 100%;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid var(--color-borde);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: var(--sombra-neo);
         }
 
-        .grid-analisis {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .grid-analisis { grid-template-columns: 1fr 2fr; }
-        }
-
-        .ia-recomendacion {
-            background: #e8f0fe;
-            border-left: 5px solid #1a73e8;
+        .ia-card-brutal {
+            background: #ccff33;
+            border: 3px solid var(--color-borde);
+            border-radius: 18px;
             padding: 20px;
-            border-radius: 0 15px 15px 0;
+            box-shadow: 4px 4px 0 #111;
+            margin-top: 20px;
+            text-align: left;
         }
 
-        .ia-tag {
-            background: #1a73e8;
+        .ia-badge {
+            background: black;
             color: white;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .grafica-simulada {
-            background: #f8f9fa;
-            border: 1px dashed #ccc;
-            height: 200px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .barra {
-            width: 40px;
-            background: var(--color-secundario);
-            border-radius: 5px 5px 0 0;
-            text-align: center;
-            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
             font-size: 0.8rem;
+            font-weight: 900;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .grafica-brutal {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 180px;
+            border-bottom: 4px solid var(--color-borde);
+            padding: 10px;
+            margin: 20px 0;
+            background: #f3eae8;
+            border-radius: 12px;
+        }
+
+        .columna-barra {
+            width: 50px;
+            border: 3px solid var(--color-borde);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+            font-weight: 900;
+            color: #111;
             padding-top: 5px;
-            transition: height 1s ease;
+            box-shadow: 3px 0px 0 #111;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. PANTALLA DE INICIO / BIENVENIDA -->
-    <div id="pantalla-inicio" class="pantalla-inicio">
-        <h1 class="titulo-principal">TequiVoz ⛺</h1>
-        <p class="subtitulo">¡Tu voz le da rumbo a nuestra próxima gran aventura! Elige tu sección:</p>
+    <!-- PANTALLA INICIAL CON LOGO DEL GRUPO -->
+    <div id="pantalla-inicio" class="tarjeta-pop pantalla-inicio">
+        <div class="badge-tequihua">
+            <div class="cuadrante-container">
+                <div class="cuadrante c-amarillo"></div>
+                <div class="cuadrante c-azul"></div>
+                <div class="cuadrante c-verde"></div>
+                <div class="cuadrante c-rojo"></div>
+            </div>
+            <div class="flor-de-lis-digital">⚜️</div>
+        </div>
         
-        <div class="contenedor-ramas">
-            <button class="btn-rama manada" onclick="iniciarEncuesta('Manada')">Manada</button>
-            <button class="btn-rama tropa" onclick="iniciarEncuesta('Tropa')">Tropa</button>
-            <button class="btn-rama comunidad" onclick="iniciarEncuesta('Comunidad')">Comunidad</button>
-            <button class="btn-rama clan" onclick="iniciarEncuesta('Clan')">Clan</button>
+        <h1 class="titulo-app">TequiVoz</h1>
+        <p class="subtitulo-app">¡Tu opinión diseña la aventura del Grupo 1 Tequihua! Elige tu sección:</p>
+
+        <div class="grid-arcade-ramas">
+            <button class="btn-arcade b-manada" onclick="iniciarAventura('Manada')">Manada</button>
+            <button class="btn-arcade b-tropa" onclick="iniciarAventura('Tropa')">Tropa</button>
+            <button class="btn-arcade b-comunidad" onclick="iniciarAventura('Comunidad')">Comunidad</button>
+            <button class="btn-arcade b-clan" onclick="iniciarAventura('Clan')">Clan</button>
         </div>
 
-        <div class="zona-scouter">
-            <button class="btn-scouter-login" onclick="accesoScouter()">Acceso Scouters / Representantes</button>
-        </div>
+        <button class="btn-scouter-link" onclick="abrirScouters()">Acceso de Representantes</button>
     </div>
 
-    <!-- 2. CONTENEDOR DE LA ENCUESTA (EL JUEGO/AVENTURA) -->
-    <div id="contenedor-aventura" class="contenedor-aventura">
+    <!-- CONTENEDOR DE LA ENCUESTA GAMIFICADA -->
+    <div id="contenedor-juego" class="tarjeta-pop contenedor-juego">
         
-        <!-- El Sendero de Progreso -->
-        <div class="sendero-progreso">
-            <div id="linea-progreso" class="linea-progreso"></div>
-            <div id="scout-avatar" class="scout-avatar">⛺</div>
+        <!-- Línea de Cuerda del Mapa -->
+        <div class="cuerda-progreso">
+            <div id="linea-nudos" class="linea-nudos"></div>
+            <div id="scout-token" class="scout-token">⛺</div>
         </div>
 
-        <!-- Formulario de Preguntas -->
-        <div id="formulario-preguntas">
-            
-            <!-- P1: Cerrada Emoji -->
-            <div class="pregunta-card activa">
-                <p class="pregunta-texto">1. ¿Qué tan divertida estuvo la actividad del sábado pasado?</p>
-                <div class="opciones-emoji">
-                    <button class="btn-emoji" onclick="guardarRespuesta(1, 'Aburrida')">😴</button>
-                    <button class="btn-emoji" onclick="guardarRespuesta(1, 'Regular')">😐</button>
-                    <button class="btn-emoji" onclick="guardarRespuesta(1, 'Divertida')">😀</button>
-                    <button class="btn-emoji" onclick="guardarRespuesta(1, 'Épica')">🤩</button>
+        <div id="bloque-preguntas">
+            <!-- P1 -->
+            <div class="pregunta-bloque activa">
+                <p class="texto-pregunta">1. ¿Qué tan divertida estuvo la actividad del sábado pasado?</p>
+                <div class="emojis-row">
+                    <button class="emoji-card-btn" onclick="registrarP(1, 'Aburrida')">😴</button>
+                    <button class="emoji-card-btn" onclick="registrarP(1, 'Regular')">😐</button>
+                    <button class="emoji-card-btn" onclick="registrarP(1, 'Divertida')">😀</button>
+                    <button class="emoji-card-btn" onclick="registrarP(1, 'Épica')">🤩</button>
                 </div>
             </div>
 
-            <!-- P2: Slider Dinámico -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">2. Califica el desempeño de tus Dirigentes/Scouters el día de hoy:</p>
-                <input type="range" min="1" max="10" value="5" class="rango-personalizado" id="p2-input" onchange="guardarRespuesta(2, this.value)">
-                <div class="etiquetas-rango">
-                    <span>Falta Dinamismo 🧭</span>
-                    <span>¡Estuvieron Increíbles! ⭐</span>
+            <!-- P2 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">2. Califica el desempeño y entusiasmo de tus Dirigentes/Scouters hoy:</p>
+                <input type="range" min="1" max="10" value="5" class="slider-pop" onchange="registrarP(2, this.value)">
+                <div style="display:flex; justify-content:space-between; margin-top:10px; font-weight:700; font-size:0.9rem;">
+                    <span>Falta dinamismo 🧭</span>
+                    <span>¡Estuvieron increíbles! ⭐</span>
                 </div>
             </div>
 
-            <!-- P3: Opción Múltiple -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">3. ¿Cómo sientes que es la comunicación y el ambiente dentro de tu Patrulla/Equipo/Seisena?</p>
-                <div class="opciones-botones">
-                    <button class="btn-opcion" onclick="guardarRespuesta(3, 'Muy unidos')">🤝 Nos apoyamos en todo y hay confianza.</button>
-                    <button class="btn-opcion" onclick="guardarRespuesta(3, 'Hay división')">⚡ Hay pequeños desacuerdos o grupitos.</button>
-                    <button class="btn-opcion" onclick="guardarRespuesta(3, 'Falta integración')">⛺ Casi no nos integramos bien.</button>
+            <!-- P3 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">3. ¿Cómo sientes que es la comunicación y el ambiente dentro de tu Patrulla o Seisena?</p>
+                <div class="opciones-verticales">
+                    <button class="opcion-bloque-btn" onclick="registrarP(3, 'Muy unidos')">🤝 Nos apoyamos en todo y hay confianza.</button>
+                    <button class="opcion-bloque-btn" onclick="registrarP(3, 'Hay división')">⚡ Hay pequeños desacuerdos o grupitos.</button>
+                    <button class="opcion-bloque-btn" onclick="registrarP(3, 'Falta integración')">⛺ Casi no nos integramos bien.</button>
                 </div>
             </div>
 
-            <!-- P4: Cerrada Sí/No -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">4. ¿Sientes que estás avanzando o aprendiendo nuevas técnicas scouts con los ciclos de programa actuales?</p>
-                <div class="opciones-botones">
-                    <button class="btn-opcion" onclick="guardarRespuesta(4, 'Sí')">💪 ¡Sí! Siento que domino más retos y competencias.</button>
-                    <button class="btn-opcion" onclick="guardarRespuesta(4, 'A medias')">⏳ Más o menos, nos hace falta salir más a campo.</button>
-                    <button class="btn-opcion" onclick="guardarRespuesta(4, 'No')">❌ No, siento que repetimos siempre lo mismo.</button>
+            <!-- P4 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">4. ¿Sientes que estás avanzando o aprendiendo nuevas técnicas scouts?</p>
+                <div class="opciones-verticales">
+                    <button class="opcion-bloque-btn" onclick="registrarP(4, 'Sí')">💪 ¡Sí! Siento que domino más retos.</button>
+                    <button class="opcion-bloque-btn" onclick="registrarP(4, 'A medias')">⏳ Más o menos, nos hace falta salir más a campo.</button>
+                    <button class="opcion-bloque-btn" onclick="registrarP(4, 'No')">❌ No, siento que repetimos siempre lo mismo.</button>
                 </div>
             </div>
 
-            <!-- P5: Slider Dinámico -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">5. ¿Qué tan pesados o equilibrados sientes los costos de los eventos y campamentos programados?</p>
-                <input type="range" min="1" max="5" value="3" class="rango-personalizado" onchange="guardarRespuesta(5, this.value)">
-                <div class="etiquetas-rango">
+            <!-- P5 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">5. ¿Qué tan equilibrados sientes los costos de los campamentos?</p>
+                <input type="range" min="1" max="5" value="3" class="slider-pop" onchange="registrarP(5, this.value)">
+                <div style="display:flex; justify-content:space-between; margin-top:10px; font-weight:700; font-size:0.9rem;">
                     <span>Muy Accesibles 🪙</span>
-                    <span>Muy Difícil Costearlos 💸</span>
+                    <span>Difícil Costearlos 💸</span>
                 </div>
             </div>
 
-            <!-- P6: Opción Múltiple -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">6. ¿Qué tipo de actividades te gustaría que los Representantes Juveniles propongamos más en los consejos?</p>
-                <div class="opciones-botones">
-                    <button class="btn-opcion" onclick="guardarRespuesta(6, 'Supervivencia')">🌲 Campismo Salvaje y Supervivencia</button>
-                    <button class="btn-opcion" onclick="guardarRespuesta(6, 'Servicio Social')">❤️ Servicio Comunitario y Ecología</button>
-                    <button class="btn-opcion" onclick="guardarRespuesta(6, 'Deportes Extremos')">🧗 Juegos de Gran Acecho y Deportes Extremos</button>
+            <!-- P6 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">6. ¿Qué tipo de actividades te gustaría que propongamos más?</p>
+                <div class="opciones-verticales">
+                    <button class="opcion-bloque-btn" onclick="registrarP(6, 'Supervivencia')">🌲 Campismo Salvaje y Supervivencia</button>
+                    <button class="opcion-bloque-btn" onclick="registrarP(6, 'Servicio')">❤️ Servicio Comunitario y Ecología</button>
+                    <button class="opcion-bloque-btn" onclick="registrarP(6, 'Extremo')">🧗 Grandes Acechos y Deportes Extremos</button>
                 </div>
             </div>
 
-            <!-- P7: Abierta -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">7. Si pudieras cambiar una sola regla o dinámica del grupo para el próximo sábado, ¿cuál sería?</p>
-                <textarea placeholder="Escribe aquí tu propuesta constructiva scout..." oninput="guardarRespuesta(7, this.value)"></textarea>
+            <!-- P7 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">7. Si pudieras cambiar una sola dinámica del grupo para el próximo sábado, ¿cuál sería?</p>
+                <textarea class="input-texto-pop" placeholder="Escribe aquí tu propuesta constructiva..." oninput="registrarP(7, this.value)"></textarea>
             </div>
 
-            <!-- P8: Emojis -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">8. ¿Cómo calificarías la seguridad y los protocolos en las actividades externas?</p>
-                <div class="opciones-emoji">
-                    <button class="btn-emoji" onclick="guardarRespuesta(8, 'Inseguro')">⚠️</button>
-                    <button class="btn-emoji" onclick="guardarRespuesta(8, 'Bien')">👍</button>
-                    <button class="btn-emoji" onclick="guardarRespuesta(8, 'Excelente/Protegido')">🛡️</button>
+            <!-- P8 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">8. ¿Cómo calificarías la seguridad en las actividades externas?</p>
+                <div class="emojis-row">
+                    <button class="emoji-card-btn" onclick="registrarP(8, 'Inseguro')">⚠️</button>
+                    <button class="emoji-card-btn" onclick="registrarP(8, 'Bien')">👍</button>
+                    <button class="emoji-card-btn" onclick="registrarP(8, 'Excelente')">🛡️</button>
                 </div>
             </div>
 
-            <!-- P9: Opción Múltiple -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">9. ¿Consideras que la equidad e inclusión se aplican correctamente en el trato diario del grupo?</p>
-                <div class="opciones-botones">
-                    <button class="btn-opcion" onclick="guardarRespuesta(9, 'Excelente')">✨ Excelente, todos jugamos y aportamos por igual.</button>
-                    <button class="btn-opcion" onclick="guardarRespuesta(9, 'A veces se excluye')">💬 A veces se le da prioridad solo a unos cuantos.</button>
+            <!-- P9 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">9. ¿Consideras que la equidad e inclusión se aplican en el trato diario?</p>
+                <div class="opciones-verticales">
+                    <button class="opcion-bloque-btn" onclick="registrarP(9, 'Excelente')">✨ Excelente, todos jugamos por igual.</button>
+                    <button class="opcion-bloque-btn" onclick="registrarP(9, 'Excluyente')">💬 A veces se le da prioridad a unos cuantos.</button>
                 </div>
             </div>
 
-            <!-- P10: Abierta de cierre -->
-            <div class="pregunta-card">
-                <p class="pregunta-texto">10. ¡Último reto! Déjanos una sugerencia libre o idea loca para el próximo campamento de grupo:</p>
-                <textarea placeholder="¡Haz volar tu creatividad scout aquí!" oninput="guardarRespuesta(10, this.value)"></textarea>
+            <!-- P10 -->
+            <div class="pregunta-bloque">
+                <p class="texto-pregunta">10. ¡Último reto! Déjanos una idea loca para el próximo campamento:</p>
+                <textarea class="input-texto-pop" placeholder="¡Haz volar tu creatividad scout aquí!" oninput="registrarP(10, this.value)"></textarea>
             </div>
-
         </div>
 
-        <!-- Navegación de la Aventura -->
-        <div class="navegacion">
-            <button id="btn-anterior" class="btn-nav btn-ant" onclick="cambiarPregunta(-1)" disabled>Anterior</button>
-            <button id="btn-siguiente" class="btn-nav btn-sig" onclick="cambiarPregunta(1)">Siguiente</button>
+        <div class="barra-navegacion">
+            <button id="nav-izq" class="btn-nav-pop btn-izq" onclick="moverPregunta(-1)" disabled>Atrás</button>
+            <button id="nav-der" class="btn-nav-pop btn-der" onclick="moverPregunta(1)">Siguiente</button>
         </div>
     </div>
 
-    <!-- 3. PANEL SCOUTER (DASHBOARD CON IA INTEGRADA) -->
-    <div id="panel-scouter" class="panel-scouter">
+    <!-- PANEL DE CONTROL SCOUTER -->
+    <div id="panel-scouter" class="panel-scouter-pop">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2>Panel de Control - TequiVoz Admin</h2>
-            <button class="btn-nav btn-ant" onclick="cerrarPanel()">Cerrar Panel</button>
+            <h2>Panel TequiVoz Admin ⚜️</h2>
+            <button class="btn-nav-pop btn-izq" onclick="cerrarScouters()">Salir</button>
         </div>
-        <p>Monitoreo continuo y análisis estratégico del Grupo 1 Tequihua.</p>
+        
+        <div class="grafica-brutal">
+            <div class="columna-barra" style="height: 85%; background: var(--color-manada);">85%</div>
+            <div class="columna-barra" style="height: 60%; background: var(--color-tropa);">60%</div>
+            <div class="columna-barra" style="height: 75%; background: var(--color-comunidad);">75%</div>
+            <div class="columna-barra" style="height: 90%; background: var(--color-clan);">90%</div>
+        </div>
+        <div style="display:flex; justify-content:space-around; font-weight:900; font-size:0.9rem; margin-bottom:20px;">
+            <span>Manada</span><span>Tropa</span><span>Comunidad</span><span>Clan</span>
+        </div>
 
-        <div class="grid-analisis">
-            <!-- Gráfica Simulada -->
-            <div>
-                <h3>Satisfacción General por Ramas</h3>
-                <br>
-                <div class="grafica-simulada">
-                    <div class="barra" style="height: 85%; background: var(--color-manada);">85%</div>
-                    <div class="barra" style="height: 60%; background: var(--color-tropa);">60%</div>
-                    <div class="barra" style="height: 75%; background: var(--color-comunidad);">75%</div>
-                    <div class="barra" style="height: 90%; background: var(--color-clan);">90%</div>
-                </div>
-                <div style="display:flex; justify-content:space-around; font-size:0.8rem; margin-top:5px;">
-                    <span>Manada</span><span>Tropa</span><span>Comun.</span><span>Clan</span>
-                </div>
-            </div>
-
-            <!-- Recomendación Estratégica IA -->
-            <div class="ia-recomendacion">
-                <span class="ia-tag">⚡ RECOMENDACIÓN IA PARA REPRESENTANTES</span>
-                <h4>Análisis de Alertas Detectadas (Tropa en 60%):</h4>
-                <p style="margin-top:10px; line-height: 1.5; font-size: 0.95rem;">
-                    Las respuestas de la <strong>Tropa</strong> reflejan una tendencia crítica de desconexión en la pregunta 3 (Conflictos internos en patrulla) y pregunta 4 (Falta de dinamismo de técnicas). 
-                    <br><br>
-                    <strong>Plan de Acción Recomendado:</strong> Implementar urgentemente un <em>"Raid de Patrullas Extremo"</em> enfocado en supervivencia autónoma el próximo sábado, delegando la planeación del menú y estrategia a los Guías de Patrulla para renovar su liderazgo y mitigar la fricción interna.
-                </p>
-            </div>
+        <div class="ia-card-brutal">
+            <span class="ia-badge">🤖 ESTRATEGIA RECOMENDADA POR IA</span>
+            <p><strong>Alerta en Tropa (60%):</strong> Los muchachos externan que hay división y repetición de dinámicas tradicionales.</p>
+            <p style="margin-top:8px;"><strong>Solución sugerida:</strong> Romper la rutina del próximo sábado eliminando las bases estáticas. Implementar un juego de rol de gran acecho tecnológico que requiera intercomunicación forzada entre patrullas cooperativas.</p>
         </div>
     </div>
 
     <script>
-        let ramaSeleccionada = "";
-        let preguntaActual = 0;
-        const totalPreguntas = 10;
-        let respuestas = {};
+        let pActual = 0;
+        const totalP = 10;
+        let datos = {};
 
-        function iniciarEncuesta(rama) {
-            ramaSeleccionada = rama;
+        function iniciarAventura(rama) {
             document.getElementById('pantalla-inicio').style.display = 'none';
-            document.getElementById('contenedor-aventura').style.display = 'block';
+            document.getElementById('contenedor-juego').style.display = 'block';
             
-            // Adaptar visualmente según la rama elegida
             if(rama === 'Manada') document.body.style.backgroundColor = '#fffbeb';
             if(rama === 'Tropa') document.body.style.backgroundColor = '#f0fdf4';
-            if(rama === 'Comunidad') document.body.style.backgroundColor = '#f0f4f8';
+            if(rama === 'Comunidad') document.body.style.backgroundColor = '#ecfeff';
             if(rama === 'Clan') document.body.style.backgroundColor = '#fff5f5';
 
-            actualizarProgreso();
+            actualizarGraficos();
         }
 
-        function cambiarPregunta(direccion) {
-            const cards = document.querySelectorAll('.pregunta-card');
-            cards[preguntaActual].classList.remove('activa');
+        function moverPregunta(dir) {
+            const bloques = document.querySelectorAll('.pregunta-bloque');
+            bloques[pActual].classList.remove('activa');
 
-            preguntaActual += direccion;
+            pActual += dir;
 
-            if (preguntaActual >= totalPreguntas) {
-                alert("¡Excelente aventura! Tus datos han quedado guardados en el registro del TequiVoz.");
-                reiniciarTodo();
+            if(pActual >= totalP) {
+                alert("¡Felicidades! Has completado el recorrido y dejado tu huella en el consejo.");
+                volverAlInicio();
                 return;
             }
 
-            cards[preguntaActual].classList.add('activa');
+            bloques[pActual].classList.add('activa');
             
-            // Control de botones de navegación
-            document.getElementById('btn-anterior').disabled = (preguntaActual === 0);
-            if(preguntaActual === totalPreguntas - 1) {
-                document.getElementById('btn-siguiente').innerText = "Terminar Desafío";
-            } else {
-                document.getElementById('btn-siguiente').innerText = "Siguiente";
-            }
+            // Animación de salto de token scout
+            const avatar = document.getElementById('scout-token');
+            avatar.classList.add('salto-anim');
+            setTimeout(() => avatar.classList.remove('salto-anim'), 400);
 
-            actualizarProgreso();
+            document.getElementById('nav-izq').disabled = (pActual === 0);
+            document.getElementById('nav-der').innerText = (pActual === totalP - 1) ? "Finalizar" : "Siguiente";
+
+            actualizarGraficos();
         }
 
-        function actualizarProgreso() {
-            const porcentaje = (preguntaActual / (totalPreguntas - 1)) * 100;
-            document.getElementById('linea-progreso').style.width = porcentaje + '%';
-            document.getElementById('scout-avatar').style.left = porcentaje + '%';
+        function actualizarGraficos() {
+            const pct = (pActual / (totalP - 1)) * 100;
+            document.getElementById('linea-nudos').style.width = pct + '%';
+            document.getElementById('scout-token').style.left = pct + '%';
         }
 
-        function guardarRespuesta(numeroPregunta, valor) {
-            respuestas[`p${numeroPregunta}`] = valor;
-            // Si es un botón de opción o emoji, marcar visualmente la selección
-            const contenedor = document.querySelectorAll('.pregunta-card')[preguntaActual];
-            const botones = contenedor.querySelectorAll('.btn-emoji, .btn-opcion');
-            botones.forEach(btn => btn.classList.remove('seleccionado'));
-            
-            // Efecto sutil si se selecciona un elemento clicable
+        function registrarP(pregunta, valor) {
+            datos[`p${pregunta}`] = valor;
+            const contenedor = document.querySelectorAll('.pregunta-bloque')[pActual];
+            const btns = contenedor.querySelectorAll('.emoji-card-btn, .opcion-bloque-btn');
+            btns.forEach(b => b.classList.remove('seleccionado'));
             if(event && event.currentTarget) {
                 event.currentTarget.classList.add('seleccionado');
             }
         }
 
-        function reiniciarTodo() {
-            preguntaActual = 0;
-            respuestas = {};
-            document.getElementById('contenedor-aventura').style.display = 'none';
-            document.getElementById('pantalla-inicio').style.display = 'flex';
+        function volverAlInicio() {
+            pActual = 0;
+            datos = {};
+            document.getElementById('contenedor-juego').style.display = 'none';
+            document.getElementById('pantalla-inicio').style.display = 'block';
             document.body.style.backgroundColor = 'var(--color-fondo)';
-            const cards = document.querySelectorAll('.pregunta-card');
-            cards.forEach(c => c.classList.remove('activa'));
-            cards[0].classList.add('activa');
-            document.getElementById('btn-anterior').disabled = true;
-            document.getElementById('btn-siguiente').innerText = "Siguiente";
+            const bloques = document.querySelectorAll('.pregunta-bloque');
+            bloques.forEach(b => b.classList.remove('activa'));
+            bloques[0].classList.add('activa');
+            document.getElementById('nav-izq').disabled = true;
+            document.getElementById('nav-der').innerText = "Siguiente";
         }
 
-        function accesoScouter() {
-            const pass = prompt("Ingresa la clave de acceso de Scouters / Representantes:");
-            // Clave demo simple para que la pruebes de inmediato
-            if (pass === "Tequihua1") { 
+        function abrirScouters() {
+            const p = prompt("Contraseña de Representantes:");
+            if(p === "Tequihua1") {
                 document.getElementById('pantalla-inicio').style.display = 'none';
                 document.getElementById('panel-scouter').style.display = 'block';
             } else {
-                alert("Clave incorrecta. Inténtalo de nuevo.");
+                alert("Acceso denegado.");
             }
         }
 
-        function cerrarPanel() {
+        function cerrarScouters() {
             document.getElementById('panel-scouter').style.display = 'none';
-            document.getElementById('pantalla-inicio').style.display = 'flex';
+            document.getElementById('pantalla-inicio').style.display = 'block';
         }
     </script>
 </body>

@@ -1,4 +1,3 @@
-:TequiVoz - La Súper Página Web Interactiva del Grupo 1 Tequihua:index.html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -39,7 +38,7 @@
     </script>
 
     <style>
-        /* Fondo fluido y orgánico Wix/Interdesign */
+        /* Fondo fluido y orgánico Wix / Interdesign */
         .gradient-bg {
             background: radial-gradient(circle at 10% 20%, rgba(244, 247, 246, 1) 0%, rgba(230, 237, 235, 1) 90%);
             position: fixed;
@@ -53,7 +52,7 @@
 
         .blob {
             position: absolute;
-            background: linear-gradient(180deg, rgba(6, 214, 160, 0.15) 0%, rgba(17, 138, 178, 0.15) 100%);
+            background: linear-gradient(180deg, rgba(6, 214, 160, 0.12) 0%, rgba(17, 138, 178, 0.12) 100%);
             filter: blur(80px);
             border-radius: 50%;
             animation: moveBlobs 25s infinite alternate ease-in-out;
@@ -68,14 +67,14 @@
 
         /* Glassmorphism al estilo Apple Premium */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.72);
+            background: rgba(255, 255, 255, 0.78);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         .glass-nav {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -131,7 +130,7 @@
         }
     </style>
 </head>
-<body class="antialiased min-height-screen text-appleDark no-scrollbar">
+<body class="antialiased min-h-screen text-appleDark no-scrollbar">
 
     <!-- Fondo dinámico con blobs de color -->
     <div class="gradient-bg">
@@ -139,13 +138,13 @@
         <div class="blob w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-duration: 35s;"></div>
     </div>
 
-    <!-- CABECERA FLOTANTE AL ESTILO DE APPLE -->
+    <!-- CABECERA FLOTANTE DE APPLE -->
     <nav class="glass-nav fixed top-0 left-0 w-full z-50 transition-apple px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
-            <!-- Logo Oficial sin modificaciones -->
-            <img src="image_13d880.png" alt="Logo Grupo 1 Tequihua" class="h-14 w-auto drop-shadow-md">
+            <!-- 1ra Imagen: Logo de Grupo 1 Tequihua sin modificaciones -->
+            <img src="image_13f707.png" alt="Logo Grupo 1 Tequihua" class="h-14 w-auto drop-shadow-md">
             <div>
-                <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-800 to-indigo-900 bg-clip-text text-transparent">TequiVoz</span>
+                <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-800 to-indigo-950 bg-clip-text text-transparent">TequiVoz</span>
                 <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest leading-none">Grupo 1 SLP</p>
             </div>
         </div>
@@ -157,7 +156,7 @@
         </div>
     </nav>
 
-    <!-- ÁREA PRINCIPAL DE CONTENIDO -->
+    <!-- ÁREA PRINCIPAL -->
     <main class="pt-32 pb-16 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center min-h-[90vh]">
 
         <!-- ================= BIENVENIDA / HERO ================= -->
@@ -167,44 +166,48 @@
                 Tu voz es el mapa de <br><span class="bg-gradient-to-r from-emerald-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent">nuestras aventuras.</span>
             </h1>
             <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto mb-12 font-medium">
-                TequiVoz es la plataforma gamificada para medir, proponer y diseñar las mejores actividades scouts del Grupo 1 Tequihua. Elige tu sección para comenzar tu viaje.
+                TequiVoz es la plataforma interactiva oficial para evaluar y planificar las mejores actividades de sábado del Grupo 1 Tequihua. Elige tu sección para comenzar.
             </p>
 
-            <!-- Grid de Secciones con Micro-interacciones de alta fidelidad -->
+            <!-- Grid de Secciones con Logotipos Oficiales Actualizados -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8">
                 <!-- Manada -->
                 <button onclick="empezarEncuesta('Manada')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-manada flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <div class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 text-2xl shadow-inner"><i class="fa-solid fa-wolf-pack-battalion"></i></div>
-                    <div>
+                    <!-- 2da Imagen: Logo Manada -->
+                    <img src="image_14497c.png" alt="Logo Manada de Lobatos" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center">
                         <span class="font-extrabold text-lg block">Manada</span>
-                        <p class="text-xs text-gray-400 font-bold uppercase">Lobatos</p>
+                        <p class="text-[10px] text-yellow-600 font-bold uppercase tracking-wider">Lobatos</p>
                     </div>
                 </button>
 
                 <!-- Tropa -->
                 <button onclick="empezarEncuesta('Tropa')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-tropa flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl shadow-inner"><i class="fa-solid fa-compass"></i></div>
-                    <div>
+                    <!-- 3ra Imagen: Logo Tropa -->
+                    <img src="image_1449df.png" alt="Logo Tropa de Scouts" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center">
                         <span class="font-extrabold text-lg block">Tropa</span>
-                        <p class="text-xs text-gray-400 font-bold uppercase">Scouts</p>
+                        <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">Scouts</p>
                     </div>
                 </button>
 
                 <!-- Comunidad -->
                 <button onclick="empezarEncuesta('Comunidad')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-comunidad flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <div class="w-16 h-16 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 text-2xl shadow-inner"><i class="fa-solid fa-mountain"></i></div>
-                    <div>
+                    <!-- 4ta Imagen: Logo Comunidad -->
+                    <img src="image_144a1c.png" alt="Logo Comunidad de Caminantes" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center">
                         <span class="font-extrabold text-lg block">Comunidad</span>
-                        <p class="text-xs text-gray-400 font-bold uppercase">Caminantes</p>
+                        <p class="text-[10px] text-sky-600 font-bold uppercase tracking-wider">Caminantes</p>
                     </div>
                 </button>
 
                 <!-- Clan -->
                 <button onclick="empezarEncuesta('Clan')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-clan flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <div class="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 text-2xl shadow-inner"><i class="fa-solid fa-route"></i></div>
-                    <div>
+                    <!-- 5ta Imagen: Logo Clan -->
+                    <img src="image_144cc8.png" alt="Logo Clan de Rovers" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center">
                         <span class="font-extrabold text-lg block">Clan</span>
-                        <p class="text-xs text-gray-400 font-bold uppercase">Rovers</p>
+                        <p class="text-[10px] text-rose-600 font-bold uppercase tracking-wider">Rovers</p>
                     </div>
                 </button>
             </div>
@@ -214,12 +217,20 @@
         <section id="contenedor-encuesta" class="hidden transition-apple w-full">
             <div class="glass-panel rounded-[32px] p-6 md:p-10 shadow-2xl">
                 
+                <!-- Encabezado de la Encuesta con el Logotipo de Sección Dinámico -->
+                <div class="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
+                    <div class="flex items-center gap-4">
+                        <img id="seccion-logo-activo" src="image_14497c.png" alt="Logotipo Sección Activa" class="h-16 w-auto object-contain">
+                        <div>
+                            <span id="badge-seccion-activa" class="text-xs font-black uppercase px-3 py-1 rounded-full text-white tracking-widest shadow-sm">Sección</span>
+                            <h3 class="text-lg font-extrabold mt-1 text-gray-700">Encuesta de Satisfacción</h3>
+                        </div>
+                    </div>
+                    <span id="contador-progreso" class="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1.5 rounded-full">Pregunta 1 de 10</span>
+                </div>
+
                 <!-- Sendero de Progreso Creativo -->
                 <div class="mb-10">
-                    <div class="flex justify-between items-center mb-3">
-                        <span id="badge-seccion-activa" class="text-xs font-black uppercase px-3 py-1 rounded-full text-white tracking-widest shadow-sm">Sección</span>
-                        <span id="contador-progreso" class="text-xs font-bold text-gray-400">Pregunta 1 de 10</span>
-                    </div>
                     <!-- Sendero con textura de cuerda scout -->
                     <div class="relative w-full h-3 bg-gray-200 rounded-full overflow-visible border border-gray-300">
                         <div id="progreso-barra" class="h-full bg-gradient-to-r from-emerald-500 to-indigo-600 rounded-full transition-all duration-500" style="width: 10%;"></div>
@@ -236,19 +247,19 @@
                         <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 01</span>
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Qué tan divertida estuvo la actividad del sábado pasado?</h2>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <button onclick="setRespuesta(1, 'Aburrida', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center">
+                            <button onclick="registrarP(1, 'Aburrida', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center btn-respuesta">
                                 <span class="text-4xl block mb-3">😴</span>
-                                <span class="font-bold text-sm text-gray-600">Poco interactivo</span>
+                                <span class="font-bold text-sm text-gray-600">Poco divertida</span>
                             </button>
-                            <button onclick="setRespuesta(1, 'Regular', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center">
+                            <button onclick="registrarP(1, 'Regular', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center btn-respuesta">
                                 <span class="text-4xl block mb-3">😐</span>
                                 <span class="font-bold text-sm text-gray-600">Regular</span>
                             </button>
-                            <button onclick="setRespuesta(1, 'Divertida', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center">
+                            <button onclick="registrarP(1, 'Divertida', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center btn-respuesta">
                                 <span class="text-4xl block mb-3">😀</span>
                                 <span class="font-bold text-sm text-gray-600">Divertida</span>
                             </button>
-                            <button onclick="setRespuesta(1, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center">
+                            <button onclick="registrarP(1, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center btn-respuesta">
                                 <span class="text-4xl block mb-3">🤩</span>
                                 <span class="font-bold text-sm text-gray-600">¡Épica!</span>
                             </button>
@@ -274,24 +285,24 @@
                         <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 03</span>
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Cómo se siente la comunicación y el trabajo en equipo dentro de tu Patrulla / Seisena?</h2>
                         <div class="flex flex-col gap-4">
-                            <button onclick="setRespuesta(3, 'Fuerte', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4">
+                            <button onclick="registrarP(3, 'Fuerte', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4 btn-respuesta">
                                 <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600"><i class="fa-solid fa-hands-holding"></i></div>
                                 <div>
-                                    <span class="block">Gran Unión</span>
+                                    <span class="block text-gray-700">Gran Unión</span>
                                     <span class="text-xs text-gray-400 font-normal">Nos apoyamos en cada reto, hay confianza total.</span>
                                 </div>
                             </button>
-                            <button onclick="setRespuesta(3, 'Division', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4">
+                            <button onclick="registrarP(3, 'Division', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4 btn-respuesta">
                                 <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600"><i class="fa-solid fa-bolt"></i></div>
                                 <div>
-                                    <span class="block">Leve División</span>
+                                    <span class="block text-gray-700">Leve División</span>
                                     <span class="text-xs text-gray-400 font-normal">Hay desacuerdos ocasionales o subgrupos formados.</span>
                                 </div>
                             </button>
-                            <button onclick="setRespuesta(3, 'FaltaIntegracion', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4">
+                            <button onclick="registrarP(3, 'FaltaIntegracion', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4 btn-respuesta">
                                 <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600"><i class="fa-solid fa-circle-exclamation"></i></div>
                                 <div>
-                                    <span class="block">Falta Integración</span>
+                                    <span class="block text-gray-700">Falta Integración</span>
                                     <span class="text-xs text-gray-400 font-normal">Se siente exclusión o apatía en las dinámicas de grupo.</span>
                                 </div>
                             </button>
@@ -303,19 +314,19 @@
                         <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 04</span>
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Sientes que las actividades de hoy aportaron a tu progresión personal o insignias?</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <button onclick="setRespuesta(4, 'Si', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                            <button onclick="registrarP(4, 'Si', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
                                 <span class="text-3xl">🏅</span>
-                                <span>¡Sí, totalmente!</span>
+                                <span class="text-gray-700">¡Sí, totalmente!</span>
                                 <p class="text-xs font-normal text-gray-400">Aprendí nuevas técnicas y reforcé habilidades.</p>
                             </button>
-                            <button onclick="setRespuesta(4, 'Medias', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                            <button onclick="registrarP(4, 'Medias', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
                                 <span class="text-3xl">⏳</span>
-                                <span>A medias</span>
+                                <span class="text-gray-700">A medias</span>
                                 <p class="text-xs font-normal text-gray-400">Hubo algo de aprendizaje pero falto práctica real.</p>
                             </button>
-                            <button onclick="setRespuesta(4, 'No', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                            <button onclick="registrarP(4, 'No', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
                                 <span class="text-3xl">❌</span>
-                                <span>No aportó</span>
+                                <span class="text-gray-700">No aportó</span>
                                 <p class="text-xs font-normal text-gray-400">Sentí que repetimos los mismos temas de siempre.</p>
                             </button>
                         </div>
@@ -340,19 +351,19 @@
                         <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 06</span>
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Qué tipo de actividades te gustaría que propusiéramos con mayor frecuencia en los Consejos?</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <button onclick="setRespuesta(6, 'Supervivencia', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3">
+                            <button onclick="registrarP(6, 'Supervivencia', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3 btn-respuesta">
                                 <span class="text-4xl">🌲</span>
-                                <span>Técnicas de Supervivencia</span>
+                                <span class="text-gray-700">Técnicas de Supervivencia</span>
                                 <span class="text-xs text-gray-400 font-normal">Campismo, pionerismo avanzado y orientación.</span>
                             </button>
-                            <button onclick="setRespuesta(6, 'Servicio', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3">
+                            <button onclick="registrarP(6, 'Servicio', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3 btn-respuesta">
                                 <span class="text-4xl">❤️</span>
-                                <span>Servicio Comunitario</span>
+                                <span class="text-gray-700">Servicio Comunitario</span>
                                 <span class="text-xs text-gray-400 font-normal">Ecología, voluntariado social y apoyo humanitario.</span>
                             </button>
-                            <button onclick="setRespuesta(6, 'Extremo', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3">
+                            <button onclick="registrarP(6, 'Extremo', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3 btn-respuesta">
                                 <span class="text-4xl">🧗</span>
-                                <span>Juegos de Acecho / Extremos</span>
+                                <span class="text-gray-700">Juegos de Acecho / Extremos</span>
                                 <span class="text-xs text-gray-400 font-normal">Grandes estrategias, retos de destreza física.</span>
                             </button>
                         </div>
@@ -372,19 +383,19 @@
                         <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 08</span>
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Cómo consideras la seguridad y los protocolos durante los campamentos o salidas externas?</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <button onclick="setRespuesta(8, 'Inseguro', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                            <button onclick="registrarP(8, 'Inseguro', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
                                 <span class="text-3xl">⚠️</span>
-                                <span>Deficiente</span>
+                                <span class="text-gray-700">Deficiente</span>
                                 <p class="text-xs font-normal text-gray-400">Hay descuidos o falta de información sobre riesgos.</p>
                             </button>
-                            <button onclick="setRespuesta(8, 'Bien', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                            <button onclick="registrarP(8, 'Bien', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
                                 <span class="text-3xl">👍</span>
-                                <span>Buena</span>
+                                <span class="text-gray-700">Buena</span>
                                 <p class="text-xs font-normal text-gray-400">Me siento seguro en la mayoría de las dinámicas.</p>
                             </button>
-                            <button onclick="setRespuesta(8, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                            <button onclick="registrarP(8, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
                                 <span class="text-3xl">🛡️</span>
-                                <span>Excelente</span>
+                                <span class="text-gray-700">Excelente</span>
                                 <p class="text-xs font-normal text-gray-400">Monitoreo constante, botiquín y zonas delimitadas.</p>
                             </button>
                         </div>
@@ -395,14 +406,14 @@
                         <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 09</span>
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Sientes que existe un ambiente inclusivo y equitativo en el trato de todos en tu sección?</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <button onclick="setRespuesta(9, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                            <button onclick="registrarP(9, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
                                 <span class="text-3xl">✨</span>
-                                <span>Siempre hay respeto</span>
+                                <span class="text-gray-700">Siempre hay respeto</span>
                                 <p class="text-xs font-normal text-gray-400">Se escuchan todas las opiniones sin importar el género o rango.</p>
                             </button>
-                            <button onclick="setRespuesta(9, 'Excluyente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                            <button onclick="registrarP(9, 'Excluyente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta">
                                 <span class="text-3xl">💬</span>
-                                <span>A veces hay exclusión</span>
+                                <span class="text-gray-700">A veces hay exclusión</span>
                                 <p class="text-xs font-normal text-gray-400">Siento favoritismos o rechazo de ciertos integrantes.</p>
                             </button>
                         </div>
@@ -420,15 +431,19 @@
                 </div>
 
                 <!-- Botones de Navegación del Prototipo -->
-                <div class="barra-navegacion">
-                    <button id="btn-anterior" onclick="cambiarP(-1)" class="btn-nav-pop btn-izq text-gray-600 hover:bg-gray-200" disabled><i class="fa-solid fa-arrow-left mr-2"></i> Atrás</button>
-                    <button id="btn-siguiente" onclick="cambiarP(1)" class="btn-nav-pop btn-der text-white hover:opacity-90">Siguiente <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                <div class="barra-navegacion flex justify-between mt-8 pt-6 border-t border-gray-100">
+                    <button id="btn-anterior" onclick="cambiarP(-1)" class="btn-nav-pop btn-izq text-gray-600 hover:bg-gray-200 px-6 py-3 rounded-xl font-bold transition-apple disabled:opacity-50" disabled>
+                        <i class="fa-solid fa-arrow-left mr-2"></i> Atrás
+                    </button>
+                    <button id="btn-siguiente" onclick="cambiarP(1)" class="btn-nav-pop btn-der text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-bold transition-apple">
+                        Siguiente <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
                 </div>
 
             </div>
         </section>
 
-        <!-- ================= BIOMETRIC / PASSWORD GATEWAY ================= -->
+        <!-- ================= PUERTA DE AUTENTICACIÓN ADM ================= -->
         <section id="puerta-autenticacion" class="hidden transition-apple w-full max-w-md mx-auto text-center">
             <div class="glass-panel rounded-[32px] p-8 shadow-2xl">
                 <!-- FaceID simulator -->
@@ -444,8 +459,8 @@
                         <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Clave Tequihua</label>
                         <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Ingresa la contraseña">
                     </div>
-                    <button onclick="validarCredenciales()" class="w-full py-3.5 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple">Verificar Identidad</button>
-                    <button onclick="regresarAlInicio()" class="text-xs text-gray-400 font-extrabold uppercase hover:text-gray-600 transition-apple">Cancelar</button>
+                    <button onclick="validarCredenciales()" class="w-full py-3.5 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple shadow-lg">Verificar Identidad</button>
+                    <button onclick="regresarAlInicio()" class="text-xs text-gray-400 font-extrabold uppercase hover:text-gray-600 transition-apple text-center block mt-2">Cancelar</button>
                 </div>
             </div>
         </section>
@@ -454,7 +469,7 @@
         <section id="panel-scouter" class="hidden transition-apple w-full">
             <div class="flex justify-between items-center mb-8">
                 <div>
-                    <h2 class="text-3xl font-extrabold tracking-tight">TequiRadar Analytics ⚜️</h2>
+                    <h2 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-900 to-violet-700 bg-clip-text text-transparent">TequiRadar Analytics ⚜️</h2>
                     <p class="text-gray-500 text-sm font-medium">Registro continuo de la satisfacción juvenil</p>
                 </div>
                 <button onclick="regresarAlInicio()" class="px-5 py-2 rounded-full border-2 border-gray-300 font-bold hover:bg-gray-100 transition-apple"><i class="fa-solid fa-arrow-left-long mr-2"></i> Salir</button>
@@ -470,31 +485,31 @@
                     <!-- Gráfico de Barras Dinámico -->
                     <div class="h-64 flex items-end justify-between px-4 pb-2 border-b border-gray-200 pt-6">
                         <div class="flex flex-col items-center gap-2 w-12">
-                            <div id="chart-fun" class="w-full bg-yellow-400 rounded-t-lg transition-apple" style="height: 75px;"></div>
-                            <span class="text-[10px] font-black uppercase text-gray-400">Diversión</span>
+                            <div id="chart-fun" class="w-full bg-yellow-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 75px;">75%</div>
+                            <span class="text-[9px] font-black uppercase text-gray-400">Diversión</span>
                         </div>
                         <div class="flex flex-col items-center gap-2 w-12">
-                            <div id="chart-leaders" class="w-full bg-emerald-400 rounded-t-lg transition-apple" style="height: 120px;"></div>
-                            <span class="text-[10px] font-black uppercase text-gray-400">Soporte</span>
+                            <div id="chart-leaders" class="w-full bg-emerald-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 120px;">80%</div>
+                            <span class="text-[9px] font-black uppercase text-gray-400">Soporte</span>
                         </div>
                         <div class="flex flex-col items-center gap-2 w-12">
-                            <div id="chart-teamwork" class="w-full bg-sky-400 rounded-t-lg transition-apple" style="height: 90px;"></div>
-                            <span class="text-[10px] font-black uppercase text-gray-400">Unión</span>
+                            <div id="chart-teamwork" class="w-full bg-sky-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 90px;">90%</div>
+                            <span class="text-[9px] font-black uppercase text-gray-400">Unión</span>
                         </div>
                         <div class="flex flex-col items-center gap-2 w-12">
-                            <div id="chart-progression" class="w-full bg-rose-400 rounded-t-lg transition-apple" style="height: 110px;"></div>
-                            <span class="text-[10px] font-black uppercase text-gray-400">Avanzar</span>
+                            <div id="chart-progression" class="w-full bg-rose-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 110px;">110%</div>
+                            <span class="text-[9px] font-black uppercase text-gray-400">Avanzar</span>
                         </div>
                         <div class="flex flex-col items-center gap-2 w-12">
-                            <div id="chart-safety" class="w-full bg-violet-400 rounded-t-lg transition-apple" style="height: 160px;"></div>
-                            <span class="text-[10px] font-black uppercase text-gray-400">Seguro</span>
+                            <div id="chart-safety" class="w-full bg-violet-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 160px;">160%</div>
+                            <span class="text-[9px] font-black uppercase text-gray-400">Seguro</span>
                         </div>
                     </div>
-                    <p class="text-xs text-gray-400 font-semibold mt-4">Los gráficos se actualizan en vivo sumando la respuesta actual del scout al histórico.</p>
+                    <p class="text-xs text-gray-400 font-semibold mt-4">Los gráficos se calculan sumando la respuesta actual del scout al histórico.</p>
                 </div>
 
                 <!-- Tarjeta 2: Métricas del Lector Reciente -->
-                <div class="glass-panel rounded-3xl p-6 shadow-lg flex flex-col justify-between">
+                <div class="glass-panel rounded-3xl p-6 shadow-lg flex flex-col justify-between text-left">
                     <div>
                         <h3 class="font-extrabold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-emerald-500"></i> Última Entrada</h3>
                         <div class="space-y-3">
@@ -513,8 +528,8 @@
 
             </div>
 
-            <!-- RECOMENDACIÓN IA DINÁMICA (Procesa respuestas reales) -->
-            <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+            <!-- RECOMENDACIÓN IA DINÁMICA -->
+            <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden text-left">
                 <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12">
                     <i class="fa-solid fa-brain text-[200px]"></i>
                 </div>
@@ -586,23 +601,29 @@
             respuestasSesion.rama = rama;
             preguntaActual = 0;
 
-            // Cambios estéticos de fondo según rama al estilo premium
             const body = document.body;
+            const logoImg = document.getElementById('seccion-logo-activo');
+
+            // Cambios estéticos de fondo e imágenes dinámicas según rama elegida
             if(rama === 'Manada') {
                 body.style.backgroundColor = '#fffbeb';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-manada)';
+                logoImg.src = 'image_14497c.png';
             }
             if(rama === 'Tropa') {
                 body.style.backgroundColor = '#f0fdf4';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-tropa)';
+                logoImg.src = 'image_1449df.png';
             }
             if(rama === 'Comunidad') {
                 body.style.backgroundColor = '#ecfeff';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-comunidad)';
+                logoImg.src = 'image_144a1c.png';
             }
             if(rama === 'Clan') {
                 body.style.backgroundColor = '#fff5f5';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-clan)';
+                logoImg.src = 'image_144cc8.png';
             }
 
             document.getElementById('badge-seccion-activa').innerText = rama;
@@ -652,19 +673,30 @@
             }
         }
 
-        // Registrar Respuestas de Click
+        // Registrar Respuestas y actualizar interfaz sin crashear (solución del bug de "event")
         function setRespuesta(pregunta, valor, btn) {
             respuestasSesion[`p${pregunta}`] = valor;
             
             // Estilo visual del botón seleccionado en la pregunta actual
-            const container = btn.parentNode;
-            const buttons = container.querySelectorAll('button');
-            buttons.forEach(b => {
-                b.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
-                b.classList.add('border-gray-200', 'bg-white');
-            });
-            btn.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
-            btn.classList.remove('border-gray-200', 'bg-white');
+            if (btn) {
+                const container = btn.parentNode;
+                const buttons = container.querySelectorAll('.btn-respuesta');
+                buttons.forEach(b => {
+                    b.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
+                    b.classList.add('border-gray-200', 'bg-white');
+                });
+                btn.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
+                btn.classList.remove('border-gray-200', 'bg-white');
+            }
+        }
+
+        // Alias redundantes para evitar discrepancias de llamado en botones
+        function registrarP(pregunta, valor, btn) {
+            setRespuesta(pregunta, valor, btn);
+        }
+
+        function guardarRespuesta(pregunta, valor, btn) {
+            setRespuesta(pregunta, valor, btn);
         }
 
         // Feedback visual slider P2
@@ -714,7 +746,7 @@
             document.getElementById('puerta-autenticacion').classList.add('hidden');
             document.getElementById('panel-scouter').classList.add('hidden');
             document.getElementById('pantalla-inicio').classList.remove('hidden');
-            document.body.style.backgroundColor = '#fcf8f2';
+            document.body.style.backgroundColor = '#f4f7f6';
         }
 
         // Procesar respuestas y calcular IA dinámicamente
@@ -751,23 +783,28 @@
 
         // Renderizado del Gráfico de Barras SVG con los nuevos datos
         function actualizarGraficasBrutales() {
-            // Calcular promedios aritméticos simples de los históricos
             const getPromedio = arr => (arr.reduce((a,b) => a+b, 0) / arr.length) * 10; // escala 100%
 
-            document.getElementById('chart-fun').style.height = getPromedio(respuestasHistoricas.fun) + '%';
-            document.getElementById('chart-fun').innerText = Math.round(getPromedio(respuestasHistoricas.fun)) + '%';
+            const chFun = document.getElementById('chart-fun');
+            const chLead = document.getElementById('chart-leaders');
+            const chTeam = document.getElementById('chart-teamwork');
+            const chProg = document.getElementById('chart-progression');
+            const chSafe = document.getElementById('chart-safety');
+
+            chFun.style.height = getPromedio(respuestasHistoricas.fun) + '%';
+            chFun.innerText = Math.round(getPromedio(respuestasHistoricas.fun)) + '%';
             
-            document.getElementById('chart-leaders').style.height = getPromedio(respuestasHistoricas.leaders) + '%';
-            document.getElementById('chart-leaders').innerText = Math.round(getPromedio(respuestasHistoricas.leaders)) + '%';
+            chLead.style.height = getPromedio(respuestasHistoricas.leaders) + '%';
+            chLead.innerText = Math.round(getPromedio(respuestasHistoricas.leaders)) + '%';
             
-            document.getElementById('chart-teamwork').style.height = getPromedio(respuestasHistoricas.teamwork) + '%';
-            document.getElementById('chart-teamwork').innerText = Math.round(getPromedio(respuestasHistoricas.teamwork)) + '%';
+            chTeam.style.height = getPromedio(respuestasHistoricas.teamwork) + '%';
+            chTeam.innerText = Math.round(getPromedio(respuestasHistoricas.teamwork)) + '%';
             
-            document.getElementById('chart-progression').style.height = getPromedio(respuestasHistoricas.progression) + '%';
-            document.getElementById('chart-progression').innerText = Math.round(getPromedio(respuestasHistoricas.progression)) + '%';
+            chProg.style.height = getPromedio(respuestasHistoricas.progression) + '%';
+            chProg.innerText = Math.round(getPromedio(respuestasHistoricas.progression)) + '%';
             
-            document.getElementById('chart-safety').style.height = getPromedio(respuestasHistoricas.safety) + '%';
-            document.getElementById('chart-safety').innerText = Math.round(getPromedio(respuestasHistoricas.safety)) + '%';
+            chSafe.style.height = getPromedio(respuestasHistoricas.safety) + '%';
+            chSafe.innerText = Math.round(getPromedio(respuestasHistoricas.safety)) + '%';
         }
 
         // MOTOR IA ANALÍTICO EN TIEMPO REAL
@@ -782,7 +819,6 @@
             let diagnostico = "";
             let accion = "";
 
-            // Motor de decisiones lógicas basadas en pedagogía Scout
             if (p1 === "Aburrida" || p1 === "Regular") {
                 diagnostico += `ALERTA DE RUTINA EN ${rama.toUpperCase()}: Los scouts indican que el dinamismo el sábado pasado no capturó su interés. `;
                 accion += "• Cambiar el esquema de bases estáticas de instrucción por un formato 'Raid' interactivo con retos cronometrados. ";
@@ -824,7 +860,6 @@
             document.getElementById('pantalla-inicio').classList.add('hidden');
             document.getElementById('puerta-autenticacion').classList.remove('hidden');
             
-            // Animación biometría simulada
             const ring = document.getElementById('biometric-ring');
             const icon = document.getElementById('biometric-icon');
             
@@ -840,13 +875,12 @@
         function validarCredenciales() {
             const pass = document.getElementById('admin-pass').value;
             if (pass === 'Tequihua1') {
-                // Sincronizar gráficas e IA al abrir
                 actualizarGraficasBrutales();
                 ejecutarMotorIA();
 
                 document.getElementById('puerta-autenticacion').classList.add('hidden');
                 document.getElementById('panel-scouter').classList.remove('hidden');
-                document.body.style.backgroundColor = '#f5f5f7'; // fondo gris claro tipo Apple admin
+                document.body.style.backgroundColor = '#f5f5f7'; 
             } else {
                 alert('Contraseña incorrecta. Pista: Tequihua1');
             }
@@ -854,13 +888,3 @@
     </script>
 </body>
 </html>
-```eof
-
-### 📦 Instrucciones de Despliegue en GitHub:
-1. Reemplaza el archivo anterior `index.html` en tu repositorio local con este nuevo código.
-2. Sube la actualización a GitHub escribiendo en tu terminal:
-   
-```bash
-   git add .
-   git commit -m "mejorada la interfaz a estilo apple-wix con ia dinámica de recomendaciones"
-   git push origin main

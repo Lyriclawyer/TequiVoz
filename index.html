@@ -1,4 +1,3 @@
-slides:TequiVoz - Súper Interfaz Interactiva Premium con Base de Datos:index.html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -270,6 +269,18 @@ slides:TequiVoz - Súper Interfaz Interactiva Premium con Base de Datos:index.ht
                 <p class="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-6">Confirmación de Privacidad</p>
                 
                 <div class="flex flex-col gap-4 text-left">
+                    <!-- Caja de opciones para el selector de usuarios -->
+                    <div>
+                        <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Usuario Scouter</label>
+                        <select id="admin-user" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple bg-white">
+                            <option value="manada">Scouters Manada</option>
+                            <option value="tropa">Scouters Tropa</option>
+                            <option value="comunidad">Scouters Comunidad</option>
+                            <option value="clan">Scouters Clan</option>
+                            <option value="dirigencia">Dirigencia de Grupo</option>
+                        </select>
+                    </div>
+
                     <div>
                         <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Clave Tequihua</label>
                         <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Ingresa la contraseña">
@@ -493,7 +504,7 @@ slides:TequiVoz - Súper Interfaz Interactiva Premium con Base de Datos:index.ht
     <!-- ACCESIBILIDAD, FIREBASE Y SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Configuración de Estados
@@ -550,7 +561,7 @@ slides:TequiVoz - Súper Interfaz Interactiva Premium con Base de Datos:index.ht
                 { id: 1, type: "select", title: "¿Qué tanto te retó y entusiasmó el proyecto o actividad de la Comunidad hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Sin reto" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Retador" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épico!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo y el rol de asesores de tus Scouters de Comunidad hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo marcha la mística, planeación y trabajo interno dentro de tu Equipo?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Unión Fuerte", desc: "Excelente distribución de tareas y apoyo mutuo constante." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Desorganización", desc: "Dificultad para ponernos de acuerdo o apatía temporal." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Equipo", desc: "Se siente recarga de trabajo en pocos integrantes o exclusión." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que la actividad de hoy aporta a tu progresión de caminante (Búsqueda, Encuentro, Desafío)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Fortalece mis competencias y proyectos personales." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que las juntas se volvieron muy teóricas." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que la actividad de hoy aporta a tu progresión de caminante (Búsqueda, Encuentro, Desafío)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Fortalece mis proyectos personales y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que las juntas se volvieron muy teóricas." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles o viables ves los presupuestos para los proyectos de Comunidad?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿En qué área de proyectos te gustaría que la Comunidad de Caminantes se enfocara más?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición", desc: "Retos de montaña, campamento sin huella y cartografía avanzada." }, { val: "Servicio", icon: "❤️", title: "Impacto", desc: "Acción social real, voluntariado ecológico y proyectos comunitarios." }, { val: "Extremo", icon: "🧗", title: "Desafíos Físicos", desc: "Deportes de aventura, rapel, orientación y juegos extremos." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar un artículo del reglamento interno de la Comunidad, ¿cuál sería?", placeholder: "Escribe tu propuesta constructiva para el Congreso de Comunidad..." },
@@ -566,7 +577,7 @@ slides:TequiVoz - Súper Interfaz Interactiva Premium con Base de Datos:index.ht
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las actividades regionales o nacionales de Clan?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de proyectos de impacto o servicio social te gustaría que el Clan organizara?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición Extrema", desc: "Retos de alta montaña, supervivencia pura y autonomía." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Voluntariado social, ecología de impacto y desarrollo comunitario." }, { val: "Extremo", icon: "🧗", title: "Servicios Técnicos", desc: "Apoyo en desastres naturales, primeros auxilios avanzados y capacitación." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar una sola norma o acuerdo de nuestro Consejo de Clan, ¿cuál sería?", placeholder: "Escribe tu propuesta o reforma para el Consejo de Clan..." },
-                { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Gestión impecable de riesgos físicos y un espacio seguro de expresión." } ] },
+                { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Gestión de riesgos físicos impecable y un espacio seguro de expresión." } ] },
                 { id: 9, type: "grid", title: "¿Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
                 { id: 10, type: "textarea", title: "Para finalizar, propón una idea loca, innovadora o juego que nunca se haya hecho en el Grupo:", placeholder: "¡Ejemplo: Un juego de rol de supervivencia de 24 horas con retos de impacto social!" }
             ]
@@ -575,8 +586,7 @@ slides:TequiVoz - Súper Interfaz Interactiva Premium con Base de Datos:index.ht
         // Estado del banco de preguntas dinámico (se carga de localStorage o usa el default)
         let bancoPreguntas = JSON.parse(localStorage.getItem('bancoPreguntas_tequivoz')) || bancoPreguntasPredeterminado;
 
-        // Configuración y Inicialización Ficticia pero Funcional de Firebase (Simulación de Realtime Firestore en Frontend para GitHub Pages)
-        // Puedes cambiar estas credenciales por las tuyas reales de Firebase en tu consola de Google
+        // Configuración y Inicialización de Firebase (Simulación de Realtime Firestore en Frontend para GitHub Pages)
         const appId = 'tequivoz-gpo1';
         let firebaseConfig = {
             apiKey: "AIzaSyAs-demo-key-for-github-pages",
@@ -959,30 +969,32 @@ slides:TequiVoz - Súper Interfaz Interactiva Premium con Base de Datos:index.ht
         }
         window.mostrarModalAutenticar = mostrarModalAutenticar;
 
+        // VALIDACIÓN DE CREDENCIALES ASOCIANDO USUARIO SELECCIONADO Y CONTRASEÑA
         function validarCredenciales() {
-            const pass = document.getElementById('admin-pass').value.toLowerCase().trim();
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value.trim();
             let loginValido = false;
 
-            // Mapeo estricto de contraseñas requeridas
-            if (pass === 'm1') {
+            // Mapeo cruzado estricto de usuario seleccionado y contraseña
+            if (user === 'manada' && pass === 'm1') {
                 currentRolScouter = "Manada";
                 activeDashboardSection = "Manada";
                 loginValido = true;
-            } else if (pass === 't1') {
+            } else if (user === 'tropa' && pass === 't1') {
                 currentRolScouter = "Tropa";
                 activeDashboardSection = "Tropa";
                 loginValido = true;
-            } else if (pass === 'co1') {
+            } else if (user === 'comunidad' && pass === 'co1') {
                 currentRolScouter = "Comunidad";
                 activeDashboardSection = "Comunidad";
                 loginValido = true;
-            } else if (pass === 'cl1') {
+            } else if (user === 'clan' && pass === 'cl1') {
                 currentRolScouter = "Clan";
                 activeDashboardSection = "Clan";
                 loginValido = true;
-            } else if (pass === 'tequihua1') {
+            } else if (user === 'dirigencia' && pass === 'tequihua1') {
                 currentRolScouter = "Dirigencia";
-                activeDashboardSection = "Manada"; // Dirigencia abre Manada primero pero puede cambiar
+                activeDashboardSection = "Manada"; // Dirigencia abre Manada por defecto pero puede cambiar todas
                 loginValido = true;
             }
 

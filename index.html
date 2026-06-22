@@ -1,685 +1,866 @@
+:TequiVoz - La Súper Página Web Interactiva del Grupo 1 Tequihua:index.html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TequiVoz - Grupo 1 Tequihua</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans para estética limpia tipo Apple -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para iconografía avanzada -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS para diseño fluido y ultra-responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        manada: '#ffb703',
+                        tropa: '#06d6a0',
+                        comunidad: '#118ab2',
+                        clan: '#ef476f',
+                        appleDark: '#1d1d1f',
+                        appleGray: '#f5f5f7',
+                        appleAccent: '#0071e3'
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --color-principal: #6a1b9a;
-            --color-borde: #111111;
-            --color-fondo: #fcf8f2;
-            --color-manada: #ffd166;
-            --color-tropa: #06d6a0;
-            --color-comunidad: #118ab2;
-            --color-clan: #ef476f;
-            --sombra-neo: 5px 5px 0px #111111;
-            --sombra-neo-hover: 2px 2px 0px #111111;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Fredoka', 'Comic Sans MS', 'Segoe UI', sans-serif;
-        }
-
-        body {
-            background-color: var(--color-fondo);
-            color: #111;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* --- LOGO ESTILO RETRO / INTERACTIVO --- */
-        .badge-tequihua {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 4px solid var(--color-borde);
-            background: #111;
-            position: relative;
-            box-shadow: var(--sombra-neo);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: flotar 3s ease-in-out infinite;
-        }
-
-        .cuadrante-container {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            position: absolute;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-        }
-
-        .cuadrante { transition: transform 0.2s; }
-        .cuadrante.c-amarillo { background: var(--color-manada); }
-        .cuadrante.c-verde { background: var(--color-tropa); }
-        .cuadrante.c-azul { background: var(--color-comunidad); }
-        .cuadrante.c-rojo { background: var(--color-clan); }
-
-        .flor-de-lis-digital {
-            width: 70px;
-            height: 70px;
-            background: #7b2cbf;
-            border: 3px solid var(--color-borde);
-            border-radius: 50%;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 32px;
-            box-shadow: 2px 2px 0 #111;
-        }
-
-        @keyframes flotar {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(2deg); }
-        }
-
-        /* --- CONTENEDORES PRINCIPALES --- */
-        .tarjeta-pop {
-            background: #ffffff;
-            border: 3px solid var(--color-borde);
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 640px;
-            width: 100%;
-            box-shadow: var(--sombra-neo);
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .pantalla-inicio {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .titulo-app {
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            -webkit-text-stroke: 1px #111;
-            color: #111;
-            margin-bottom: 5px;
-            letter-spacing: -1px;
-        }
-
-        .subtitulo-app {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        /* --- BOTONES ESTILO ARCADE DE SECCIONES --- */
-        .grid-arcade-ramas {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            width: 100%;
-            margin-bottom: 25px;
-        }
-
-        .btn-arcade {
-            padding: 22px 15px;
-            border: 3px solid var(--color-borde);
-            border-radius: 20px;
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: #111;
-            cursor: pointer;
-            box-shadow: var(--sombra-neo);
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase;
-            position: relative;
+        /* Fondo fluido y orgánico Wix/Interdesign */
+        .gradient-bg {
+            background: radial-gradient(circle at 10% 20%, rgba(244, 247, 246, 1) 0%, rgba(230, 237, 235, 1) 90%);
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -2;
             overflow: hidden;
         }
 
-        .btn-arcade::after {
-            content: '';
+        .blob {
             position: absolute;
-            top: 5px; left: 8px; right: 8px; height: 35%;
-            background: rgba(255,255,255,0.4);
-            border-radius: 10px;
-            pointer-events: none;
+            background: linear-gradient(180deg, rgba(6, 214, 160, 0.15) 0%, rgba(17, 138, 178, 0.15) 100%);
+            filter: blur(80px);
+            border-radius: 50%;
+            animation: moveBlobs 25s infinite alternate ease-in-out;
+            z-index: -1;
         }
 
-        .btn-arcade:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 7px 7px 0px #111;
+        @keyframes moveBlobs {
+            0% { transform: translateY(0px) translateX(0px) scale(1); }
+            50% { transform: translateY(100px) translateX(150px) scale(1.3); }
+            100% { transform: translateY(-50px) translateX(-100px) scale(0.8); }
         }
 
-        .btn-arcade:active {
-            transform: translate(3px, 3px);
-            box-shadow: 2px 2px 0px #111;
+        /* Glassmorphism al estilo Apple Premium */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.45);
         }
 
-        .b-manada { background: var(--color-manada); }
-        .b-tropa { background: var(--color-tropa); }
-        .b-comunidad { background: var(--color-comunidad); color: white; }
-        .b-clan { background: var(--color-clan); color: white; }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
 
-        /* --- SENDERO DE CUERDA (PROGRESO JUEGO) --- */
-        .contenedor-juego {
+        /* Animaciones elásticas */
+        .transition-apple {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bounce-hover:hover {
+            transform: scale(1.025) translateY(-2px);
+        }
+
+        .bounce-hover:active {
+            transform: scale(0.98) translateY(0px);
+        }
+
+        /* Ocultar scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
-
-        .cuerda-progreso {
-            width: 100%;
-            height: 16px;
-            background: #e9d8a6;
-            border: 3px solid var(--color-borde);
-            border-radius: 10px;
-            position: relative;
-            margin: 20px 0 45px 0;
-            box-shadow: 3px 3px 0 #111;
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        .linea-nudos {
-            height: 100%;
-            width: 0%;
-            background: #9b5de5;
-            border-radius: 6px;
-            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .scout-token {
-            position: absolute;
-            top: -24px;
-            left: 0%;
-            font-size: 28px;
-            transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform: translateX(-50%);
-            filter: drop-shadow(2px 2px 0px #000);
-        }
-
-        .salto-anim {
-            animation: brincarToken 0.4s ease;
-        }
-
-        @keyframes brincarToken {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-15px) scale(1.2); }
-        }
-
-        /* --- TARJETAS DE PREGUNTAS --- */
-        .pregunta-bloque {
-            display: none;
-            text-align: left;
-            animation: aparecerCard 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        .pregunta-bloque.activa { display: block; }
-
-        @keyframes aparecerCard {
-            from { opacity: 0; transform: scale(0.92) translateY(15px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .texto-pregunta {
-            font-size: 1.4rem;
-            font-weight: 900;
-            margin-bottom: 25px;
-            line-height: 1.3;
-        }
-
-        /* --- INPUTS POP INTERACTIVOS --- */
-        .emojis-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px 0;
-        }
-
-        .emoji-card-btn {
-            font-size: 2.8rem;
-            background: white;
-            border: 3px solid var(--color-borde);
-            padding: 10px;
-            border-radius: 18px;
-            cursor: pointer;
-            box-shadow: 4px 4px 0 #111;
-            transition: all 0.15s;
-        }
-
-        .emoji-card-btn:hover {
-            transform: scale(1.15) translateY(-4px);
-            box-shadow: 6px 6px 0 #111;
-            background: #fff3b0;
-        }
-
-        .emoji-card-btn.seleccionado {
-            background: #f15bb5;
-            transform: scale(1.1) translate(2px, 2px);
-            box-shadow: 2px 2px 0 #111;
-        }
-
-        .slider-pop {
-            width: 100%;
-            height: 15px;
+        /* Estilo premium del slider de rango */
+        .apple-range {
             -webkit-appearance: none;
-            background: #e5e5e5;
-            border: 3px solid var(--color-borde);
-            border-radius: 10px;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e5e5e7;
             outline: none;
-            box-shadow: 3px 3px 0 #111;
         }
 
-        .slider-pop::-webkit-slider-thumb {
+        .apple-range::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 28px;
-            height: 28px;
+            appearance: none;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            background: #fee440;
-            border: 3px solid var(--color-borde);
+            background: #ffffff;
+            border: 2px solid #0071e3;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
             cursor: pointer;
-            box-shadow: 2px 2px 0 #111;
             transition: transform 0.1s;
         }
 
-        .slider-pop::-webkit-slider-thumb:active {
-            transform: scale(1.3);
-        }
-
-        .opciones-verticales {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .opcion-bloque-btn {
-            padding: 16px;
-            background: white;
-            border: 3px solid var(--color-borde);
-            border-radius: 16px;
-            text-align: left;
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 4px 4px 0 #111;
-            transition: all 0.1s;
-        }
-
-        .opcion-bloque-btn:hover {
-            background: #f0fdf4;
-            transform: translateY(-2px);
-            box-shadow: 5px 5px 0 #111;
-        }
-
-        .opcion-bloque-btn.seleccionado {
-            background: #00f5d4;
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0 #111;
-        }
-
-        textarea.input-texto-pop {
-            width: 100%;
-            height: 110px;
-            border: 3px solid var(--color-borde);
-            border-radius: 16px;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            box-shadow: inset 3px 3px 0px rgba(0,0,0,0.1), 4px 4px 0 #111;
-            outline: none;
-        }
-
-        textarea.input-texto-pop:focus {
-            background: #fffbf0;
-            border-color: #9b5de5;
-        }
-
-        /* --- BOTONES NAVEGACIÓN --- */
-        .barra-navegacion {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 35px;
-        }
-
-        .btn-nav-pop {
-            padding: 14px 28px;
-            border: 3px solid var(--color-borde);
-            border-radius: 14px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: var(--sombra-neo);
-            transition: all 0.1s;
-        }
-
-        .btn-nav-pop:active {
-            transform: translate(3px, 3px);
-            box-shadow: 1px 1px 0 #111;
-        }
-
-        .btn-izq { background: #e0e0e0; }
-        .btn-der { background: #00f5d4; }
-
-        .btn-scouter-link {
-            margin-top: 25px;
-            background: none;
-            border: none;
-            font-weight: 700;
-            text-decoration: underline;
-            cursor: pointer;
-            color: #555;
-        }
-
-        /* --- DASHBOARD SCOUT / IA --- */
-        .panel-scouter-pop {
-            display: none;
-            max-width: 850px;
-            width: 100%;
-            background: white;
-            border: 3px solid var(--color-borde);
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: var(--sombra-neo);
-        }
-
-        .ia-card-brutal {
-            background: #ccff33;
-            border: 3px solid var(--color-borde);
-            border-radius: 18px;
-            padding: 20px;
-            box-shadow: 4px 4px 0 #111;
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .ia-badge {
-            background: black;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 900;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-
-        .grafica-brutal {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            height: 180px;
-            border-bottom: 4px solid var(--color-borde);
-            padding: 10px;
-            margin: 20px 0;
-            background: #f3eae8;
-            border-radius: 12px;
-        }
-
-        .columna-barra {
-            width: 50px;
-            border: 3px solid var(--color-borde);
-            border-bottom: none;
-            border-radius: 8px 8px 0 0;
-            text-align: center;
-            font-weight: 900;
-            color: #111;
-            padding-top: 5px;
-            box-shadow: 3px 0px 0 #111;
+        .apple-range::-webkit-slider-thumb:active {
+            transform: scale(1.2);
         }
     </style>
 </head>
-<body>
+<body class="antialiased min-height-screen text-appleDark no-scrollbar">
 
-    <!-- PANTALLA INICIAL CON LOGO DEL GRUPO -->
-    <div id="pantalla-inicio" class="tarjeta-pop pantalla-inicio">
-        <div class="badge-tequihua">
-            <div class="cuadrante-container">
-                <div class="cuadrante c-amarillo"></div>
-                <div class="cuadrante c-azul"></div>
-                <div class="cuadrante c-verde"></div>
-                <div class="cuadrante c-rojo"></div>
-            </div>
-            <div class="flor-de-lis-digital">⚜️</div>
-        </div>
-        
-        <h1 class="titulo-app">TequiVoz</h1>
-        <p class="subtitulo-app">¡Tu opinión diseña la aventura del Grupo 1 Tequihua! Elige tu sección:</p>
-
-        <div class="grid-arcade-ramas">
-            <button class="btn-arcade b-manada" onclick="iniciarAventura('Manada')">Manada</button>
-            <button class="btn-arcade b-tropa" onclick="iniciarAventura('Tropa')">Tropa</button>
-            <button class="btn-arcade b-comunidad" onclick="iniciarAventura('Comunidad')">Comunidad</button>
-            <button class="btn-arcade b-clan" onclick="iniciarAventura('Clan')">Clan</button>
-        </div>
-
-        <button class="btn-scouter-link" onclick="abrirScouters()">Acceso de Representantes</button>
+    <!-- Fondo dinámico con blobs de color -->
+    <div class="gradient-bg">
+        <div class="blob w-[500px] h-[500px] top-[-10%] left-[-10%]"></div>
+        <div class="blob w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-duration: 35s;"></div>
     </div>
 
-    <!-- CONTENEDOR DE LA ENCUESTA GAMIFICADA -->
-    <div id="contenedor-juego" class="tarjeta-pop contenedor-juego">
-        
-        <!-- Línea de Cuerda del Mapa -->
-        <div class="cuerda-progreso">
-            <div id="linea-nudos" class="linea-nudos"></div>
-            <div id="scout-token" class="scout-token">⛺</div>
-        </div>
-
-        <div id="bloque-preguntas">
-            <!-- P1 -->
-            <div class="pregunta-bloque activa">
-                <p class="texto-pregunta">1. ¿Qué tan divertida estuvo la actividad del sábado pasado?</p>
-                <div class="emojis-row">
-                    <button class="emoji-card-btn" onclick="registrarP(1, 'Aburrida')">😴</button>
-                    <button class="emoji-card-btn" onclick="registrarP(1, 'Regular')">😐</button>
-                    <button class="emoji-card-btn" onclick="registrarP(1, 'Divertida')">😀</button>
-                    <button class="emoji-card-btn" onclick="registrarP(1, 'Épica')">🤩</button>
-                </div>
+    <!-- CABECERA FLOTANTE AL ESTILO DE APPLE -->
+    <nav class="glass-nav fixed top-0 left-0 w-full z-50 transition-apple px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <!-- Logo Oficial sin modificaciones -->
+            <img src="image_13d880.png" alt="Logo Grupo 1 Tequihua" class="h-14 w-auto drop-shadow-md">
+            <div>
+                <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-800 to-indigo-900 bg-clip-text text-transparent">TequiVoz</span>
+                <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest leading-none">Grupo 1 SLP</p>
             </div>
-
-            <!-- P2 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">2. Califica el desempeño y entusiasmo de tus Dirigentes/Scouters hoy:</p>
-                <input type="range" min="1" max="10" value="5" class="slider-pop" onchange="registrarP(2, this.value)">
-                <div style="display:flex; justify-content:space-between; margin-top:10px; font-weight:700; font-size:0.9rem;">
-                    <span>Falta dinamismo 🧭</span>
-                    <span>¡Estuvieron increíbles! ⭐</span>
-                </div>
-            </div>
-
-            <!-- P3 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">3. ¿Cómo sientes que es la comunicación y el ambiente dentro de tu Patrulla o Seisena?</p>
-                <div class="opciones-verticales">
-                    <button class="opcion-bloque-btn" onclick="registrarP(3, 'Muy unidos')">🤝 Nos apoyamos en todo y hay confianza.</button>
-                    <button class="opcion-bloque-btn" onclick="registrarP(3, 'Hay división')">⚡ Hay pequeños desacuerdos o grupitos.</button>
-                    <button class="opcion-bloque-btn" onclick="registrarP(3, 'Falta integración')">⛺ Casi no nos integramos bien.</button>
-                </div>
-            </div>
-
-            <!-- P4 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">4. ¿Sientes que estás avanzando o aprendiendo nuevas técnicas scouts?</p>
-                <div class="opciones-verticales">
-                    <button class="opcion-bloque-btn" onclick="registrarP(4, 'Sí')">💪 ¡Sí! Siento que domino más retos.</button>
-                    <button class="opcion-bloque-btn" onclick="registrarP(4, 'A medias')">⏳ Más o menos, nos hace falta salir más a campo.</button>
-                    <button class="opcion-bloque-btn" onclick="registrarP(4, 'No')">❌ No, siento que repetimos siempre lo mismo.</button>
-                </div>
-            </div>
-
-            <!-- P5 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">5. ¿Qué tan equilibrados sientes los costos de los campamentos?</p>
-                <input type="range" min="1" max="5" value="3" class="slider-pop" onchange="registrarP(5, this.value)">
-                <div style="display:flex; justify-content:space-between; margin-top:10px; font-weight:700; font-size:0.9rem;">
-                    <span>Muy Accesibles 🪙</span>
-                    <span>Difícil Costearlos 💸</span>
-                </div>
-            </div>
-
-            <!-- P6 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">6. ¿Qué tipo de actividades te gustaría que propongamos más?</p>
-                <div class="opciones-verticales">
-                    <button class="opcion-bloque-btn" onclick="registrarP(6, 'Supervivencia')">🌲 Campismo Salvaje y Supervivencia</button>
-                    <button class="opcion-bloque-btn" onclick="registrarP(6, 'Servicio')">❤️ Servicio Comunitario y Ecología</button>
-                    <button class="opcion-bloque-btn" onclick="registrarP(6, 'Extremo')">🧗 Grandes Acechos y Deportes Extremos</button>
-                </div>
-            </div>
-
-            <!-- P7 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">7. Si pudieras cambiar una sola dinámica del grupo para el próximo sábado, ¿cuál sería?</p>
-                <textarea class="input-texto-pop" placeholder="Escribe aquí tu propuesta constructiva..." oninput="registrarP(7, this.value)"></textarea>
-            </div>
-
-            <!-- P8 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">8. ¿Cómo calificarías la seguridad en las actividades externas?</p>
-                <div class="emojis-row">
-                    <button class="emoji-card-btn" onclick="registrarP(8, 'Inseguro')">⚠️</button>
-                    <button class="emoji-card-btn" onclick="registrarP(8, 'Bien')">👍</button>
-                    <button class="emoji-card-btn" onclick="registrarP(8, 'Excelente')">🛡️</button>
-                </div>
-            </div>
-
-            <!-- P9 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">9. ¿Consideras que la equidad e inclusión se aplican en el trato diario?</p>
-                <div class="opciones-verticales">
-                    <button class="opcion-bloque-btn" onclick="registrarP(9, 'Excelente')">✨ Excelente, todos jugamos por igual.</button>
-                    <button class="opcion-bloque-btn" onclick="registrarP(9, 'Excluyente')">💬 A veces se le da prioridad a unos cuantos.</button>
-                </div>
-            </div>
-
-            <!-- P10 -->
-            <div class="pregunta-bloque">
-                <p class="texto-pregunta">10. ¡Último reto! Déjanos una idea loca para el próximo campamento:</p>
-                <textarea class="input-texto-pop" placeholder="¡Haz volar tu creatividad scout aquí!" oninput="registrarP(10, this.value)"></textarea>
-            </div>
-        </div>
-
-        <div class="barra-navegacion">
-            <button id="nav-izq" class="btn-nav-pop btn-izq" onclick="moverPregunta(-1)" disabled>Atrás</button>
-            <button id="nav-der" class="btn-nav-pop btn-der" onclick="moverPregunta(1)">Siguiente</button>
-        </div>
-    </div>
-
-    <!-- PANEL DE CONTROL SCOUTER -->
-    <div id="panel-scouter" class="panel-scouter-pop">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2>Panel TequiVoz Admin ⚜️</h2>
-            <button class="btn-nav-pop btn-izq" onclick="cerrarScouters()">Salir</button>
         </div>
         
-        <div class="grafica-brutal">
-            <div class="columna-barra" style="height: 85%; background: var(--color-manada);">85%</div>
-            <div class="columna-barra" style="height: 60%; background: var(--color-tropa);">60%</div>
-            <div class="columna-barra" style="height: 75%; background: var(--color-comunidad);">75%</div>
-            <div class="columna-barra" style="height: 90%; background: var(--color-clan);">90%</div>
+        <div class="flex items-center gap-4">
+            <button onclick="mostrarModalAutenticar()" class="px-5 py-2.5 rounded-full bg-appleDark text-white text-sm font-semibold hover:bg-black transition-apple shadow-lg hover:shadow-xl active:scale-95 flex items-center gap-2">
+                <i class="fa-solid fa-user-shield"></i> Portal Scouter
+            </button>
         </div>
-        <div style="display:flex; justify-content:space-around; font-weight:900; font-size:0.9rem; margin-bottom:20px;">
-            <span>Manada</span><span>Tropa</span><span>Comunidad</span><span>Clan</span>
-        </div>
+    </nav>
 
-        <div class="ia-card-brutal">
-            <span class="ia-badge">🤖 ESTRATEGIA RECOMENDADA POR IA</span>
-            <p><strong>Alerta en Tropa (60%):</strong> Los muchachos externan que hay división y repetición de dinámicas tradicionales.</p>
-            <p style="margin-top:8px;"><strong>Solución sugerida:</strong> Romper la rutina del próximo sábado eliminando las bases estáticas. Implementar un juego de rol de gran acecho tecnológico que requiera intercomunicación forzada entre patrullas cooperativas.</p>
-        </div>
-    </div>
+    <!-- ÁREA PRINCIPAL DE CONTENIDO -->
+    <main class="pt-32 pb-16 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center min-h-[90vh]">
 
+        <!-- ================= BIENVENIDA / HERO ================= -->
+        <section id="pantalla-inicio" class="text-center transition-apple w-full">
+            <span class="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-widest inline-block mb-6 shadow-sm">Representación Juvenil</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
+                Tu voz es el mapa de <br><span class="bg-gradient-to-r from-emerald-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent">nuestras aventuras.</span>
+            </h1>
+            <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto mb-12 font-medium">
+                TequiVoz es la plataforma gamificada para medir, proponer y diseñar las mejores actividades scouts del Grupo 1 Tequihua. Elige tu sección para comenzar tu viaje.
+            </p>
+
+            <!-- Grid de Secciones con Micro-interacciones de alta fidelidad -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8">
+                <!-- Manada -->
+                <button onclick="empezarEncuesta('Manada')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-manada flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                    <div class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 text-2xl shadow-inner"><i class="fa-solid fa-wolf-pack-battalion"></i></div>
+                    <div>
+                        <span class="font-extrabold text-lg block">Manada</span>
+                        <p class="text-xs text-gray-400 font-bold uppercase">Lobatos</p>
+                    </div>
+                </button>
+
+                <!-- Tropa -->
+                <button onclick="empezarEncuesta('Tropa')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-tropa flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                    <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl shadow-inner"><i class="fa-solid fa-compass"></i></div>
+                    <div>
+                        <span class="font-extrabold text-lg block">Tropa</span>
+                        <p class="text-xs text-gray-400 font-bold uppercase">Scouts</p>
+                    </div>
+                </button>
+
+                <!-- Comunidad -->
+                <button onclick="empezarEncuesta('Comunidad')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-comunidad flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                    <div class="w-16 h-16 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 text-2xl shadow-inner"><i class="fa-solid fa-mountain"></i></div>
+                    <div>
+                        <span class="font-extrabold text-lg block">Comunidad</span>
+                        <p class="text-xs text-gray-400 font-bold uppercase">Caminantes</p>
+                    </div>
+                </button>
+
+                <!-- Clan -->
+                <button onclick="empezarEncuesta('Clan')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-clan flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                    <div class="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 text-2xl shadow-inner"><i class="fa-solid fa-route"></i></div>
+                    <div>
+                        <span class="font-extrabold text-lg block">Clan</span>
+                        <p class="text-xs text-gray-400 font-bold uppercase">Rovers</p>
+                    </div>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= PANEL DE ENCUESTA GAMIFICADA ================= -->
+        <section id="contenedor-encuesta" class="hidden transition-apple w-full">
+            <div class="glass-panel rounded-[32px] p-6 md:p-10 shadow-2xl">
+                
+                <!-- Sendero de Progreso Creativo -->
+                <div class="mb-10">
+                    <div class="flex justify-between items-center mb-3">
+                        <span id="badge-seccion-activa" class="text-xs font-black uppercase px-3 py-1 rounded-full text-white tracking-widest shadow-sm">Sección</span>
+                        <span id="contador-progreso" class="text-xs font-bold text-gray-400">Pregunta 1 de 10</span>
+                    </div>
+                    <!-- Sendero con textura de cuerda scout -->
+                    <div class="relative w-full h-3 bg-gray-200 rounded-full overflow-visible border border-gray-300">
+                        <div id="progreso-barra" class="h-full bg-gradient-to-r from-emerald-500 to-indigo-600 rounded-full transition-all duration-500" style="width: 10%;"></div>
+                        <!-- Token flotante -->
+                        <div id="token-scout" class="absolute top-[-10px] left-[10%] -translate-x-1/2 transition-all duration-500 text-2xl filter drop-shadow-md">⛺</div>
+                    </div>
+                </div>
+
+                <!-- Bloques Dinámicos de Preguntas -->
+                <div id="formulario-preguntas">
+                    
+                    <!-- P1: Diversómetro -->
+                    <div class="pregunta-tarjeta block">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 01</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Qué tan divertida estuvo la actividad del sábado pasado?</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <button onclick="setRespuesta(1, 'Aburrida', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center">
+                                <span class="text-4xl block mb-3">😴</span>
+                                <span class="font-bold text-sm text-gray-600">Poco interactivo</span>
+                            </button>
+                            <button onclick="setRespuesta(1, 'Regular', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center">
+                                <span class="text-4xl block mb-3">😐</span>
+                                <span class="font-bold text-sm text-gray-600">Regular</span>
+                            </button>
+                            <button onclick="setRespuesta(1, 'Divertida', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center">
+                                <span class="text-4xl block mb-3">😀</span>
+                                <span class="font-bold text-sm text-gray-600">Divertida</span>
+                            </button>
+                            <button onclick="setRespuesta(1, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white shadow-sm hover:shadow-md transition-apple text-center">
+                                <span class="text-4xl block mb-3">🤩</span>
+                                <span class="font-bold text-sm text-gray-600">¡Épica!</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- P2: Relación Dirigentes -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 02</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Cómo evaluarías el entusiasmo y apoyo de tus Dirigentes (Scouters) hoy?</h2>
+                        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-6">
+                            <input type="range" min="1" max="10" value="5" id="slider-p2" oninput="actualizarFeedbackSlider(this.value)" class="apple-range mb-4">
+                            <div class="flex justify-between font-bold text-xs text-gray-400">
+                                <span>Falta Dinamismo 🧭</span>
+                                <span>¡Estuvieron Increíbles! 🌟</span>
+                            </div>
+                        </div>
+                        <p class="text-center font-extrabold text-indigo-600 text-lg" id="feedback-slider-p2">Calificación: 5 - Neutro</p>
+                    </div>
+
+                    <!-- P3: Sinergia de Patrulla -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 03</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Cómo se siente la comunicación y el trabajo en equipo dentro de tu Patrulla / Seisena?</h2>
+                        <div class="flex flex-col gap-4">
+                            <button onclick="setRespuesta(3, 'Fuerte', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600"><i class="fa-solid fa-hands-holding"></i></div>
+                                <div>
+                                    <span class="block">Gran Unión</span>
+                                    <span class="text-xs text-gray-400 font-normal">Nos apoyamos en cada reto, hay confianza total.</span>
+                                </div>
+                            </button>
+                            <button onclick="setRespuesta(3, 'Division', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600"><i class="fa-solid fa-bolt"></i></div>
+                                <div>
+                                    <span class="block">Leve División</span>
+                                    <span class="text-xs text-gray-400 font-normal">Hay desacuerdos ocasionales o subgrupos formados.</span>
+                                </div>
+                            </button>
+                            <button onclick="setRespuesta(3, 'FaltaIntegracion', this)" class="p-5 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white text-left font-bold transition-apple flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600"><i class="fa-solid fa-circle-exclamation"></i></div>
+                                <div>
+                                    <span class="block">Falta Integración</span>
+                                    <span class="text-xs text-gray-400 font-normal">Se siente exclusión o apatía en las dinámicas de grupo.</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- P4: Avance y Progresión -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 04</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Sientes que las actividades de hoy aportaron a tu progresión personal o insignias?</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button onclick="setRespuesta(4, 'Si', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                                <span class="text-3xl">🏅</span>
+                                <span>¡Sí, totalmente!</span>
+                                <p class="text-xs font-normal text-gray-400">Aprendí nuevas técnicas y reforcé habilidades.</p>
+                            </button>
+                            <button onclick="setRespuesta(4, 'Medias', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                                <span class="text-3xl">⏳</span>
+                                <span>A medias</span>
+                                <p class="text-xs font-normal text-gray-400">Hubo algo de aprendizaje pero falto práctica real.</p>
+                            </button>
+                            <button onclick="setRespuesta(4, 'No', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                                <span class="text-3xl">❌</span>
+                                <span>No aportó</span>
+                                <p class="text-xs font-normal text-gray-400">Sentí que repetimos los mismos temas de siempre.</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- P5: Economía de Eventos -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 05</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Qué tan accesibles sientes los costos de los eventos y campamentos programados?</h2>
+                        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-6">
+                            <input type="range" min="1" max="5" value="3" id="slider-p5" oninput="actualizarFeedbackP5(this.value)" class="apple-range mb-4">
+                            <div class="flex justify-between font-bold text-xs text-gray-400">
+                                <span>Accesibles / Fáciles de Costear 🪙</span>
+                                <span>Muy Caros / Difícil Participar 💸</span>
+                            </div>
+                        </div>
+                        <p class="text-center font-extrabold text-indigo-600 text-lg" id="feedback-slider-p5">Escala: 3 - Balanceado</p>
+                    </div>
+
+                    <!-- P6: Preferencias de Actividades -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 06</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Qué tipo de actividades te gustaría que propusiéramos con mayor frecuencia en los Consejos?</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button onclick="setRespuesta(6, 'Supervivencia', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3">
+                                <span class="text-4xl">🌲</span>
+                                <span>Técnicas de Supervivencia</span>
+                                <span class="text-xs text-gray-400 font-normal">Campismo, pionerismo avanzado y orientación.</span>
+                            </button>
+                            <button onclick="setRespuesta(6, 'Servicio', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3">
+                                <span class="text-4xl">❤️</span>
+                                <span>Servicio Comunitario</span>
+                                <span class="text-xs text-gray-400 font-normal">Ecología, voluntariado social y apoyo humanitario.</span>
+                            </button>
+                            <button onclick="setRespuesta(6, 'Extremo', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-3">
+                                <span class="text-4xl">🧗</span>
+                                <span>Juegos de Acecho / Extremos</span>
+                                <span class="text-xs text-gray-400 font-normal">Grandes estrategias, retos de destreza física.</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- P7: El Gran Cambio -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 07</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">Si pudieras cambiar o mejorar una sola regla de nuestras actividades habituales, ¿cuál sería?</h2>
+                        <div class="relative">
+                            <textarea id="texto-p7" rows="4" class="w-full rounded-2xl border-2 border-gray-200 focus:border-indigo-500 bg-white p-5 font-medium outline-none transition-apple shadow-inner resize-none" placeholder="Escribe aquí tu propuesta constructiva..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- P8: Seguridad de Campo -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 08</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Cómo consideras la seguridad y los protocolos durante los campamentos o salidas externas?</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button onclick="setRespuesta(8, 'Inseguro', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                                <span class="text-3xl">⚠️</span>
+                                <span>Deficiente</span>
+                                <p class="text-xs font-normal text-gray-400">Hay descuidos o falta de información sobre riesgos.</p>
+                            </button>
+                            <button onclick="setRespuesta(8, 'Bien', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                                <span class="text-3xl">👍</span>
+                                <span>Buena</span>
+                                <p class="text-xs font-normal text-gray-400">Me siento seguro en la mayoría de las dinámicas.</p>
+                            </button>
+                            <button onclick="setRespuesta(8, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                                <span class="text-3xl">🛡️</span>
+                                <span>Excelente</span>
+                                <p class="text-xs font-normal text-gray-400">Monitoreo constante, botiquín y zonas delimitadas.</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- P9: Inclusión y Respeto -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 09</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">¿Sientes que existe un ambiente inclusivo y equitativo en el trato de todos en tu sección?</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <button onclick="setRespuesta(9, 'Excelente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                                <span class="text-3xl">✨</span>
+                                <span>Siempre hay respeto</span>
+                                <p class="text-xs font-normal text-gray-400">Se escuchan todas las opiniones sin importar el género o rango.</p>
+                            </button>
+                            <button onclick="setRespuesta(9, 'Excluyente', this)" class="p-6 rounded-2xl border-2 border-gray-200 hover:border-indigo-500 bg-white font-bold transition-apple text-center flex flex-col items-center gap-2">
+                                <span class="text-3xl">💬</span>
+                                <span>A veces hay exclusión</span>
+                                <p class="text-xs font-normal text-gray-400">Siento favoritismos o rechazo de ciertos integrantes.</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- P10: Idea Loca -->
+                    <div class="pregunta-tarjeta hidden">
+                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">Pregunta 10</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">Para finalizar, propón una idea loca, innovadora o juego que nunca se haya hecho en el Grupo:</h2>
+                        <div class="relative">
+                            <textarea id="texto-p10" rows="4" class="w-full rounded-2xl border-2 border-gray-200 focus:border-indigo-500 bg-white p-5 font-medium outline-none transition-apple shadow-inner resize-none" placeholder="¡Ejemplo: Un juego de rol de espionaje nocturno con sensores o supervivencia total!"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Botones de Navegación del Prototipo -->
+                <div class="barra-navegacion">
+                    <button id="btn-anterior" onclick="cambiarP(-1)" class="btn-nav-pop btn-izq text-gray-600 hover:bg-gray-200" disabled><i class="fa-solid fa-arrow-left mr-2"></i> Atrás</button>
+                    <button id="btn-siguiente" onclick="cambiarP(1)" class="btn-nav-pop btn-der text-white hover:opacity-90">Siguiente <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= BIOMETRIC / PASSWORD GATEWAY ================= -->
+        <section id="puerta-autenticacion" class="hidden transition-apple w-full max-w-md mx-auto text-center">
+            <div class="glass-panel rounded-[32px] p-8 shadow-2xl">
+                <!-- FaceID simulator -->
+                <div class="relative w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                    <div id="biometric-ring" class="absolute inset-0 border-4 border-gray-200 rounded-full transition-all duration-[2s]"></div>
+                    <i id="biometric-icon" class="fa-solid fa-face-id text-gray-300 text-5xl"></i>
+                </div>
+                <h3 class="text-xl font-extrabold mb-2">Acceso Scouters & Representantes</h3>
+                <p class="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-6">Confirmación de Privacidad</p>
+                
+                <div class="flex flex-col gap-4 text-left">
+                    <div>
+                        <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Clave Tequihua</label>
+                        <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Ingresa la contraseña">
+                    </div>
+                    <button onclick="validarCredenciales()" class="w-full py-3.5 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple">Verificar Identidad</button>
+                    <button onclick="regresarAlInicio()" class="text-xs text-gray-400 font-extrabold uppercase hover:text-gray-600 transition-apple">Cancelar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ANALYTICS DASHBOARD (CON IA REAL) ================= -->
+        <section id="panel-scouter" class="hidden transition-apple w-full">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-3xl font-extrabold tracking-tight">TequiRadar Analytics ⚜️</h2>
+                    <p class="text-gray-500 text-sm font-medium">Registro continuo de la satisfacción juvenil</p>
+                </div>
+                <button onclick="regresarAlInicio()" class="px-5 py-2 rounded-full border-2 border-gray-300 font-bold hover:bg-gray-100 transition-apple"><i class="fa-solid fa-arrow-left-long mr-2"></i> Salir</button>
+            </div>
+
+            <!-- Grid Analítico -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                
+                <!-- Tarjeta 1: Gráfico Reactivo a Respuestas -->
+                <div class="glass-panel rounded-3xl p-6 shadow-lg md:col-span-2">
+                    <h3 class="font-extrabold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-simple text-indigo-500"></i> Desempeño General Reciente</h3>
+                    
+                    <!-- Gráfico de Barras Dinámico -->
+                    <div class="h-64 flex items-end justify-between px-4 pb-2 border-b border-gray-200 pt-6">
+                        <div class="flex flex-col items-center gap-2 w-12">
+                            <div id="chart-fun" class="w-full bg-yellow-400 rounded-t-lg transition-apple" style="height: 75px;"></div>
+                            <span class="text-[10px] font-black uppercase text-gray-400">Diversión</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-12">
+                            <div id="chart-leaders" class="w-full bg-emerald-400 rounded-t-lg transition-apple" style="height: 120px;"></div>
+                            <span class="text-[10px] font-black uppercase text-gray-400">Soporte</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-12">
+                            <div id="chart-teamwork" class="w-full bg-sky-400 rounded-t-lg transition-apple" style="height: 90px;"></div>
+                            <span class="text-[10px] font-black uppercase text-gray-400">Unión</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-12">
+                            <div id="chart-progression" class="w-full bg-rose-400 rounded-t-lg transition-apple" style="height: 110px;"></div>
+                            <span class="text-[10px] font-black uppercase text-gray-400">Avanzar</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-12">
+                            <div id="chart-safety" class="w-full bg-violet-400 rounded-t-lg transition-apple" style="height: 160px;"></div>
+                            <span class="text-[10px] font-black uppercase text-gray-400">Seguro</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 font-semibold mt-4">Los gráficos se actualizan en vivo sumando la respuesta actual del scout al histórico.</p>
+                </div>
+
+                <!-- Tarjeta 2: Métricas del Lector Reciente -->
+                <div class="glass-panel rounded-3xl p-6 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-emerald-500"></i> Última Entrada</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">SECCIÓN:</span> <span id="dash-seccion" class="font-black text-xs px-2 py-0.5 rounded text-white bg-slate-800">Manada</span></div>
+                            <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">DIVERSIÓN:</span> <span id="dash-diversion" class="font-black text-xs">Sin Datos</span></div>
+                            <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">LIDERAZGO:</span> <span id="dash-lider" class="font-black text-xs">Sin Datos</span></div>
+                            <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">TRABAJO EQUIPO:</span> <span id="dash-equipo" class="font-black text-xs">Sin Datos</span></div>
+                            <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">TASA PROGRESO:</span> <span id="dash-progreso" class="font-black text-xs">Sin Datos</span></div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 bg-gray-50 rounded-2xl p-4">
+                        <span class="text-[10px] font-black text-emerald-800 uppercase block mb-1">Estatus del Servidor</span>
+                        <div class="flex items-center gap-2 text-emerald-600 font-extrabold text-xs"><i class="fa-solid fa-circle-check animate-pulse"></i> Sincronizado en Tiempo Real</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RECOMENDACIÓN IA DINÁMICA (Procesa respuestas reales) -->
+            <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12">
+                    <i class="fa-solid fa-brain text-[200px]"></i>
+                </div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-emerald-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider shadow-md"><i class="fa-solid fa-robot mr-1"></i> TequiVoz AI Engine</span>
+                    <span class="text-xs text-gray-300 font-semibold">Análisis Pedagógico del Grupo 1</span>
+                </div>
+                <h3 class="text-xl md:text-2xl font-extrabold mb-4 leading-tight">Plan de Acción Estratégico Generado</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Diagnóstico Inicial de Riesgos</span>
+                        <p id="ia-diagnostico" class="text-gray-300 text-sm font-medium leading-relaxed">
+                            Contesta primero una encuesta para ver cómo el motor de IA realiza el análisis pedagógico en vivo.
+                        </p>
+                    </div>
+
+                    <div>
+                        <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Líneas de Acción Inmediatas sugeridas</span>
+                        <p id="ia-accion" class="text-gray-300 text-sm font-medium leading-relaxed">
+                            Las recomendaciones se adaptan de forma inteligente a cada rama analizada.
+                        </p>
+                    </div>
+                    
+                    <div id="ia-sugerencias-container" class="hidden bg-white/5 border border-white/10 rounded-2xl p-4">
+                        <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-2"><i class="fa-regular fa-comment-dots mr-1"></i> Sugerencia de Cambio Directa del Alumno</span>
+                        <p id="ia-sugerencia-alberto" class="text-gray-300 text-xs italic font-medium">...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ACCESIBILIDAD Y SCRIPTS -->
     <script>
-        let pActual = 0;
-        const totalP = 10;
-        let datos = {};
+        // Configuración de Estados
+        let seccionActiva = "";
+        let preguntaActual = 0;
+        const totalPreguntas = 10;
+        
+        // Historial base simulado
+        let respuestasHistoricas = {
+            fun: [8, 9, 6, 8, 7],
+            leaders: [9, 10, 8, 9, 7],
+            teamwork: [7, 8, 6, 8, 5],
+            progression: [8, 9, 7, 8, 6],
+            safety: [9, 9, 8, 10, 9]
+        };
 
-        function iniciarAventura(rama) {
-            document.getElementById('pantalla-inicio').style.display = 'none';
-            document.getElementById('contenedor-juego').style.display = 'block';
-            
-            if(rama === 'Manada') document.body.style.backgroundColor = '#fffbeb';
-            if(rama === 'Tropa') document.body.style.backgroundColor = '#f0fdf4';
-            if(rama === 'Comunidad') document.body.style.backgroundColor = '#ecfeff';
-            if(rama === 'Clan') document.body.style.backgroundColor = '#fff5f5';
+        // Estado actual de respuestas
+        let respuestasSesion = {
+            rama: "",
+            p1: "", // Diversidad (Aburrida, Regular, Divertida, Excelente)
+            p2: 5,  // Desempeño Dirigentes (1-10)
+            p3: "", // Sinergia (Fuerte, Division, FaltaIntegracion)
+            p4: "", // Progresión (Si, Medias, No)
+            p5: 3,  // Economía (1-5)
+            p6: "", // Áreas (Supervivencia, Servicio, Extremo)
+            p7: "", // Texto libre cambio
+            p8: "", // Seguridad (Inseguro, Bien, Excelente)
+            p9: "", // Equidad (Excelente, Excluyente)
+            p10: "" // Idea Loca
+        };
 
-            actualizarGraficos();
+        // Iniciar flujo de preguntas
+        function empezarEncuesta(rama) {
+            seccionActiva = rama;
+            respuestasSesion.rama = rama;
+            preguntaActual = 0;
+
+            // Cambios estéticos de fondo según rama al estilo premium
+            const body = document.body;
+            if(rama === 'Manada') {
+                body.style.backgroundColor = '#fffbeb';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-manada)';
+            }
+            if(rama === 'Tropa') {
+                body.style.backgroundColor = '#f0fdf4';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-tropa)';
+            }
+            if(rama === 'Comunidad') {
+                body.style.backgroundColor = '#ecfeff';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-comunidad)';
+            }
+            if(rama === 'Clan') {
+                body.style.backgroundColor = '#fff5f5';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-clan)';
+            }
+
+            document.getElementById('badge-seccion-activa').innerText = rama;
+
+            document.getElementById('pantalla-inicio').classList.add('hidden');
+            document.getElementById('contenedor-encuesta').classList.remove('hidden');
+
+            renderPreguntaActiva();
         }
 
-        function moverPregunta(dir) {
-            const bloques = document.querySelectorAll('.pregunta-bloque');
-            bloques[pActual].classList.remove('activa');
+        // Renderizado del Prototipo de Preguntas
+        function renderPreguntaActiva() {
+            const tarjetas = document.querySelectorAll('.pregunta-tarjeta');
+            tarjetas.forEach((t, i) => {
+                if(i === preguntaActual) {
+                    t.classList.remove('hidden');
+                    t.classList.add('block');
+                } else {
+                    t.classList.remove('block');
+                    t.classList.add('hidden');
+                }
+            });
 
-            pActual += dir;
+            // Actualizar número de contador
+            document.getElementById('contador-progreso').innerText = `Pregunta ${preguntaActual + 1} de ${totalPreguntas}`;
 
-            if(pActual >= totalP) {
-                alert("¡Felicidades! Has completado el recorrido y dejado tu huella en el consejo.");
-                volverAlInicio();
+            // Actualizar la barra de progreso elástica y el token
+            const pct = ((preguntaActual) / (totalPreguntas - 1)) * 100;
+            document.getElementById('progreso-barra').style.width = pct + '%';
+            document.getElementById('token-scout').style.left = pct + '%';
+
+            // Animación de bote del token scout
+            const token = document.getElementById('token-scout');
+            token.style.transform = 'scale(1.3) translateX(-40%)';
+            setTimeout(() => {
+                token.style.transform = 'scale(1) translateX(-50%)';
+            }, 300);
+
+            // Activar o desactivar botón de navegación
+            document.getElementById('btn-anterior').disabled = (preguntaActual === 0);
+            
+            // Texto del botón siguiente al final
+            if (preguntaActual === totalPreguntas - 1) {
+                document.getElementById('btn-siguiente').innerHTML = 'Terminar Aventura <i class="fa-solid fa-circle-check ml-2"></i>';
+            } else {
+                document.getElementById('btn-siguiente').innerHTML = 'Siguiente <i class="fa-solid fa-arrow-right ml-2"></i>';
+            }
+        }
+
+        // Registrar Respuestas de Click
+        function setRespuesta(pregunta, valor, btn) {
+            respuestasSesion[`p${pregunta}`] = valor;
+            
+            // Estilo visual del botón seleccionado en la pregunta actual
+            const container = btn.parentNode;
+            const buttons = container.querySelectorAll('button');
+            buttons.forEach(b => {
+                b.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
+                b.classList.add('border-gray-200', 'bg-white');
+            });
+            btn.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
+            btn.classList.remove('border-gray-200', 'bg-white');
+        }
+
+        // Feedback visual slider P2
+        function actualizarFeedbackSlider(val) {
+            respuestasSesion.p2 = parseInt(val);
+            let texto = "";
+            if (val <= 3) texto = "Falta Dinamismo 🧭";
+            else if (val <= 6) texto = "Neutro / Regular";
+            else if (val <= 8) texto = "¡Muy bueno y amigable! 👍";
+            else texto = "¡Excelente, Leyendas! 🌟";
+            document.getElementById('feedback-slider-p2').innerText = `Calificación: ${val} - ${texto}`;
+        }
+
+        // Feedback visual slider P5
+        function actualizarFeedbackP5(val) {
+            respuestasSesion.p5 = parseInt(val);
+            let texto = "";
+            if (val <= 2) texto = "Excelente / Muy accesible";
+            else if (val == 3) texto = "Moderado / Balanceado";
+            else texto = "Muy caro / Requiere esfuerzo para costearlo";
+            document.getElementById('feedback-slider-p5').innerText = `Calificación: ${val} - ${texto}`;
+        }
+
+        // Controladores de navegación de encuesta
+        function cambiarP(direccion) {
+            // Guardar valores de inputs abiertos si estamos en las preguntas 7 u 10
+            if (preguntaActual === 6) {
+                respuestasSesion.p7 = document.getElementById('texto-p7').value;
+            }
+            if (preguntaActual === 9) {
+                respuestasSesion.p10 = document.getElementById('texto-p10').value;
+            }
+
+            preguntaActual += direccion;
+
+            if (preguntaActual >= totalPreguntas) {
+                procesarEncuestaCompleta();
                 return;
             }
 
-            bloques[pActual].classList.add('activa');
+            renderPreguntaActiva();
+        }
+
+        // Retornar a la vista Home
+        function regresarAlInicio() {
+            document.getElementById('contenedor-encuesta').classList.add('hidden');
+            document.getElementById('puerta-autenticacion').classList.add('hidden');
+            document.getElementById('panel-scouter').classList.add('hidden');
+            document.getElementById('pantalla-inicio').classList.remove('hidden');
+            document.body.style.backgroundColor = '#fcf8f2';
+        }
+
+        // Procesar respuestas y calcular IA dinámicamente
+        function procesarEncuestaCompleta() {
+            alert(`¡Excelente aventura, tu registro para la sección de ${seccionActiva} ha sido procesado de manera segura!`);
             
-            // Animación de salto de token scout
-            const avatar = document.getElementById('scout-token');
-            avatar.classList.add('salto-anim');
-            setTimeout(() => avatar.classList.remove('salto-anim'), 400);
+            // Inyectar la sesión activa al historial base
+            let funScore = respuestasSesion.p1 === 'Excelente' ? 10 : (respuestasSesion.p1 === 'Divertida' ? 8 : (respuestasSesion.p1 === 'Regular' ? 5 : 3));
+            let supportScore = respuestasSesion.p2;
+            let teamworkScore = respuestasSesion.p3 === 'Fuerte' ? 10 : (respuestasSesion.p3 === 'Division' ? 6 : 3);
+            let progressionScore = respuestasSesion.p4 === 'Si' ? 10 : (respuestasSesion.p4 === 'Medias' ? 6 : 3);
+            let safetyScore = respuestasSesion.p8 === 'Excelente' ? 10 : (respuestasSesion.p8 === 'Bien' ? 7 : 4);
 
-            document.getElementById('nav-izq').disabled = (pActual === 0);
-            document.getElementById('nav-der').innerText = (pActual === totalP - 1) ? "Finalizar" : "Siguiente";
+            respuestasHistoricas.fun.push(funScore);
+            respuestasHistoricas.leaders.push(supportScore);
+            respuestasHistoricas.teamwork.push(teamworkScore);
+            respuestasHistoricas.progression.push(progressionScore);
+            respuestasHistoricas.safety.push(safetyScore);
 
-            actualizarGraficos();
+            // Cargar datos a la vista del panel de control
+            document.getElementById('dash-seccion').innerText = respuestasSesion.rama;
+            document.getElementById('dash-seccion').style.backgroundColor = `var(--color-${respuestasSesion.rama.toLowerCase()})`;
+            document.getElementById('dash-diversion').innerText = respuestasSesion.p1 || "No respondido";
+            document.getElementById('dash-lider').innerText = respuestasSesion.p2 + " / 10";
+            document.getElementById('dash-equipo').innerText = respuestasSesion.p3 === 'Fuerte' ? "Excelente" : (respuestasSesion.p3 === 'Division' ? "Divisiones leves" : "Crítico");
+            document.getElementById('dash-progreso').innerText = respuestasSesion.p4 === 'Si' ? "Progresando" : "Lento";
+
+            // Recalcular gráficas e IA
+            actualizarGraficasBrutales();
+            ejecutarMotorIA();
+
+            regresarAlInicio();
         }
 
-        function actualizarGraficos() {
-            const pct = (pActual / (totalP - 1)) * 100;
-            document.getElementById('linea-nudos').style.width = pct + '%';
-            document.getElementById('scout-token').style.left = pct + '%';
+        // Renderizado del Gráfico de Barras SVG con los nuevos datos
+        function actualizarGraficasBrutales() {
+            // Calcular promedios aritméticos simples de los históricos
+            const getPromedio = arr => (arr.reduce((a,b) => a+b, 0) / arr.length) * 10; // escala 100%
+
+            document.getElementById('chart-fun').style.height = getPromedio(respuestasHistoricas.fun) + '%';
+            document.getElementById('chart-fun').innerText = Math.round(getPromedio(respuestasHistoricas.fun)) + '%';
+            
+            document.getElementById('chart-leaders').style.height = getPromedio(respuestasHistoricas.leaders) + '%';
+            document.getElementById('chart-leaders').innerText = Math.round(getPromedio(respuestasHistoricas.leaders)) + '%';
+            
+            document.getElementById('chart-teamwork').style.height = getPromedio(respuestasHistoricas.teamwork) + '%';
+            document.getElementById('chart-teamwork').innerText = Math.round(getPromedio(respuestasHistoricas.teamwork)) + '%';
+            
+            document.getElementById('chart-progression').style.height = getPromedio(respuestasHistoricas.progression) + '%';
+            document.getElementById('chart-progression').innerText = Math.round(getPromedio(respuestasHistoricas.progression)) + '%';
+            
+            document.getElementById('chart-safety').style.height = getPromedio(respuestasHistoricas.safety) + '%';
+            document.getElementById('chart-safety').innerText = Math.round(getPromedio(respuestasHistoricas.safety)) + '%';
         }
 
-        function registrarP(pregunta, valor) {
-            datos[`p${pregunta}`] = valor;
-            const contenedor = document.querySelectorAll('.pregunta-bloque')[pActual];
-            const btns = contenedor.querySelectorAll('.emoji-card-btn, .opcion-bloque-btn');
-            btns.forEach(b => b.classList.remove('seleccionado'));
-            if(event && event.currentTarget) {
-                event.currentTarget.classList.add('seleccionado');
-            }
-        }
+        // MOTOR IA ANALÍTICO EN TIEMPO REAL
+        function ejecutarMotorIA() {
+            let rama = respuestasSesion.rama || "Tropa";
+            let p1 = respuestasSesion.p1 || "Excelente";
+            let p2 = respuestasSesion.p2 || 8;
+            let p3 = respuestasSesion.p3 || "Fuerte";
+            let p4 = respuestasSesion.p4 || "Si";
+            let p7 = respuestasSesion.p7 || "";
 
-        function volverAlInicio() {
-            pActual = 0;
-            datos = {};
-            document.getElementById('contenedor-juego').style.display = 'none';
-            document.getElementById('pantalla-inicio').style.display = 'block';
-            document.body.style.backgroundColor = 'var(--color-fondo)';
-            const bloques = document.querySelectorAll('.pregunta-bloque');
-            bloques.forEach(b => b.classList.remove('activa'));
-            bloques[0].classList.add('activa');
-            document.getElementById('nav-izq').disabled = true;
-            document.getElementById('nav-der').innerText = "Siguiente";
-        }
+            let diagnostico = "";
+            let accion = "";
 
-        function abrirScouters() {
-            const p = prompt("Contraseña de Representantes:");
-            if(p === "Tequihua1") {
-                document.getElementById('pantalla-inicio').style.display = 'none';
-                document.getElementById('panel-scouter').style.display = 'block';
+            // Motor de decisiones lógicas basadas en pedagogía Scout
+            if (p1 === "Aburrida" || p1 === "Regular") {
+                diagnostico += `ALERTA DE RUTINA EN ${rama.toUpperCase()}: Los scouts indican que el dinamismo el sábado pasado no capturó su interés. `;
+                accion += "• Cambiar el esquema de bases estáticas de instrucción por un formato 'Raid' interactivo con retos cronometrados. ";
             } else {
-                alert("Acceso denegado.");
+                diagnostico += `SALUD CREATIVA BUENA: El nivel de diversión en ${rama} es óptimo. `;
+                accion += "• Mantener la mística de misiones activas y dinámicas grupales cortas al iniciar. ";
+            }
+
+            if (p2 < 6) {
+                diagnostico += "BRECHA DE APOYO SCOUTER: Se percibe desconexión o falta de retroalimentación de los scouters hacia las propuestas de los jóvenes. ";
+                accion += "• El Consejo de Grupo debe revisar la planificación de la sección y delegar mayor liderazgo en la Corte de Honor o el Consejo de Clan. ";
+            }
+
+            if (p3 === "Division" || p3 === "FaltaIntegracion") {
+                diagnostico += "ALERTA DE CLIMA INTERNO: Se detectan tensiones, subgrupos excluyentes o baja comunicación dentro de las patrullas/seisenas. ";
+                accion += "• Se sugiere aplicar con urgencia dinámicas de 'Cuerdas de Integración' y 'Raid de Confianza cooperativo' de 40 minutos para romper barreras. ";
+            } else {
+                diagnostico += "COHESIÓN FUERTE: Excelente nivel de integración e identidad de patrulla/seisena. ";
+            }
+
+            if (p4 === "No" || p4 === "Medias") {
+                diagnostico += "BRECHA PEDAGÓGICA (PROGRESIÓN): Los scouts sienten que las actividades no impulsan sus especialidades o insignias de desarrollo. ";
+                accion += "• Implementar un taller dinámico de 'Caza de Especialidades' para que cada scout defina retos específicos basados en lo que desea aprender en campo. ";
+            }
+
+            document.getElementById('ia-diagnostico').innerText = diagnostico;
+            document.getElementById('ia-accion').innerText = accion || "• Continuar con el esquema actual de planeación adaptativo.";
+
+            if (p7.trim() !== "") {
+                document.getElementById('ia-sugerencias-container').classList.remove('hidden');
+                document.getElementById('ia-sugerencia-alberto').innerText = `"${p7}"`;
+            } else {
+                document.getElementById('ia-sugerencias-container').classList.add('hidden');
             }
         }
 
-        function cerrarScouters() {
-            document.getElementById('panel-scouter').style.display = 'none';
-            document.getElementById('pantalla-inicio').style.display = 'block';
+        // Autenticación con animación FaceID / Password
+        function mostrarModalAutenticar() {
+            document.getElementById('pantalla-inicio').classList.add('hidden');
+            document.getElementById('puerta-autenticacion').classList.remove('hidden');
+            
+            // Animación biometría simulada
+            const ring = document.getElementById('biometric-ring');
+            const icon = document.getElementById('biometric-icon');
+            
+            ring.classList.add('border-emerald-500');
+            icon.classList.add('text-emerald-500');
+            
+            setTimeout(() => {
+                ring.classList.remove('border-emerald-500');
+                icon.classList.remove('text-emerald-500');
+            }, 2000);
+        }
+
+        function validarCredenciales() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === 'Tequihua1') {
+                // Sincronizar gráficas e IA al abrir
+                actualizarGraficasBrutales();
+                ejecutarMotorIA();
+
+                document.getElementById('puerta-autenticacion').classList.add('hidden');
+                document.getElementById('panel-scouter').classList.remove('hidden');
+                document.body.style.backgroundColor = '#f5f5f7'; // fondo gris claro tipo Apple admin
+            } else {
+                alert('Contraseña incorrecta. Pista: Tequihua1');
+            }
         }
     </script>
 </body>
 </html>
+```eof
+
+### 📦 Instrucciones de Despliegue en GitHub:
+1. Reemplaza el archivo anterior `index.html` en tu repositorio local con este nuevo código.
+2. Sube la actualización a GitHub escribiendo en tu terminal:
+   
+```bash
+   git add .
+   git commit -m "mejorada la interfaz a estilo apple-wix con ia dinámica de recomendaciones"
+   git push origin main

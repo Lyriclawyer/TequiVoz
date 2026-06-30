@@ -163,7 +163,7 @@
     <!-- ÁREA PRINCIPAL -->
     <main class="pt-32 pb-16 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center min-h-[90vh]">
 
-        <!-- ================= BIENVENIDA / HERO ================= -->
+        <!-- ================= BIENVENIDA / HERO (Inspirado en la imagen image_1129a4.png) ================= -->
         <section id="pantalla-inicio" class="text-center transition-apple w-full">
             <span class="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-widest inline-block mb-6 shadow-sm">Representación Juvenil</span>
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
@@ -177,7 +177,6 @@
             <div id="grid-secciones" class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto mb-8">
                 <!-- Manada -->
                 <button id="btn-home-manada" onclick="empezarEncuesta('Manada')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-manada flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <!-- Logo Manada -->
                     <img src="Logo 2.png" alt="Logo Manada de Lobatos" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
                         <span class="font-extrabold text-lg block">Manada</span>
@@ -187,7 +186,6 @@
 
                 <!-- Tropa -->
                 <button id="btn-home-tropa" onclick="empezarEncuesta('Tropa')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-tropa flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <!-- Logo Tropa -->
                     <img src="Logo 3.png" alt="Logo Tropa de Scouts" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
                         <span class="font-extrabold text-lg block">Tropa</span>
@@ -197,7 +195,6 @@
 
                 <!-- Comunidad -->
                 <button id="btn-home-comunidad" onclick="empezarEncuesta('Comunidad')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-comunidad flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <!-- Logo Comunidad -->
                     <img src="Logo 4.png" alt="Logo Comunidad de Caminantes" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
                         <span class="font-extrabold text-lg block">Comunidad</span>
@@ -207,7 +204,6 @@
 
                 <!-- Clan -->
                 <button id="btn-home-clan" onclick="empezarEncuesta('Clan')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-clan flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <!-- Logo Clan -->
                     <img src="Logo 5.png" alt="Logo Clan de Rovers" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
                         <span class="font-extrabold text-lg block">Clan</span>
@@ -215,9 +211,8 @@
                     </div>
                 </button>
 
-                <!-- Dirigencia -->
+                <!-- Dirigencia / Scouters (Nuevo apartado) -->
                 <button id="btn-home-dirigencia" onclick="empezarEncuesta('Dirigencia')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-slate-800 flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <!-- Logo Dirigencia -->
                     <img src="Logo 1.png" alt="Logo Dirigencia" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
                         <span class="font-extrabold text-lg block">Dirigencia</span>
@@ -295,9 +290,15 @@
                         </select>
                     </div>
 
+                    <!-- Clave Tequihua con Toggle de Ojo para ver caracteres -->
                     <div>
                         <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Clave Tequihua</label>
-                        <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Ingresa la contraseña">
+                        <div class="relative">
+                            <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 pl-4 pr-10 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Ingresa la contraseña">
+                            <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-apple">
+                                <i id="admin-pass-eye" class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                     <button onclick="validarCredenciales()" class="w-full py-3.5 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple shadow-lg">Verificar Identidad</button>
                     <button onclick="regresarAlInicio()" class="text-xs text-gray-400 font-extrabold uppercase hover:text-gray-600 transition-apple text-center block mt-2">Cancelar</button>
@@ -438,6 +439,9 @@
 
                 <!-- RECOMENDACIÓN IA DINÁMICA -->
                 <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden text-left">
+                    <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12">
+                        <i class="fa-solid fa-brain text-[200px]"></i>
+                    </div>
                     <div class="flex items-center gap-3 mb-4">
                         <span class="bg-emerald-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider shadow-md">TequiVoz AI Engine</span>
                         <span id="ia-subtitle-seccion-kpi" class="text-xs text-gray-300 font-semibold">Análisis Pedagógico</span>
@@ -505,15 +509,28 @@
 
     </main>
 
-    <!-- MODAL ALERT REEMPLAZO DE ALERT() -->
-    <div id="custom-alert" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-opacity duration-300">
-        <div class="glass-panel p-6 rounded-3xl max-w-sm w-full text-center shadow-2xl border border-white/20">
-            <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-xl mx-auto mb-4">
-                <i class="fa-solid fa-circle-info"></i>
+    <!-- ================= MODAL CONTRASEÑA DIRIGENCIA ================= -->
+    <div id="modal-password-dirigencia" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-opacity duration-300">
+        <div class="glass-panel p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl border border-white/20">
+            <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 text-2xl mx-auto mb-4 border border-gray-200 shadow-sm">
+                <i class="fa-solid fa-lock text-slate-800"></i>
             </div>
-            <h3 class="text-lg font-bold text-gray-900 mb-2" id="custom-alert-title">Notificación</h3>
-            <p class="text-sm text-gray-500 mb-6" id="custom-alert-message"></p>
-            <button onclick="cerrarAlert()" class="w-full py-2.5 rounded-xl bg-appleDark text-white font-bold transition-apple active:scale-95 shadow-lg">Entendido</button>
+            <h3 class="text-xl font-extrabold text-gray-900 mb-2">Sección Restringida</h3>
+            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-6">Ingresa la clave de Dirigencia</p>
+            
+            <div class="space-y-4 text-left">
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"><i class="fa-solid fa-key"></i></span>
+                    <input type="password" id="dirigencia-pass-input" class="w-full rounded-xl border border-gray-200 pl-11 pr-10 py-3.5 font-bold focus:border-indigo-500 bg-gray-50/50 outline-none transition-apple" placeholder="••••">
+                    <button type="button" onclick="toggleDirigenciaPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-apple">
+                        <i id="dirigencia-pass-eye" class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="cancelarPasswordDirigencia()" class="flex-1 py-3 rounded-xl border border-gray-200 text-gray-500 font-bold hover:bg-gray-50 transition-apple text-xs uppercase tracking-wider">Cancelar</button>
+                    <button onclick="confirmarPasswordDirigencia()" class="flex-1 py-3 rounded-xl bg-appleDark hover:bg-black text-white font-bold transition-apple text-xs uppercase tracking-wider shadow-md">Verificar</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -523,7 +540,6 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Configuración de Estados
         let seccionActiva = "";
         let preguntaActual = 0;
         let totalPreguntas = 10;
@@ -531,8 +547,8 @@
         let activeDashboardSection = "Manada"; 
         let currentRolScouter = "Dirigencia"; 
         let editorPreguntaIndexSeleccionada = 0; 
+        let pendingSurveyRama = "";
         
-        // Estado actual de respuestas
         let respuestasSesion = {
             rama: "",
             p1: "", // Diversidad
@@ -554,7 +570,6 @@
         // Estado local de Reportes Semanales de KPIs Validados por Scouters
         let reportesValidadosHistorico = JSON.parse(localStorage.getItem('tequivoz_reportes_kpi_validados')) || [];
 
-        // Banco de preguntas predeterminado y altamente personalizado para cada sección
         const bancoPreguntasPredeterminado = {
             Manada: [
                 { id: 1, type: "select", title: "¿Qué tan divertida estuvo la actividad de la Manada el sábado pasado?", options: [ { val: "Aburrida", icon: "😴", text: "Poco divertida" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Divertida" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épica!" } ] },
@@ -564,7 +579,7 @@
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de los eventos y campamentos de Manada?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de actividades o cacerías te gustaría realizar más seguido en la Manada?", options: [ { val: "Supervivencia", icon: "🌲", title: "Grandes Cacerías", desc: "Seguimiento de pistas, rastreo y cabuyería básica." }, { val: "Servicio", icon: "❤️", title: "Buenas Acciones", desc: "Ayuda a la comunidad, ecología y cuidado animal." }, { val: "Extremo", icon: "🧗", title: "Juegos del Libro de la Selva", desc: "Estrategia física, destrezas y retos de agilidad." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de la Manada para el próximo sábado, ¿cuál sería?", placeholder: "Escribe aquí tu propuesta constructiva para la selva..." },
-                { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y el cuidado de los Viejos Lobos durante nuestras salidas?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Faltó cuidado o información sobre los límites del juego." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro con Akela y Baloo cuidándome." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Zonas delimitadas, botiquín y cuidado constante." } ] },
+                { id: 8, type: "grid", title: "Cómo consideras la seguridad y el cuidado de los Viejos Lobos durante nuestras salidas?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Faltó cuidado o información sobre los límites del juego." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro con Akela y Baloo cuidándome." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Zonas delimitadas, botiquín y cuidado constante." } ] },
                 { id: 9, type: "grid", title: "¿Sientes que existe un ambiente inclusivo y equitativo en el trato de todos en la Manada?", options: [ { val: "Excelente", icon: "✨", title: "Siempre hay respeto", desc: "Todos los lobatos somos escuchados por igual." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o rechazo en ocasiones." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
                 { id: 10, type: "textarea", title: "Para finalizar, propón un juego loco de selva que te gustaría hacer con toda la Manada:", placeholder: "¡Ejemplo: Una búsqueda del tesoro de Shere Khan con mapas secretos!" }
             ],
@@ -572,11 +587,11 @@
                 { id: 1, type: "select", title: "¿Qué tan divertidos y desafiantes estuvieron los juegos y bases de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótonos" }, { val: "Regular", icon: "😐", text: "Regulares" }, { val: "Divertida", icon: "😀", text: "Desafiantes" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épicos!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo, preparación y apoyo de tus Scouters de Tropa hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo se siente la mística, el espíritu y la convivencia interna dentro de tu Patrulla?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Cohesión", desc: "Trabajamos como un solo bloque, mística y apoyo al 100%." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Roces Internos", desc: "Hay desacuerdos de liderazgo o divisiones menores." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se siente apatía o exclusión en el consejo de patrulla." } ] },
-                { id: 4, type: "grid", title: "¿Las actividades de hoy aportaron a tus etapas de progresión (Pistas, Senda, Rumbo)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí o reforcé especialidades técnicas." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Faltó vincularlo con mi carpeta o práctica real." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que no avanzamos en nuestra progresión scout." } ] },
+                { id: 4, type: "grid", title: "¿Las actividades de hoy aportaron a tus etapas de progresión (Pistas, Senda, Rumbo)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí o reforcé especialidades técnicas." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que no avanzamos en nuestra progresión scout." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las excursiones y campamentos de Tropa?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de dinámicas o técnicas scouts te gustaría practicar más en los ciclos de programa?", options: [ { val: "Supervivencia", icon: "🌲", title: "Pionerismo y Campismo", desc: "Construcciones con nudos complejos, refugios y orientación." }, { val: "Servicio", icon: "❤️", title: "Servicios Técnicos", desc: "Apoyo a la comunidad, primeros auxilios avanzados y ecología." }, { val: "Extremo", icon: "🧗", title: "Juegos de Acecho", desc: "Estrategias nocturnas, retos físicos y de aventura." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de nuestra Tropa o Corte de Honor, ¿cuál sería?", placeholder: "Escribe tu sugerencia constructiva para la Corte de Honor..." },
-                { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y los protocolos de riesgo durante los campamentos o excursiones?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Falta de botiquín o supervisión directa en las bases críticas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Monitoreo constante, botiquín visible and zonas seguras." } ] },
+                { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y los protocolos de riesgo durante los campamentos o excursiones?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Falta de botiquín o supervisión directa en las bases críticas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Monitoreo constante, botiquín visible y zonas seguras." } ] },
                 { id: 9, type: "grid", title: "¿Consideras que existe un ambiente inclusivo y de equidad en el trato de todos en la Tropa?", options: [ { val: "Excelente", icon: "✨", title: "Excelente ambiente", desc: "Todos los scouts y patrullas son tomados en cuenta por igual." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o diferencias de rango marcadas." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
                 { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego nocturno o idea loca para el próximo campamento de Tropa:", placeholder: "¡Ejemplo: Un juego de rol de espionaje nocturno con claves secretas y linternas!" }
             ],
@@ -596,13 +611,13 @@
                 { id: 1, type: "select", title: "¿Qué tan enriquecedora e inspiradora fue la jornada o debate del Clan el día de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótona" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Inspiradora" }, { val: "Excelente", icon: "🤩", text: "¡Trascendente!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el nivel de acompañamiento y consejería de tus Sinodales/Scouters de Clan hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo marcha la mística, el apoyo mutuo y la verdadera hermandad dentro de la comunidad de Clan?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Unión", desc: "Excelente integración, apoyo mutuo en proyectos y plan de vida." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Distanciamiento", desc: "Falta de participación en debates o distanciamiento entre rovers." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se sienten grupos herméticos o apatía generalizada." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la realidad de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la reality de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las actividades regionales o nacionales de Clan?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de proyectos de impacto o servicio social te gustaría que el Clan organizara?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición Extrema", desc: "Retos de alta montaña, supervivencia pura y autonomía." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Voluntariado social, ecología de impacto y desarrollo comunitario." }, { val: "Extremo", icon: "🧗", title: "Servicios Técnicos", desc: "Apoyo en desastres naturales, primeros auxilios avanzados y capacitación." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar una sola norma o acuerdo de nuestro Consejo de Clan, ¿cuál sería?", placeholder: "Escribe tu propuesta o reforma para el Consejo de Clan..." },
                 { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Análisis previo de riesgos, equipamiento y monitoreo constante." } ] },
                 { id: 9, type: "grid", title: "¿Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
-                { id: 10, type: "textarea", title: "Para finalizar, propón una idea loca, innovadora o juego que nunca se haya hecho en el Grupo:", placeholder: "¡Ejemplo: Un juego de rol de supervivencia de 24 horas con retos de impacto social!" }
+                { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego o debate que te gustaría realizar con todo el Clan:", placeholder: "¡Ejemplo: Un debate de temas de impacto social y proyección profesional!" }
             ],
             Dirigencia: [
                 { id: 11, type: "range", title: "Del 1 al 10, ¿Cómo calificarías tu experiencia en la actividad de Día del Padre?", min: 1, max: 10, def: 5, left: "Poca experiencia 🛠️", right: "Experiencia Excelente 🌟" },
@@ -685,16 +700,19 @@
         }
         window.cerrarAlert = cerrarAlert;
 
-        // Iniciar encuesta de sección
+        // Iniciar encuesta de sección con modal premium para Dirigencia
         function empezarEncuesta(rama) {
             if (rama === 'Dirigencia') {
-                const pass = prompt("Ingresa la contraseña de Dirigencia:");
-                if (pass !== '000') {
-                    lanzarAlert("Acceso Denegado", "Contraseña incorrecta para Dirigencia.");
-                    return;
-                }
+                pendingSurveyRama = rama;
+                document.getElementById('dirigencia-pass-input').value = "";
+                document.getElementById('modal-password-dirigencia').classList.remove('hidden');
+                return;
             }
+            ejecutarEmpezarEncuesta(rama);
+        }
+        window.empezarEncuesta = empezarEncuesta;
 
+        function ejecutarEmpezarEncuesta(rama) {
             seccionActiva = rama;
             respuestasSesion = {
                 rama: rama,
@@ -734,7 +752,54 @@
 
             renderPreguntaActiva();
         }
-        window.empezarEncuesta = empezarEncuesta;
+
+        function toggleDirigenciaPasswordVisibility() {
+            const passInput = document.getElementById('dirigencia-pass-input');
+            const eyeIcon = document.getElementById('dirigencia-pass-eye');
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = "password";
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+        window.toggleDirigenciaPasswordVisibility = toggleDirigenciaPasswordVisibility;
+
+        function cancelarPasswordDirigencia() {
+            document.getElementById('modal-password-dirigencia').classList.add('hidden');
+            pendingSurveyRama = "";
+        }
+        window.cancelarPasswordDirigencia = cancelarPasswordDirigencia;
+
+        function confirmarPasswordDirigencia() {
+            const pass = document.getElementById('dirigencia-pass-input').value.trim();
+            if (pass === '000') {
+                document.getElementById('modal-password-dirigencia').classList.add('hidden');
+                ejecutarEmpezarEncuesta(pendingSurveyRama);
+                pendingSurveyRama = "";
+            } else {
+                lanzarAlert("Acceso Denegado", "Clave de Dirigencia incorrecta.");
+            }
+        }
+        window.confirmarPasswordDirigencia = confirmarPasswordDirigencia;
+
+        function toggleAdminPasswordVisibility() {
+            const passInput = document.getElementById('admin-pass');
+            const eyeIcon = document.getElementById('admin-pass-eye');
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = "password";
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+        window.toggleAdminPasswordVisibility = toggleAdminPasswordVisibility;
 
         // Renderizado dinámico del Wix-Style Question Editor
         function renderPreguntaActiva() {
@@ -901,7 +966,6 @@
         }
         window.actualizarFeedbackRango = actualizarFeedbackRango;
 
-        // Controlador de navegación de la encuesta
         function cambiarP(direccion) {
             // Guardar texto abierto de manera explícita si aplica antes de cambiar de índice
             const txtArea = document.getElementById('texto-textarea-dinamico');
@@ -934,13 +998,6 @@
             if (btnSig) {
                 btnSig.disabled = true;
                 btnSig.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
-            }
-
-            const txtArea = document.getElementById('texto-textarea-dinamico');
-            if (txtArea) {
-                const qList = bancoPreguntas[seccionActiva];
-                const q = qList[preguntaActual];
-                respuestasSesion[`p${q.id}`] = txtArea.value;
             }
 
             // Mapeo unificado para que la encuesta de dirigencia guarde correctamente sus preguntas especiales (11, 12, 13, 14)
@@ -1008,11 +1065,11 @@
 
         function validarCredenciales() {
             const user = document.getElementById('admin-user').value;
-            const pass = document.getElementById('admin-pass').value.toLowerCase().trim();
+            const pass = document.getElementById('admin-pass').value.trim();
             let loginValido = false;
 
             // Mapeo estricto de contraseñas requeridas con Scouter Manada con su nueva clave
-            if (user === 'manada' && pass === '100%manada') {
+            if (user === 'manada' && pass === '100%MaNada') {
                 currentRolScouter = "Manada";
                 activeDashboardSection = "Manada";
                 loginValido = true;
@@ -1045,7 +1102,6 @@
         }
         window.validarCredenciales = validarCredenciales;
 
-        // Configurar Dashboard y Wix-Style Editor según permisos de rol
         function configurarVisibilidadSegunRol() {
             const selectorDash = document.getElementById('selector-secciones-dash');
             const subtext = document.getElementById('subtitulo-rol-scouter');
@@ -1352,7 +1408,6 @@
             }
         }
 
-        // Helper para pintar tarjetas de KPIs con colores dinámicos tipo tacómetro
         function setKPICardValue(kpiId, val) {
             const card = document.getElementById(`kpi-card-${kpiId}`);
             const valContainer = document.getElementById(`kpi-val-${kpiId}`);
@@ -1453,7 +1508,6 @@
             `).join('');
         }
 
-        // CONTROL DE TABS DEL PANEL SCOUTER
         function cambiarTabScouter(tab) {
             const btnAnalytics = document.getElementById('tab-analytics');
             const btnEditor = document.getElementById('tab-editor');
@@ -1476,7 +1530,6 @@
         }
         window.cambiarTabScouter = cambiarTabScouter;
 
-        // INICIALIZACIÓN Y CONFIGURACIÓN DEL EDITOR DE PREGUNTAS PERSONALIZADO
         function inicializarWixEditorPreguntas() {
             const listaPreguntas = bancoPreguntas[activeDashboardSection];
             const listContainer = document.getElementById('editor-selector-preguntas-lista');
@@ -1778,7 +1831,6 @@
         }
         window.restablecerPreguntasPredeterminadas = restablecerPreguntasPredeterminadas;
 
-        // ================= PDF GENERATOR FUNCTION =================
         async function generarReportePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -1871,8 +1923,9 @@
         }
         window.generarReportePDF = generarReportePDF;
         
-        // Inicializar por defecto la vista de Login Scout sin cabecera
-        mostrarSeccion('puerta-autenticacion-scout');
+        window.onload = function () {
+            mostrarSeccion('pantalla-inicio');
+        }
     </script>
 </body>
 </html>

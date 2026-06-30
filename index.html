@@ -294,7 +294,7 @@
                     <div>
                         <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Clave Tequihua</label>
                         <div class="relative">
-                            <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 pl-4 pr-10 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Ingresa la contraseña">
+                            <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 pl-4 pr-10 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple bg-white" placeholder="Ingresa la contraseña">
                             <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-apple">
                                 <i id="admin-pass-eye" class="fa-solid fa-eye"></i>
                             </button>
@@ -587,7 +587,7 @@
                 { id: 1, type: "select", title: "¿Qué tan divertidos y desafiantes estuvieron los juegos y bases de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótonos" }, { val: "Regular", icon: "😐", text: "Regulares" }, { val: "Divertida", icon: "😀", text: "Desafiantes" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épicos!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo, preparación y apoyo de tus Scouters de Tropa hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo se siente la mística, el espíritu y la convivencia interna dentro de tu Patrulla?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Cohesión", desc: "Trabajamos como un solo bloque, mística y apoyo al 100%." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Roces Internos", desc: "Hay desacuerdos de liderazgo o divisiones menores." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se siente apatía o exclusión en el consejo de patrulla." } ] },
-                { id: 4, type: "grid", title: "¿Las actividades de hoy aportaron a tus etapas de progresión (Pistas, Senda, Rumbo)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí o reforcé especialidades técnicas." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que no avanzamos en nuestra progresión scout." } ] },
+                { id: 4, type: "grid", title: "¿Las actividades de hoy aportaron a tus etapas de progresión (Pistas, Senda, Rumbo)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí o reforcé especialidades técnicas." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de aprendizaje pero faltó más práctica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que no avanzamos en nuestra progresión scout." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las excursiones y campamentos de Tropa?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de dinámicas o técnicas scouts te gustaría practicar más en los ciclos de programa?", options: [ { val: "Supervivencia", icon: "🌲", title: "Pionerismo y Campismo", desc: "Construcciones con nudos complejos, refugios y orientación." }, { val: "Servicio", icon: "❤️", title: "Servicios Técnicos", desc: "Apoyo a la comunidad, primeros auxilios avanzados y ecología." }, { val: "Extremo", icon: "🧗", title: "Juegos de Acecho", desc: "Estrategias nocturnas, retos físicos y de aventura." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de nuestra Tropa o Corte de Honor, ¿cuál sería?", placeholder: "Escribe tu sugerencia constructiva para la Corte de Honor..." },
@@ -599,7 +599,7 @@
                 { id: 1, type: "select", title: "¿Qué tanto te retó y entusiasmó el proyecto o actividad de la Comunidad hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Sin reto" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Retador" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épico!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo y el rol de asesores de tus Scouters de Comunidad hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo marcha la mística, planeación y trabajo interno dentro de tu Equipo?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Unión Fuerte", desc: "Excelente distribución de tareas y apoyo mutuo constante." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Desorganización", desc: "Dificultad para ponernos de acuerdo o apatía temporal." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Equipo", desc: "Se siente recarga de trabajo en pocos integrantes o exclusión." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que la actividad de hoy aporta a tu progresión de caminante (Búsqueda, Encuentro, Desafío)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Fortalece mis proyectos personales y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que las juntas se volvieron muy teóricas." } ] },
+                { id: 4, type: "grid", title: "Sientes que la actividad de hoy aporta a tu progresión de caminante (Búsqueda, Encuentro, Desafío)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Fortalece mis proyectos personales y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que las juntas se volvieron muy teóricas." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles o viables ves los presupuestos para los proyectos de Comunidad?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿En qué área de proyectos te gustaría que la Comunidad de Caminantes se enfocara más?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición", desc: "Retos de montaña, campamento sin huella y cartografía avanzada." }, { val: "Servicio", icon: "❤️", title: "Impacto", desc: "Acción social real, voluntariado ecológico y proyectos comunitarios." }, { val: "Extremo", icon: "🧗", title: "Desafíos Físicos", desc: "Deportes de aventura, rapel, orientación y juegos extremos." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar un artículo del reglamento interno de la Comunidad, ¿cuál sería?", placeholder: "Escribe tu propuesta constructiva para el Congreso de Comunidad..." },
@@ -611,12 +611,12 @@
                 { id: 1, type: "select", title: "¿Qué tan enriquecedora e inspiradora fue la jornada o debate del Clan el día de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótona" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Inspiradora" }, { val: "Excelente", icon: "🤩", text: "¡Trascendente!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el nivel de acompañamiento y consejería de tus Sinodales/Scouters de Clan hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo marcha la mística, el apoyo mutuo y la verdadera hermandad dentro de la comunidad de Clan?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Unión", desc: "Excelente integración, apoyo mutuo en proyectos y plan de vida." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Distanciamiento", desc: "Falta de participación en debates o distanciamiento entre rovers." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se sienten grupos herméticos o apatía generalizada." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la reality de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la mística de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las actividades regionales o nacionales de Clan?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de proyectos de impacto o servicio social te gustaría que el Clan organizara?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición Extrema", desc: "Retos de alta montaña, supervivencia pura y autonomía." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Voluntariado social, ecología de impacto y desarrollo comunitario." }, { val: "Extremo", icon: "🧗", title: "Servicios Técnicos", desc: "Apoyo en desastres naturales, primeros auxilios avanzados y capacitación." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar una sola norma o acuerdo de nuestro Consejo de Clan, ¿cuál sería?", placeholder: "Escribe tu propuesta o reforma para el Consejo de Clan..." },
                 { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Análisis previo de riesgos, equipamiento y monitoreo constante." } ] },
-                { id: 9, type: "grid", title: "¿Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
+                { id: 9, type: "grid", title: "Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
                 { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego o debate que te gustaría realizar con todo el Clan:", placeholder: "¡Ejemplo: Un debate de temas de impacto social y proyección profesional!" }
             ],
             Dirigencia: [
@@ -626,8 +626,6 @@
                 { id: 14, type: "textarea", title: "¿Qué cuestiones o elementos sugerirías agregar, quitar o mantener para la Regata?", placeholder: "Escribe tus propuestas de mejora para la Regata..." }
             ]
         };
-
-        let bancoPreguntas = JSON.parse(localStorage.getItem('bancoPreguntas_tequivoz')) || bancoPreguntasPredeterminado;
 
         const appId = 'tequivoz-gpo1';
         let firebaseConfig = {
@@ -682,9 +680,9 @@
             // Visibilidad de botón Scouter en barra superior
             const scouterBtn = document.getElementById('btn-portal-scouter-nav');
             if (idSeccion === 'contenedor-encuesta' || idSeccion === 'panel-scouter' || idSeccion === 'puerta-autenticacion') {
-                scouterBtn.classList.add('hidden');
+                if (scouterBtn) scouterBtn.classList.add('hidden');
             } else {
-                scouterBtn.classList.remove('hidden');
+                if (scouterBtn) scouterBtn.classList.remove('hidden');
             }
         }
 
@@ -817,9 +815,9 @@
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             ${q.options.map(opt => {
-                                const selectedClass = (respuestasSesion.p1 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
+                                const selectedClass = (respuestasSesion[`p${q.id}`] === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
                                 return `
-                                    <button onclick="registrarP(1, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 shadow-sm hover:shadow-md transition-apple text-center btn-respuesta ${selectedClass}">
+                                    <button onclick="registrarP(${q.id}, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 shadow-sm hover:shadow-md transition-apple text-center btn-respuesta ${selectedClass}">
                                         <span class="text-4xl block mb-3">${opt.icon}</span>
                                         <span class="font-bold text-sm text-gray-600">${opt.text}</span>
                                     </button>
@@ -851,9 +849,9 @@
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
                         <div class="flex flex-col gap-4">
                             ${q.options.map(opt => {
-                                const selectedClass = (respuestasSesion.p3 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
+                                const selectedClass = (respuestasSesion[`p${q.id}`] === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
                                 return `
-                                    <button onclick="registrarP(3, '${opt.val}', this)" class="p-5 rounded-2xl border-2 hover:border-indigo-500 text-left font-bold transition-apple flex items-center gap-4 btn-respuesta ${selectedClass}">
+                                    <button onclick="registrarP(${q.id}, '${opt.val}', this)" class="p-5 rounded-2xl border-2 hover:border-indigo-500 text-left font-bold transition-apple flex items-center gap-4 btn-respuesta ${selectedClass}">
                                         <div class="w-10 h-10 rounded-full bg-${opt.color}-100 flex items-center justify-center text-${opt.color}-600"><i class="fa-solid ${opt.icon}"></i></div>
                                         <div>
                                             <span class="block text-gray-700">${opt.title}</span>
@@ -992,7 +990,6 @@
         }
         window.regresarAlInicio = regresarAlInicio;
 
-        // Procesamiento del guardado en Firestore de manera Asíncrona (A prueba de fallos de internet)
         async function procesarEncuestaCompleta() {
             const btnSig = document.getElementById('btn-siguiente');
             if (btnSig) {
@@ -1019,6 +1016,17 @@
                 p14: respuestasSesion.p14 || "",
                 timestamp: new Date().toISOString()
             };
+
+            // Capturar última respuesta de texto abierto para Dirigencia si aplica
+            const txtArea = document.getElementById('texto-textarea-dinamico');
+            if (txtArea) {
+                const qList = bancoPreguntas[seccionActiva];
+                const q = qList[preguntaActual];
+                if (q.id === 13) docData.p13 = txtArea.value;
+                if (q.id === 14) docData.p14 = txtArea.value;
+                if (q.id === 7) docData.p7 = txtArea.value;
+                if (q.id === 10) docData.p10 = txtArea.value;
+            }
 
             const guardarLocalmente = () => {
                 const localData = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
@@ -1322,7 +1330,7 @@
             if (promEco) promEco.innerText = `${avgEconomy} / 5`;
             if (prefAct) prefAct.innerText = favAct;
 
-            actualizarBarrasGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
+            actualizarBarsGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
 
             // CALCULAR KPIs DEL MODELO HÍBRIDO EN TIEMPO REAL (80% Analítica de Base de Datos)
             const kpiISP = Math.round((avgFun + avgSupport) / 2);
@@ -1434,7 +1442,6 @@
             }
         }
 
-        // FUSIONAR MÉTRICAS (80% IA) Y APORTE DE SCOUTER (20% sabiduría humana)
         function validarDiagnosticoSemanal() {
             const scouterNote = document.getElementById('scouter-context-note');
             if (!scouterNote) return;
@@ -1591,7 +1598,6 @@
             const dd = document.getElementById(`opt-emoji-dropdown-${optIdx}`);
             if (dd) dd.classList.add('hidden');
         }
-        window.openSelectorEmojiInterno = abrirSelectorEmojiInterno;
         window.abrirSelectorEmojiInterno = abrirSelectorEmojiInterno;
 
         function toggleEmojiDropdownVisual(optIdx) {
@@ -1922,10 +1928,18 @@
             doc.save(`TequiRadar_${activeDashboardSection}_${Date.now()}.pdf`);
         }
         window.generarReportePDF = generarReportePDF;
-        
+
         window.onload = function () {
             mostrarSeccion('pantalla-inicio');
         }
+
+        // Asignaciones seguras al objeto Window para evitar ReferenceError en módulo
+        window.mostrarSeccion = mostrarSeccion;
+        window.regresarAlInicio = regresarAlInicio;
+        window.validarCredenciales = validarCredenciales;
+        window.cambiarP = cambiarP;
+        window.cambiarTabScouter = cambiarTabScouter;
+        window.seleccionarSeccionDashboard = seleccionarSeccionDashboard;
     </script>
 </body>
 </html>

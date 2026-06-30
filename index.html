@@ -15,6 +15,10 @@
     
     <!-- Tailwind CSS para diseño fluido y ultra-responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Librerías para Generación de Reportes PDF (jsPDF y autoTable) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -170,9 +174,9 @@
             </p>
 
             <!-- Grid de Secciones con Logotipos Oficiales Actualizados -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8">
+            <div id="grid-secciones" class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto mb-8">
                 <!-- Manada -->
-                <button onclick="empezarEncuesta('Manada')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-manada flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                <button id="btn-home-manada" onclick="empezarEncuesta('Manada')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-manada flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
                     <!-- Logo Manada -->
                     <img src="Logo 2.png" alt="Logo Manada de Lobatos" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
@@ -182,7 +186,7 @@
                 </button>
 
                 <!-- Tropa -->
-                <button onclick="empezarEncuesta('Tropa')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-tropa flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                <button id="btn-home-tropa" onclick="empezarEncuesta('Tropa')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-tropa flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
                     <!-- Logo Tropa -->
                     <img src="Logo 3.png" alt="Logo Tropa de Scouts" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
@@ -192,7 +196,7 @@
                 </button>
 
                 <!-- Comunidad -->
-                <button onclick="empezarEncuesta('Comunidad')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-comunidad flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                <button id="btn-home-comunidad" onclick="empezarEncuesta('Comunidad')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-comunidad flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
                     <!-- Logo Comunidad -->
                     <img src="Logo 4.png" alt="Logo Comunidad de Caminantes" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
@@ -202,12 +206,22 @@
                 </button>
 
                 <!-- Clan -->
-                <button onclick="empezarEncuesta('Clan')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-clan flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                <button id="btn-home-clan" onclick="empezarEncuesta('Clan')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-clan flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
                     <!-- Logo Clan -->
                     <img src="Logo 5.png" alt="Logo Clan de Rovers" class="h-24 w-auto object-contain drop-shadow-sm">
                     <div class="text-center">
                         <span class="font-extrabold text-lg block">Clan</span>
                         <p class="text-[10px] text-rose-600 font-bold uppercase tracking-wider">Rovers</p>
+                    </div>
+                </button>
+
+                <!-- Dirigencia -->
+                <button id="btn-home-dirigencia" onclick="empezarEncuesta('Dirigencia')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-slate-800 flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
+                    <!-- Logo Dirigencia -->
+                    <img src="Logo 1.png" alt="Logo Dirigencia" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center">
+                        <span class="font-extrabold text-lg block">Dirigencia</span>
+                        <p class="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Scouters</p>
                     </div>
                 </button>
             </div>
@@ -301,7 +315,7 @@
                 <button onclick="cerrarSesionScouter()" class="px-5 py-2 rounded-full border-2 border-red-300 text-red-600 font-bold hover:bg-red-50 transition-apple"><i class="fa-solid fa-power-off mr-2"></i> Cerrar Sesión</button>
             </div>
 
-            <!-- Tabs de Navegación del Panel Scouter (Analytics vs Editor de Preguntas) -->
+            <!-- Tabs de Navegación del Panel Scouter -->
             <div class="flex gap-4 border-b border-gray-200 mb-8">
                 <button id="tab-analytics" onclick="cambiarTabScouter('analytics')" class="pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple">
                     <i class="fa-solid fa-chart-line mr-2"></i> Métricas y Reportes
@@ -313,12 +327,20 @@
 
             <!-- VISTA DE MÉTRICAS -->
             <div id="vista-scouter-analytics" class="space-y-8">
-                <!-- Selector de Secciones en Dashboard (Editable para dirigencia, bloqueado/adaptado para secciones) -->
+                
+                <div class="flex justify-end">
+                    <button onclick="generarReportePDF()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold transition-apple shadow-lg flex items-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-file-pdf"></i> Descargar Reporte PDF
+                    </button>
+                </div>
+                
+                <!-- Selector de Secciones en Dashboard -->
                 <div id="selector-secciones-dash" class="flex flex-wrap gap-2 mb-8 bg-gray-100 p-1.5 rounded-2xl max-w-2xl">
                     <button id="dash-btn-Manada" onclick="seleccionarSeccionDashboard('Manada')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-yellow-600 shadow-sm border border-yellow-200">Manada</button>
                     <button id="dash-btn-Tropa" onclick="seleccionarSeccionDashboard('Tropa')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-emerald-600">Tropa</button>
                     <button id="dash-btn-Comunidad" onclick="seleccionarSeccionDashboard('Comunidad')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-sky-600">Comunidad</button>
                     <button id="dash-btn-Clan" onclick="seleccionarSeccionDashboard('Clan')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-rose-600">Clan</button>
+                    <button id="dash-btn-Dirigencia" onclick="seleccionarSeccionDashboard('Dirigencia')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-slate-600">Dirigencia</button>
                 </div>
 
                 <!-- Grid Analítico Principal -->
@@ -351,7 +373,6 @@
                                 <span class="text-[9px] font-black uppercase text-gray-400">Seguro</span>
                             </div>
                         </div>
-                        <p class="text-xs text-gray-400 font-semibold mt-4">Los gráficos muestran el promedio acumulado en tiempo real en nuestra base de datos para la sección elegida.</p>
                     </div>
 
                     <!-- Tarjeta 2: Métricas del Lector Reciente -->
@@ -359,16 +380,12 @@
                         <div>
                             <h3 class="font-extrabold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-emerald-500"></i> Métricas en la Nube</h3>
                             <div class="space-y-3">
-                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">SECCIÓN ACTUAL:</span> <span id="dash-seccion" class="font-black text-xs px-2 py-0.5 rounded text-white bg-slate-800">Manada</span></div>
-                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">TOTAL DE REGISTROS:</span> <span id="dash-total-registros" class="font-black text-xs text-indigo-600">0</span></div>
-                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">SABOR DE ACTIVIDAD:</span> <span id="dash-promedio-diversion" class="font-black text-xs">Sin Datos</span></div>
-                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">ECONOMÍA DE EVENTO:</span> <span id="dash-promedio-economia" class="font-black text-xs">Sin Datos</span></div>
-                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">PREFERENCIA GENERAL:</span> <span id="dash-preferencia-actividades" class="font-black text-xs">Sin Datos</span></div>
+                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">SECCIÓN:</span> <span id="dash-seccion" class="font-black text-xs px-2 py-0.5 rounded text-white bg-slate-800">Manada</span></div>
+                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">REGISTROS:</span> <span id="dash-total-registros" class="font-black text-xs text-indigo-600">0</span></div>
+                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">DIVERSIÓN:</span> <span id="dash-promedio-diversion" class="font-black text-xs">Sin Datos</span></div>
+                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">ECONOMÍA:</span> <span id="dash-promedio-economia" class="font-black text-xs">Sin Datos</span></div>
+                                <div class="flex justify-between border-b pb-2"><span class="text-xs text-gray-400 font-bold">PREFERENCIA:</span> <span id="dash-preferencia-actividades" class="font-black text-xs">Sin Datos</span></div>
                             </div>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-gray-100 bg-gray-50 rounded-2xl p-4">
-                            <span class="text-[10px] font-black text-emerald-800 uppercase block mb-1">Estatus del Servidor</span>
-                            <div class="flex items-center gap-2 text-emerald-600 font-extrabold text-xs"><i class="fa-solid fa-cloud-arrow-up animate-pulse"></i> Base de Datos Activa</div>
                         </div>
                     </div>
 
@@ -380,93 +397,65 @@
                         <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider">Módulo de Co-creación Híbrido</span>
                         <h3 class="text-2xl font-extrabold text-slate-800">Evaluador de KPIs Scouts</h3>
                     </div>
-                    <p class="text-sm text-gray-500 mb-8 font-medium">La plataforma calcula dinámicamente las pre-calificaciones cuantitativas (80%) cruzando las respuestas en tiempo real de los jóvenes. Complementa con el contexto de sábado (20%) para oficializar tu diagnóstico.</p>
 
                     <!-- Grid de Tacómetros de KPIs scouts -->
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-                        <!-- KPI 1: ISP -->
                         <div id="kpi-card-isp" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
                             <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.P. (Programa)</span>
                             <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-isp">0%</div>
-                            <span class="text-[9px] font-bold text-slate-500 mt-2">Divertido y Retador</span>
                         </div>
-                        <!-- KPI 2: ICS -->
                         <div id="kpi-card-ics" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
                             <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.C.S. (Cohesión)</span>
                             <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-ics">0%</div>
-                            <span class="text-[9px] font-bold text-slate-500 mt-2">Hermandad de Sección</span>
                         </div>
-                        <!-- KPI 3: IAP -->
                         <div id="kpi-card-iap" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
                             <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.A.P. (Avance)</span>
                             <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-iap">0%</div>
-                            <span class="text-[9px] font-bold text-slate-500 mt-2">Crecimiento Educativo</span>
                         </div>
-                        <!-- KPI 4: ISG -->
                         <div id="kpi-card-isg" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
                             <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.G. (Seguridad)</span>
                             <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-isg">0%</div>
-                            <span class="text-[9px] font-bold text-slate-500 mt-2">Espacio Seguro</span>
                         </div>
-                        <!-- KPI 5: IVE -->
                         <div id="kpi-card-ive" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
                             <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.V.E. (Economía)</span>
                             <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-ive">0%</div>
-                            <span class="text-[9px] font-bold text-slate-500 mt-2">Viabilidad Financiera</span>
                         </div>
                     </div>
 
                     <!-- Input Cualitativo de Scouter y Registro -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Columna izquierda: Contextualización Humana -->
                         <div class="space-y-4">
-                            <label class="text-xs font-extrabold text-gray-500 uppercase block tracking-wider">Contexto Cualitativo de la Actividad (20%)</label>
-                            <textarea id="scouter-context-note" rows="3" class="w-full rounded-2xl border border-gray-200 focus:border-indigo-500 p-4 font-semibold outline-none transition-apple bg-white resize-none text-sm" placeholder="Registra notas claves del sábado (ej. 'Lluvia moderada en gran juego', 'Exámenes escolares mermaron asistencia')..."></textarea>
-                            <button onclick="validarDiagnosticoSemanal()" class="w-full py-3.5 rounded-xl bg-appleDark hover:bg-black text-white text-sm font-bold transition-apple shadow-lg flex items-center justify-center gap-2 active:scale-95">
-                                <i class="fa-solid fa-cloud-arrow-up"></i> Validar Diagnóstico Semanal
-                            </button>
+                            <label class="text-xs font-extrabold text-gray-500 uppercase block tracking-wider">Contexto Cualitativo (20%)</label>
+                            <textarea id="scouter-context-note" rows="3" class="w-full rounded-2xl border border-gray-200 focus:border-indigo-500 p-4 font-semibold outline-none transition-apple bg-white resize-none text-sm" placeholder="Notas claves del sábado..."></textarea>
+                            <button onclick="validarDiagnosticoSemanal()" class="w-full py-3.5 rounded-xl bg-appleDark hover:bg-black text-white text-sm font-bold transition-apple shadow-lg">Validar Diagnóstico</button>
                         </div>
-                        <!-- Columna derecha: Historial de Diagnósticos Cofirmados -->
                         <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
-                            <label class="text-xs font-extrabold text-gray-500 uppercase block tracking-wider mb-4">Registro Histórico de Reportes Semanales</label>
-                            <div id="reportes-validados-lista" class="space-y-3 max-h-[180px] overflow-y-auto no-scrollbar">
-                                <p class="text-xs text-gray-400 italic text-center py-6">Aún no se ha validado ningún reporte semanal de KPIs para esta sección.</p>
-                            </div>
+                            <label class="text-xs font-extrabold text-gray-500 uppercase block tracking-wider mb-4">Registro Histórico</label>
+                            <div id="reportes-validados-lista" class="space-y-3 max-h-[180px] overflow-y-auto no-scrollbar"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- RECOMENDACIÓN IA DINÁMICA -->
                 <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden text-left">
-                    <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12">
-                        <i class="fa-solid fa-brain text-[200px]"></i>
-                    </div>
                     <div class="flex items-center gap-3 mb-4">
-                        <span class="bg-emerald-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider shadow-md"><i class="fa-solid fa-robot mr-1"></i> TequiVoz AI Engine</span>
-                        <span id="ia-subtitle-seccion" class="text-xs text-gray-300 font-semibold">Análisis Pedagógico</span>
+                        <span class="bg-emerald-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider shadow-md">TequiVoz AI Engine</span>
+                        <span id="ia-subtitle-seccion-kpi" class="text-xs text-gray-300 font-semibold">Análisis Pedagógico</span>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-extrabold mb-4 leading-tight">Plan de Acción Estratégico Generado</h3>
+                    <h3 class="text-xl md:text-2xl font-extrabold mb-4">Plan de Acción Estratégico</h3>
                     
                     <div class="space-y-6">
                         <div>
-                            <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Diagnóstico General por Sección</span>
-                            <p id="ia-diagnostico" class="text-gray-300 text-sm font-medium leading-relaxed">
-                                Cargando análisis inteligente...
-                            </p>
+                            <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Diagnóstico General</span>
+                            <p id="ia-diagnostico-kpi" class="text-gray-300 text-sm font-medium leading-relaxed"></p>
                         </div>
-
                         <div>
-                            <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Líneas de Acción Inmediatas sugeridas</span>
-                            <p id="ia-accion" class="text-gray-300 text-sm font-medium leading-relaxed">
-                                Cargando recomendaciones pedagógicas...
-                            </p>
+                            <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Líneas de Acción Inmediatas</span>
+                            <p id="ia-accion-kpi" class="text-gray-300 text-sm font-medium leading-relaxed"></p>
                         </div>
-                        
                         <div id="ia-sugerencias-container" class="hidden bg-white/5 border border-white/10 rounded-2xl p-4">
-                            <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-2"><i class="fa-regular fa-comment-dots mr-1"></i> Últimas Sugerencias de Cambio de los Alumnos</span>
-                            <div id="ia-sugerencias-texto-lista" class="text-gray-300 text-xs italic font-medium space-y-1">
-                                ...
-                            </div>
+                            <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-2">Últimas Sugerencias de Cambio</span>
+                            <div id="ia-sugerencias-texto-lista" class="text-gray-300 text-xs italic font-medium space-y-1"></div>
                         </div>
                     </div>
                 </div>
@@ -474,80 +463,45 @@
 
             <!-- VISTA DE EDITOR DE FORMULARIOS -->
             <div id="vista-scouter-editor" class="hidden text-left">
+                <!-- Editor Wix-Style -->
                 <div class="glass-panel rounded-3xl p-6 md:p-8 shadow-xl">
-                    <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wider inline-block">Módulo de Personalización</span>
-                            <h3 class="text-2xl font-extrabold mt-2 text-slate-800">Diseñador del Formulario (<span id="editor-nombre-seccion-activa">Manada</span>)</h3>
-                        </div>
-                        <i class="fa-solid fa-palette text-indigo-500 text-3xl"></i>
-                    </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <!-- Columna izquierda: Listado de Preguntas -->
                         <div class="md:col-span-1 border-r border-gray-100 pr-4">
                             <h4 class="text-sm font-extrabold text-slate-500 uppercase tracking-widest mb-4">Selecciona Pregunta</h4>
-                            <div class="flex flex-col gap-2 max-h-[350px] overflow-y-auto no-scrollbar" id="editor-selector-preguntas-lista">
-                                <!-- Se inyectará dinámicamente con las 10 preguntas -->
-                            </div>
+                            <div class="flex flex-col gap-2 max-h-[350px] overflow-y-auto no-scrollbar" id="editor-selector-preguntas-lista"></div>
                         </div>
-
-                        <!-- Columna centro/derecha: Formulario de edición -->
                         <div class="md:col-span-2 space-y-6">
                             <h4 class="text-sm font-extrabold text-slate-500 uppercase tracking-widest mb-4">Configuración de Pregunta</h4>
-                            
-                            <!-- Pregunta seleccionada número -->
                             <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl">
                                 <span class="text-xs text-indigo-600 font-extrabold tracking-widest uppercase block">Modificando</span>
                                 <span id="editor-pregunta-label-seleccionada" class="text-lg font-black text-indigo-950">Pregunta 1</span>
                             </div>
-
-                            <!-- Título de la pregunta -->
                             <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">Título de la Pregunta</label>
-                                <input type="text" id="editor-pregunta-titulo" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Escribe el título aquí">
+                                <label class="text-xs font-bold text-gray-500 uppercase block mb-2">Título de la Pregunta</label>
+                                <input type="text" id="editor-pregunta-titulo" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple">
                             </div>
-
-                            <!-- Tipo de Pregunta -->
                             <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">Tipo de Interacción</label>
+                                <label class="text-xs font-bold text-gray-500 uppercase block mb-2">Tipo de Interacción</label>
                                 <select id="editor-pregunta-tipo" onchange="alternarCamposOpcionesEditor(this.value)" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple">
-                                    <option value="select">Fila de Botones con Emojis (Excelente para satisfacción rápida)</option>
-                                    <option value="range">Slider de Escala (Elegante barra del 1 al 10 o 1 al 5)</option>
-                                    <option value="list">Tarjetas con Descripciones (Ideales para dinámicas complejas)</option>
-                                    <option value="grid">Grid de Opciones con Icono (Muy visual)</option>
-                                    <option value="textarea">Caja de Texto Abierto (Para opiniones directas)</option>
+                                    <option value="select">Fila de Botones con Emojis</option>
+                                    <option value="range">Slider de Escala</option>
+                                    <option value="list">Tarjetas con Descripciones</option>
+                                    <option value="grid">Grid de Opciones con Icono</option>
+                                    <option value="textarea">Caja de Texto Abierto</option>
                                 </select>
                             </div>
-
-                            <!-- Opciones Custom (Condicionales según tipo) -->
                             <div id="editor-seccion-opciones" class="space-y-4">
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block">Opciones del Formulario</label>
-                                <p class="text-xs text-gray-400">Personaliza los textos o etiquetas de los botones interactivos.</p>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="editor-campos-dinamicos-opciones">
-                                    <!-- Campos autogenerados según tipo -->
-                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="editor-campos-dinamicos-opciones"></div>
                             </div>
-
                             <div class="pt-4 border-t border-gray-100 flex gap-4">
-                                <button onclick="guardarPreguntaModificada()" class="flex-1 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-apple shadow-lg flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-circle-check"></i> Guardar y Aplicar Cambios
-                                </button>
-                                <button onclick="restablecerPreguntasPredeterminadas()" class="py-3.5 px-6 rounded-xl border border-gray-200 text-gray-500 font-bold hover:bg-gray-50 transition-apple">
-                                    Restablecer
-                                </button>
+                                <button onclick="guardarPreguntaModificada()" class="flex-1 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-apple shadow-lg">Guardar Cambios</button>
+                                <button onclick="restablecerPreguntasPredeterminadas()" class="py-3.5 px-6 rounded-xl border border-gray-200 text-gray-500 font-bold hover:bg-gray-50 transition-apple">Restablecer</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- CRÉDITOS -->
-        <footer class="mt-16 pb-8 text-center text-[10px] font-semibold text-gray-400 tracking-wide uppercase opacity-75">
-            Plataforma diseñada y desarrollada por Rafael Magaña Rangel
-        </footer>
 
     </main>
 
@@ -558,8 +512,8 @@
                 <i class="fa-solid fa-circle-info"></i>
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-2" id="custom-alert-title">Notificación</h3>
-            <p class="text-sm text-gray-500 mb-6" id="custom-alert-message">Mensaje de alerta.</p>
-            <button onclick="cerrarAlert()" class="w-full py-2.5 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple active:scale-95 shadow-lg">Entendido</button>
+            <p class="text-sm text-gray-500 mb-6" id="custom-alert-message"></p>
+            <button onclick="cerrarAlert()" class="w-full py-2.5 rounded-xl bg-appleDark text-white font-bold transition-apple active:scale-95 shadow-lg">Entendido</button>
         </div>
     </div>
 
@@ -572,11 +526,11 @@
         // Configuración de Estados
         let seccionActiva = "";
         let preguntaActual = 0;
-        const totalPreguntas = 10;
-        let surveysList = []; // Lista de encuestas en tiempo real cargadas de Firebase
-        let activeDashboardSection = "Manada"; // Sección seleccionada en el dashboard de scouter
-        let currentRolScouter = "Dirigencia"; // "Dirigencia", "Manada", "Tropa", "Comunidad", "Clan"
-        let editorPreguntaIndexSeleccionada = 0; // Índice de la pregunta que se edita (0 a 9)
+        let totalPreguntas = 10;
+        let surveysList = []; 
+        let activeDashboardSection = "Manada"; 
+        let currentRolScouter = "Dirigencia"; 
+        let editorPreguntaIndexSeleccionada = 0; 
         
         // Estado actual de respuestas
         let respuestasSesion = {
@@ -590,7 +544,11 @@
             p7: "", // Texto libre cambio
             p8: "", // Seguridad
             p9: "", // Equidad
-            p10: "" // Idea Loca
+            p10: "", // Idea Loca
+            p11: 5,  // Día del padre escala
+            p12: 5,  // Regata escala
+            p13: "", // Día del padre texto
+            p14: ""  // Regata texto
         };
 
         // Estado local de Reportes Semanales de KPIs Validados por Scouters
@@ -618,7 +576,7 @@
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las excursiones y campamentos de Tropa?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de dinámicas o técnicas scouts te gustaría practicar más en los ciclos de programa?", options: [ { val: "Supervivencia", icon: "🌲", title: "Pionerismo y Campismo", desc: "Construcciones con nudos complejos, refugios y orientación." }, { val: "Servicio", icon: "❤️", title: "Servicios Técnicos", desc: "Apoyo a la comunidad, primeros auxilios avanzados y ecología." }, { val: "Extremo", icon: "🧗", title: "Juegos de Acecho", desc: "Estrategias nocturnas, retos físicos y de aventura." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de nuestra Tropa o Corte de Honor, ¿cuál sería?", placeholder: "Escribe tu sugerencia constructiva para la Corte de Honor..." },
-                { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y los protocolos de riesgo durante los campamentos o excursiones?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Falta de botiquín o supervisión directa en las bases críticas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Monitoreo constante, botiquín visible y zonas seguras." } ] },
+                { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y los protocolos de riesgo durante los campamentos o excursiones?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Falta de botiquín o supervisión directa en las bases críticas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Monitoreo constante, botiquín visible and zonas seguras." } ] },
                 { id: 9, type: "grid", title: "¿Consideras que existe un ambiente inclusivo y de equidad en el trato de todos en la Tropa?", options: [ { val: "Excelente", icon: "✨", title: "Excelente ambiente", desc: "Todos los scouts y patrullas son tomados en cuenta por igual." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o diferencias de rango marcadas." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
                 { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego nocturno o idea loca para el próximo campamento de Tropa:", placeholder: "¡Ejemplo: Un juego de rol de espionaje nocturno con claves secretas y linternas!" }
             ],
@@ -645,13 +603,17 @@
                 { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Análisis previo de riesgos, equipamiento y monitoreo constante." } ] },
                 { id: 9, type: "grid", title: "¿Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
                 { id: 10, type: "textarea", title: "Para finalizar, propón una idea loca, innovadora o juego que nunca se haya hecho en el Grupo:", placeholder: "¡Ejemplo: Un juego de rol de supervivencia de 24 horas con retos de impacto social!" }
+            ],
+            Dirigencia: [
+                { id: 11, type: "range", title: "Del 1 al 10, ¿Cómo calificarías tu experiencia en la actividad de Día del Padre?", min: 1, max: 10, def: 5, left: "Poca experiencia 🛠️", right: "Experiencia Excelente 🌟" },
+                { id: 12, type: "range", title: "Del 1 al 10, ¿Cómo calificarías tu experiencia en la actividad de la Regata?", min: 1, max: 10, def: 5, left: "Poca experiencia 🛠️", right: "Experiencia Excelente 🌟" },
+                { id: 13, type: "textarea", title: "¿Qué cambiarías de la organización del Día del Padre o qué sugerencias tienes?", placeholder: "Escribe tus propuestas de mejora para el Día del Padre..." },
+                { id: 14, type: "textarea", title: "¿Qué cuestiones o elementos sugerirías agregar, quitar o mantener para la Regata?", placeholder: "Escribe tus propuestas de mejora para la Regata..." }
             ]
         };
 
-        // Estado del banco de preguntas dinámico (se carga de localStorage o usa el default)
         let bancoPreguntas = JSON.parse(localStorage.getItem('bancoPreguntas_tequivoz')) || bancoPreguntasPredeterminado;
 
-        // Configuración y Inicialización de Firebase (Simulación de Realtime Firestore en Frontend para GitHub Pages)
         const appId = 'tequivoz-gpo1';
         let firebaseConfig = {
             apiKey: "AIzaSyAs-demo-key-for-github-pages",
@@ -666,7 +628,6 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // Autenticar de manera segura para leer/escribir
         async function authenticateUser() {
             try {
                 await signInAnonymously(auth);
@@ -676,16 +637,13 @@
         }
         await authenticateUser();
 
-        // Referencia a colección pública estructurada
         const surveysCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'surveys');
 
-        // Escuchar datos de la nube en tiempo real (Sincronización automática de estadísticas)
         onSnapshot(surveysCollectionRef, (snapshot) => {
             surveysList = [];
             snapshot.forEach((doc) => {
                 surveysList.push(doc.data());
             });
-            // Si el panel de administración está abierto, refrescar UI
             if (!document.getElementById('panel-scouter').classList.contains('hidden')) {
                 actualizarDashboardSeccionUI();
             }
@@ -693,7 +651,6 @@
             console.error("Error al sincronizar datos en la nube:", error);
         });
 
-        // Ruteador centralizado de vistas
         function mostrarSeccion(idSeccion) {
             const secciones = ['pantalla-inicio', 'contenedor-encuesta', 'puerta-autenticacion', 'panel-scouter'];
             secciones.forEach(id => {
@@ -730,12 +687,21 @@
 
         // Iniciar encuesta de sección
         function empezarEncuesta(rama) {
+            if (rama === 'Dirigencia') {
+                const pass = prompt("Ingresa la contraseña de Dirigencia:");
+                if (pass !== '000') {
+                    lanzarAlert("Acceso Denegado", "Contraseña incorrecta para Dirigencia.");
+                    return;
+                }
+            }
+
             seccionActiva = rama;
             respuestasSesion = {
                 rama: rama,
-                p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: ""
+                p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: "", p11: 5, p12: 5, p13: "", p14: ""
             };
             preguntaActual = 0;
+            totalPreguntas = bancoPreguntas[rama].length;
 
             const body = document.body;
             const logoImg = document.getElementById('seccion-logo-activo');
@@ -745,21 +711,22 @@
                 body.style.backgroundColor = '#fffbeb';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-manada)';
                 logoImg.src = 'Logo 2.png';
-            }
-            if(rama === 'Tropa') {
+            } else if(rama === 'Tropa') {
                 body.style.backgroundColor = '#f0fdf4';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-tropa)';
                 logoImg.src = 'Logo 3.png';
-            }
-            if(rama === 'Comunidad') {
+            } else if(rama === 'Comunidad') {
                 body.style.backgroundColor = '#ecfeff';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-comunidad)';
                 logoImg.src = 'Logo 4.png';
-            }
-            if(rama === 'Clan') {
+            } else if(rama === 'Clan') {
                 body.style.backgroundColor = '#fff5f5';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-clan)';
                 logoImg.src = 'Logo 5.png';
+            } else if(rama === 'Dirigencia') {
+                body.style.backgroundColor = '#f8fafc';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = '#475569';
+                logoImg.src = 'Logo 1.png';
             }
 
             document.getElementById('badge-seccion-activa').innerText = rama;
@@ -769,7 +736,7 @@
         }
         window.empezarEncuesta = empezarEncuesta;
 
-        // Renderizado dinámico del Diseñador de Formulario
+        // Renderizado dinámico del Wix-Style Question Editor
         function renderPreguntaActiva() {
             const container = document.getElementById('formulario-preguntas');
             const listaPreguntas = bancoPreguntas[seccionActiva];
@@ -919,7 +886,7 @@
             const feedbackEl = document.getElementById('feedback-slider-dinamico');
             if (feedbackEl) {
                 let extra = "";
-                if (id === 2) {
+                if (id === 2 || id === 11 || id === 12) {
                     if (val <= 3) extra = "- Falta Dinamismo 🧭";
                     else if (val <= 6) extra = "- Neutro / Regular";
                     else if (val <= 8) extra = "- ¡Muy bueno y amigable! 👍";
@@ -969,7 +936,6 @@
                 btnSig.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
             }
 
-            // Capturar última respuesta de texto abierto si se omitió el evento input
             const txtArea = document.getElementById('texto-textarea-dinamico');
             if (txtArea) {
                 const qList = bancoPreguntas[seccionActiva];
@@ -977,7 +943,7 @@
                 respuestasSesion[`p${q.id}`] = txtArea.value;
             }
 
-            // Datos estructurados limpios
+            // Mapeo unificado para que la encuesta de dirigencia guarde correctamente sus preguntas especiales (11, 12, 13, 14)
             const docData = {
                 rama: respuestasSesion.rama,
                 p1: respuestasSesion.p1 || "Divertida",
@@ -990,6 +956,10 @@
                 p8: respuestasSesion.p8 || "Bien",
                 p9: respuestasSesion.p9 || "Excelente",
                 p10: respuestasSesion.p10 || "",
+                p11: Number(respuestasSesion.p11 || 5),
+                p12: Number(respuestasSesion.p12 || 5),
+                p13: respuestasSesion.p13 || "",
+                p14: respuestasSesion.p14 || "",
                 timestamp: new Date().toISOString()
             };
 
@@ -1027,10 +997,12 @@
         function mostrarModalAutenticar() {
             mostrarSeccion('puerta-autenticacion');
             const ring = document.getElementById('biometric-ring');
-            ring.classList.add('border-emerald-500');
-            setTimeout(() => {
-                ring.classList.remove('border-emerald-500');
-            }, 2000);
+            if (ring) {
+                ring.classList.add('border-emerald-500');
+                setTimeout(() => {
+                    ring.classList.remove('border-emerald-500');
+                }, 2000);
+            }
         }
         window.mostrarModalAutenticar = mostrarModalAutenticar;
 
@@ -1039,8 +1011,8 @@
             const pass = document.getElementById('admin-pass').value.toLowerCase().trim();
             let loginValido = false;
 
-            // Mapeo estricto de contraseñas requeridas
-            if (user === 'manada' && pass === 'm1') {
+            // Mapeo estricto de contraseñas requeridas con Scouter Manada con su nueva clave
+            if (user === 'manada' && pass === '100%manada') {
                 currentRolScouter = "Manada";
                 activeDashboardSection = "Manada";
                 loginValido = true;
@@ -1077,41 +1049,46 @@
         function configurarVisibilidadSegunRol() {
             const selectorDash = document.getElementById('selector-secciones-dash');
             const subtext = document.getElementById('subtitulo-rol-scouter');
+            const btnDirigenciaDash = document.getElementById('dash-btn-Dirigencia');
 
             if (currentRolScouter === "Dirigencia") {
-                selectorDash.classList.remove('hidden');
-                subtext.innerText = "Acceso Maestro Completo — Grupo 1 Tequihua";
+                if (selectorDash) selectorDash.classList.remove('hidden');
+                if (btnDirigenciaDash) btnDirigenciaDash.classList.remove('hidden');
+                if (subtext) subtext.innerText = "Acceso Maestro Completo — Grupo 1 Tequihua";
             } else {
-                selectorDash.classList.add('hidden'); // Ocultar selector de otras ramas si el jefe de sección tiene rol limitado
-                subtext.innerText = `Acceso Restringido a Jefatura de ${currentRolScouter}`;
+                if (selectorDash) selectorDash.classList.add('hidden'); 
+                if (btnDirigenciaDash) btnDirigenciaDash.classList.add('hidden');
+                if (subtext) subtext.innerText = `Acceso Restringido a Jefatura de ${currentRolScouter}`;
             }
 
-            // Cambiar por defecto el Wix-Style editor al rol activo
-            document.getElementById('editor-nombre-seccion-activa').innerText = activeDashboardSection;
+            const editorTitle = document.getElementById('editor-nombre-seccion-activa');
+            if (editorTitle) editorTitle.innerText = activeDashboardSection;
             inicializarWixEditorPreguntas();
         }
 
         // Alternar visualización del dashboard para dirigencia de grupo
         function seleccionarSeccionDashboard(seccion) {
-            // Impedir alteración de dashboard si el rol de usuario no tiene permisos maestros
             if (currentRolScouter !== "Dirigencia" && currentRolScouter !== seccion) {
                 return;
             }
 
             activeDashboardSection = seccion;
             
-            // Toggle visual de botones
-            const secciones = ["Manada", "Tropa", "Comunidad", "Clan"];
+            const secciones = ["Manada", "Tropa", "Comunidad", "Clan", "Dirigencia"];
             secciones.forEach((s) => {
                 const btn = document.getElementById(`dash-btn-${s}`);
-                if (s === seccion) {
-                    btn.className = `flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-${s === 'Manada' ? 'yellow-600' : (s === 'Tropa' ? 'emerald-600' : (s === 'Comunidad' ? 'sky-600' : 'rose-600'))} shadow-sm border border-${s === 'Manada' ? 'yellow-200' : (s === 'Tropa' ? 'emerald-200' : (s === 'Comunidad' ? 'sky-200' : 'rose-200'))}`;
-                } else {
-                    btn.className = "flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-gray-700";
+                if (btn) {
+                    if (s === seccion) {
+                        btn.className = `flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-${s === 'Manada' ? 'yellow-600' : (s === 'Tropa' ? 'emerald-600' : (s === 'Comunidad' ? 'sky-600' : (s === 'Dirigencia' ? 'slate-600' : 'rose-600')))} shadow-sm border border-${s === 'Manada' ? 'yellow-200' : (s === 'Tropa' ? 'emerald-200' : (s === 'Comunidad' ? 'sky-200' : (s === 'Dirigencia' ? 'slate-200' : 'rose-200')))}`;
+                    } else {
+                        btn.className = "flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-gray-700";
+                    }
                 }
             });
 
-            document.getElementById('editor-nombre-seccion-activa').innerText = seccion;
+            const editorTitle = document.getElementById('editor-nombre-seccion-activa');
+            if (editorTitle) editorTitle.innerText = seccion;
+            
             actualizarDashboardSeccionUI();
             inicializarWixEditorPreguntas();
             renderReportesValidadosLista();
@@ -1126,21 +1103,40 @@
             const filteredSurveys = totalSurveys.filter(s => s.rama === activeDashboardSection);
             const total = filteredSurveys.length;
 
-            document.getElementById('dash-seccion').innerText = activeDashboardSection;
-            document.getElementById('dash-seccion').style.backgroundColor = `var(--color-${activeDashboardSection.toLowerCase()})`;
-            document.getElementById('dash-total-registros').innerText = total;
+            const dashSeccion = document.getElementById('dash-seccion');
+            if (dashSeccion) {
+                dashSeccion.innerText = activeDashboardSection;
+                if (activeDashboardSection === "Dirigencia") {
+                    dashSeccion.style.backgroundColor = '#475569';
+                } else {
+                    dashSeccion.style.backgroundColor = `var(--color-${activeDashboardSection.toLowerCase()})`;
+                }
+            }
+            
+            const totalRegistros = document.getElementById('dash-total-registros');
+            if (totalRegistros) totalRegistros.innerText = total;
 
             if (total === 0) {
                 // Limpiar Dashboard ante base de datos vacía
-                document.getElementById('dash-promedio-diversion').innerText = "Sin Datos";
-                document.getElementById('dash-promedio-economia').innerText = "Sin Datos";
-                document.getElementById('dash-preferencia-actividades').innerText = "Sin Datos";
+                const promDiv = document.getElementById('dash-promedio-diversion');
+                const promEco = document.getElementById('dash-promedio-economia');
+                const prefAct = document.getElementById('dash-preferencia-actividades');
+                
+                if (promDiv) promDiv.innerText = "Sin Datos";
+                if (promEco) promEco.innerText = "Sin Datos";
+                if (prefAct) prefAct.innerText = "Sin Datos";
 
                 actualizarBarrasGrafica(0, 0, 0, 0, 0);
-                document.getElementById('ia-subtitle-seccion').innerText = `Análisis Pedagógico de ${activeDashboardSection}`;
-                document.getElementById('ia-diagnostico').innerText = `Aún no se registran datos para la sección de ${activeDashboardSection}. Las recomendaciones de IA se generarán cuando ingreses la primera encuesta.`;
-                document.getElementById('ia-accion').innerText = "Incentiva a los scouts de tu sección a dejar su huella digital en TequiVoz.";
-                document.getElementById('ia-sugerencias-container').classList.add('hidden');
+                
+                const iaSub = document.getElementById('ia-subtitle-seccion-kpi');
+                const iaDiag = document.getElementById('ia-diagnostico-kpi');
+                const iaAcc = document.getElementById('ia-accion-kpi');
+                const iaSugContainer = document.getElementById('ia-sugerencias-container');
+
+                if (iaSub) iaSub.innerText = `Análisis Pedagógico de ${activeDashboardSection}`;
+                if (iaDiag) iaDiag.innerText = `Aún no se registran datos para la sección de ${activeDashboardSection}. Las recomendaciones de IA se generarán cuando ingreses la primera encuesta.`;
+                if (iaAcc) iaAcc.innerText = "Incentiva a los scouts de tu sección a dejar su huella digital en TequiVoz.";
+                if (iaSugContainer) iaSugContainer.classList.add('hidden');
 
                 // Reiniciar KPI Cards
                 setKPICardValue("isp", 0);
@@ -1156,6 +1152,58 @@
             let countAburrida = 0, countRegular = 0, countDivertida = 0, countExcelente = 0;
             let countSupervivencia = 0, countServicio = 0, countExtremo = 0;
             let sugerenciasCambio = [];
+
+            if (activeDashboardSection === "Dirigencia") {
+                let p11Sum = 0, p12Sum = 0;
+                filteredSurveys.forEach(s => {
+                    p11Sum += Number(s.p11 || 5);
+                    p12Sum += Number(s.p12 || 5);
+                    if (s.p13 && s.p13.trim() !== "") sugerenciasCambio.push(s.p13);
+                    if (s.p14 && s.p14.trim() !== "") sugerenciasCambio.push(s.p14);
+                });
+                const avgP11 = p11Sum / total;
+                const avgP12 = p12Sum / total;
+                
+                const promDiv = document.getElementById('dash-promedio-diversion');
+                const promEco = document.getElementById('dash-promedio-economia');
+                const prefAct = document.getElementById('dash-preferencia-actividades');
+                if (promDiv) promDiv.innerText = "N/A";
+                if (promEco) promEco.innerText = "N/A";
+                if (prefAct) prefAct.innerText = "N/A";
+                
+                // Representación de barras para dirigencia
+                actualizarBarrasGrafica((avgP11/10)*100, (avgP12/10)*100, 100, 100, 100);
+                
+                setKPICardValue("isp", Math.round((avgP11/10)*100));
+                setKPICardValue("ics", Math.round((avgP12/10)*100));
+                setKPICardValue("iap", 100);
+                setKPICardValue("isg", 100);
+                setKPICardValue("ive", 100);
+
+                const iaSub = document.getElementById('ia-subtitle-seccion-kpi');
+                const iaDiag = document.getElementById('ia-diagnostico-kpi');
+                const iaAcc = document.getElementById('ia-accion-kpi');
+                const iaSugContainer = document.getElementById('ia-sugerencias-container');
+                const listContainer = document.getElementById('ia-sugerencias-texto-lista');
+
+                if (iaSub) iaSub.innerText = `Análisis Pedagógico de ${activeDashboardSection}`;
+                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. Calificación promedio Día del Padre: ${avgP11.toFixed(1)}/10. Calificación Regata: ${avgP12.toFixed(1)}/10.`;
+                if (iaAcc) iaAcc.innerText = "• Revisar las sugerencias logísticas aportadas por los scouters para mejorar las próximas bases e inscripciones del grupo.";
+
+                if (sugerenciasCambio.length > 0 && iaSugContainer && listContainer) {
+                    iaSugContainer.classList.remove('hidden');
+                    listContainer.innerHTML = "";
+                    sugerenciasCambio.slice(-3).forEach(txt => {
+                        const item = document.createElement('p');
+                        item.className = "text-gray-300 text-xs italic font-medium";
+                        item.innerText = `• "${txt}"`;
+                        listContainer.appendChild(item);
+                    });
+                } else if (iaSugContainer) {
+                    iaSugContainer.classList.add('hidden');
+                }
+                return;
+            }
 
             filteredSurveys.forEach(s => {
                 if (s.p1 === "Excelente") { funSum += 10; countExcelente++; }
@@ -1210,22 +1258,21 @@
             if (maxActVal === countServicio) favAct = "Servicio Comunitario";
             else if (maxActVal === countExtremo) favAct = "Deportes Extremos";
 
-            document.getElementById('dash-promedio-diversion').innerText = popularP1;
-            document.getElementById('dash-promedio-economia').innerText = `${avgEconomy} / 5`;
-            document.getElementById('dash-preferencia-actividades').innerText = favAct;
+            const promDiv = document.getElementById('dash-promedio-diversion');
+            const promEco = document.getElementById('dash-promedio-economia');
+            const prefAct = document.getElementById('dash-preferencia-actividades');
+            
+            if (promDiv) promDiv.innerText = popularP1;
+            if (promEco) promEco.innerText = `${avgEconomy} / 5`;
+            if (prefAct) prefAct.innerText = favAct;
 
             actualizarBarrasGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
 
             // CALCULAR KPIs DEL MODELO HÍBRIDO EN TIEMPO REAL (80% Analítica de Base de Datos)
-            // ISP = Promedio de Diversión (P1) y Desempeño de Dirigentes (P2)
             const kpiISP = Math.round((avgFun + avgSupport) / 2);
-            // ICS = Promedio de Sinergia de Patrulla (P3) e Inclusión (P9)
             const kpiICS = Math.round((avgTeamwork + avgP9) / 2);
-            // IAP = Avance de Progresión (P4)
             const kpiIAP = Math.round(avgProgression);
-            // ISG = Gestión de Riesgos y Seguridad (P8)
             const kpiISG = Math.round(avgSafety);
-            // IVE = Viabilidad Económica (Mapeado inverso de P5: 1 es 100%, 5 es 0% viable)
             const kpiIVE = Math.round(((5 - (economySum / total)) / 4) * 100);
 
             // Actualizar Tarjetas de KPIs en el DOM
@@ -1236,7 +1283,13 @@
             setKPICardValue("ive", kpiIVE);
 
             // Generar Reporte Automatizado de IA exclusivo por rama
-            document.getElementById('ia-subtitle-seccion').innerText = `Análisis Pedagógico de ${activeDashboardSection}`;
+            const iaSub = document.getElementById('ia-subtitle-seccion-kpi');
+            const iaDiag = document.getElementById('ia-diagnostico-kpi');
+            const iaAcc = document.getElementById('ia-accion-kpi');
+            const iaSugContainer = document.getElementById('ia-sugerencias-container');
+            const listContainer = document.getElementById('ia-sugerencias-texto-lista');
+
+            if (iaSub) iaSub.innerText = `Análisis Pedagógico de ${activeDashboardSection}`;
             
             let diagnostico = "", accion = "";
 
@@ -1282,12 +1335,11 @@
                 }
             }
 
-            document.getElementById('ia-diagnostico').innerText = diagnostico;
-            document.getElementById('ia-accion').innerText = accion || "• Mantener el monitoreo continuo para prevenir desviaciones pedagógicas.";
+            if (iaDiag) iaDiag.innerText = diagnostico;
+            if (iaAcc) iaAcc.innerText = accion || "• Mantener el monitoreo continuo para prevenir desviaciones pedagógicas.";
 
-            if (sugerenciasCambio.length > 0) {
-                document.getElementById('ia-sugerencias-container').classList.remove('hidden');
-                const listContainer = document.getElementById('ia-sugerencias-texto-lista');
+            if (sugerenciasCambio.length > 0 && iaSugContainer && listContainer) {
+                iaSugContainer.classList.remove('hidden');
                 listContainer.innerHTML = "";
                 sugerenciasCambio.slice(-3).forEach(txt => {
                     const item = document.createElement('p');
@@ -1295,8 +1347,8 @@
                     item.innerText = `• "${txt}"`;
                     listContainer.appendChild(item);
                 });
-            } else {
-                document.getElementById('ia-sugerencias-container').classList.add('hidden');
+            } else if (iaSugContainer) {
+                iaSugContainer.classList.add('hidden');
             }
         }
 
@@ -1329,18 +1381,25 @@
 
         // FUSIONAR MÉTRICAS (80% IA) Y APORTE DE SCOUTER (20% sabiduría humana)
         function validarDiagnosticoSemanal() {
-            const notaContexto = document.getElementById('scouter-context-note').value.trim();
+            const scouterNote = document.getElementById('scouter-context-note');
+            if (!scouterNote) return;
+            const notaContexto = scouterNote.value.trim();
             if (notaContexto === "") {
                 lanzarAlert("Falta Contexto", "Por favor ingresa una breve nota de contexto para enriquecer las métricas de la IA.");
                 return;
             }
 
-            // Obtener valores de KPIs activos del DOM
-            const ispVal = document.getElementById('kpi-val-isp').innerText;
-            const icsVal = document.getElementById('kpi-val-ics').innerText;
-            const iapVal = document.getElementById('kpi-val-iap').innerText;
-            const isgVal = document.getElementById('kpi-val-isg').innerText;
-            const iveVal = document.getElementById('kpi-val-ive').innerText;
+            const ispEl = document.getElementById('kpi-val-isp');
+            const icsEl = document.getElementById('kpi-val-ics');
+            const iapEl = document.getElementById('kpi-val-iap');
+            const isgEl = document.getElementById('kpi-val-isg');
+            const iveEl = document.getElementById('kpi-val-ive');
+
+            const ispVal = ispEl ? ispEl.innerText : "0%";
+            const icsVal = icsEl ? icsEl.innerText : "0%";
+            const iapVal = iapEl ? iapEl.innerText : "0%";
+            const isgVal = isgEl ? isgEl.innerText : "0%";
+            const iveVal = iveEl ? iveEl.innerText : "0%";
 
             const nuevoReporte = {
                 rama: activeDashboardSection,
@@ -1357,7 +1416,7 @@
             localStorage.setItem('tequivoz_reportes_kpi_validados', JSON.stringify(reportesValidadosHistorico));
 
             lanzarAlert("¡Reporte Semanal Guardado! ⚜️", `Fusión de co-creación exitosa. El diagnóstico oficial para la sección de ${activeDashboardSection} ha quedado registrado en el histórico.`);
-            document.getElementById('scouter-context-note').value = "";
+            scouterNote.value = "";
             renderReportesValidadosLista();
         }
         window.validarDiagnosticoSemanal = validarDiagnosticoSemanal;
@@ -1370,7 +1429,7 @@
             const filtrados = reportesValidadosHistorico.filter(r => r.rama === activeDashboardSection);
 
             if (filtrados.length === 0) {
-                listContainer.innerHTML = `<p class="text-xs text-gray-400 italic text-center py-6">Aún no se ha validado ningún reporte de KPIs semanales para la sección de ${activeDashboardSection}.</p>`;
+                listContainer.innerHTML = `<p class="text-xs text-gray-400 italic text-center py-6">Aún no se ha validado ningún reporte semanal de KPIs para esta sección.</p>`;
                 return;
             }
 
@@ -1394,23 +1453,6 @@
             `).join('');
         }
 
-        function actualizarBarrasGrafica(fun, support, teamwork, progression, safety) {
-            document.getElementById('chart-fun').style.height = `${fun}%`;
-            document.getElementById('chart-fun').innerText = `${Math.round(fun)}%`;
-
-            document.getElementById('chart-leaders').style.height = `${support}%`;
-            document.getElementById('chart-leaders').innerText = `${Math.round(support)}%`;
-
-            document.getElementById('chart-teamwork').style.height = `${teamwork}%`;
-            document.getElementById('chart-teamwork').innerText = `${Math.round(teamwork)}%`;
-
-            document.getElementById('chart-progression').style.height = `${progression}%`;
-            document.getElementById('chart-progression').innerText = `${Math.round(progression)}%`;
-
-            document.getElementById('chart-safety').style.height = `${safety}%`;
-            document.getElementById('chart-safety').innerText = `${Math.round(safety)}%`;
-        }
-
         // CONTROL DE TABS DEL PANEL SCOUTER
         function cambiarTabScouter(tab) {
             const btnAnalytics = document.getElementById('tab-analytics');
@@ -1419,16 +1461,16 @@
             const vistaEditor = document.getElementById('vista-scouter-editor');
 
             if (tab === 'analytics') {
-                btnAnalytics.className = "pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple";
-                btnEditor.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple";
-                vistaAnalytics.classList.remove('hidden');
-                vistaEditor.classList.add('hidden');
+                if (btnAnalytics) btnAnalytics.className = "pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple";
+                if (btnEditor) btnEditor.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple";
+                if (vistaAnalytics) vistaAnalytics.classList.remove('hidden');
+                if (vistaEditor) vistaEditor.classList.add('hidden');
                 actualizarDashboardSeccionUI();
             } else {
-                btnEditor.className = "pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple";
-                btnAnalytics.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple";
-                vistaEditor.classList.remove('hidden');
-                vistaAnalytics.classList.add('hidden');
+                if (btnEditor) btnEditor.className = "pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple";
+                if (btnAnalytics) btnAnalytics.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple";
+                if (vistaEditor) vistaEditor.classList.remove('hidden');
+                if (vistaAnalytics) vistaAnalytics.classList.add('hidden');
                 inicializarWixEditorPreguntas();
             }
         }
@@ -1438,6 +1480,8 @@
         function inicializarWixEditorPreguntas() {
             const listaPreguntas = bancoPreguntas[activeDashboardSection];
             const listContainer = document.getElementById('editor-selector-preguntas-lista');
+            if (!listContainer) return;
+            
             listContainer.innerHTML = "";
 
             listaPreguntas.forEach((q, idx) => {
@@ -1459,36 +1503,42 @@
             editorPreguntaIndexSeleccionada = idx;
             const q = bancoPreguntas[activeDashboardSection][idx];
 
-            document.getElementById('editor-pregunta-label-seleccionada').innerText = `Pregunta ${q.id} (Slot ${idx + 1})`;
-            document.getElementById('editor-pregunta-titulo').value = q.title;
-            document.getElementById('editor-pregunta-tipo').value = q.type;
+            const lblSel = document.getElementById('editor-pregunta-label-seleccionada');
+            const inpTit = document.getElementById('editor-pregunta-titulo');
+            const selTip = document.getElementById('editor-pregunta-tipo');
+            
+            if (lblSel) lblSel.innerText = `Pregunta ${q.id} (Slot ${idx + 1})`;
+            if (inpTit) inpTit.value = q.title;
+            if (selTip) selTip.value = q.type;
 
-            // Renderizar las preguntas en la lista de la izquierda con el estilo activo correcto
-            const botones = document.getElementById('editor-selector-preguntas-lista').querySelectorAll('button');
-            botones.forEach((btn, bIdx) => {
-                if(bIdx === idx) {
-                    btn.className = "w-full text-left p-3 rounded-xl border text-xs font-bold transition-apple flex justify-between items-center bg-indigo-600 text-white shadow-md border-indigo-700";
-                } else {
-                    btn.className = "w-full text-left p-3 rounded-xl border text-xs font-bold transition-apple flex justify-between items-center bg-white text-slate-700 hover:bg-slate-50 border-slate-200";
-                }
-            });
+            const listContainer = document.getElementById('editor-selector-preguntas-lista');
+            if (listContainer) {
+                const botones = listContainer.querySelectorAll('button');
+                botones.forEach((btn, bIdx) => {
+                    if(bIdx === idx) {
+                        btn.className = "w-full text-left p-3 rounded-xl border text-xs font-bold transition-apple flex justify-between items-center bg-indigo-600 text-white shadow-md border-indigo-700";
+                    } else {
+                        btn.className = "w-full text-left p-3 rounded-xl border text-xs font-bold transition-apple flex justify-between items-center bg-white text-slate-700 hover:bg-slate-50 border-slate-200";
+                    }
+                });
+            }
 
             alternarCamposOpcionesEditor(q.type);
         }
         window.cargarPreguntaEnEditor = cargarPreguntaEnEditor;
 
-        // Lista de emojis populares de rápido acceso para los muchachos en Manada o satisfacción general
         const popularEmojisScout = ["😴", "😐", "😀", "🤩", "🏆", "🧭", "🌲", "⛺", "🤝", "🧗", "⚠️", "👍", "🛡️", "✨", "💬", "❤️", "🏅", "⏳", "❌", "🔥", "🐺", "🐾", "🚶", "🎒"];
 
-        // Función para cambiar de forma interactiva el emoji seleccionado desde el picker dropdown
         function abrirSelectorEmojiInterno(optIdx, selectedEmoji) {
-            document.getElementById(`opt-emoji-input-${optIdx}`).value = selectedEmoji;
-            document.getElementById(`opt-emoji-display-${optIdx}`).innerText = selectedEmoji;
+            const inp = document.getElementById(`opt-emoji-input-${optIdx}`);
+            const disp = document.getElementById(`opt-emoji-display-${optIdx}`);
+            if (inp) inp.value = selectedEmoji;
+            if (disp) disp.innerText = selectedEmoji;
             
-            // Ocultar dropdown de vuelta
             const dd = document.getElementById(`opt-emoji-dropdown-${optIdx}`);
             if (dd) dd.classList.add('hidden');
         }
+        window.openSelectorEmojiInterno = abrirSelectorEmojiInterno;
         window.abrirSelectorEmojiInterno = abrirSelectorEmojiInterno;
 
         function toggleEmojiDropdownVisual(optIdx) {
@@ -1505,6 +1555,7 @@
 
         function alternarCamposOpcionesEditor(type) {
             const container = document.getElementById('editor-campos-dinamicos-opciones');
+            if (!container) return;
             container.innerHTML = "";
 
             const q = bancoPreguntas[activeDashboardSection][editorPreguntaIndexSeleccionada];
@@ -1521,18 +1572,15 @@
                     const div = document.createElement('div');
                     div.className = "space-y-2 border border-gray-100 p-4 rounded-2xl bg-slate-50 relative";
                     
-                    // Render del selector interactivo de emojis en lugar de un input de texto plano
                     div.innerHTML = `
                         <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Opción ${idx+1}</span>
                         <div class="flex gap-3 items-center">
-                            <!-- Dropdown / Selector Interactivo Premium de Emoji -->
                             <div class="relative">
                                 <button type="button" onclick="toggleEmojiDropdownVisual(${idx})" class="w-12 h-12 text-2xl flex items-center justify-center bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100 transition-apple" id="opt-emoji-display-${idx}">
                                     ${opt.icon}
                                 </button>
-                                <input type="hidden" id="opt-emoji-${idx}" id="opt-emoji-input-${idx}" value="${opt.icon}">
+                                <input type="hidden" id="opt-emoji-input-${idx}" value="${opt.icon}">
                                 
-                                <!-- Paleta de Emojis desplegable -->
                                 <div id="opt-emoji-dropdown-${idx}" class="hidden absolute left-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-xl z-50 p-2 grid grid-cols-6 gap-1 max-h-40 overflow-y-auto no-scrollbar border-2 border-slate-200">
                                     ${popularEmojisScout.map(emoji => `
                                         <button type="button" onclick="abrirSelectorEmojiInterno(${idx}, '${emoji}')" class="w-7 h-7 text-lg flex items-center justify-center rounded-lg hover:bg-indigo-50 transition-apple">${emoji}</button>
@@ -1584,8 +1632,8 @@
                             <input type="text" id="opt-list-color-${idx}" class="rounded-lg border px-2 py-1.5 text-xs" value="${opt.color}" placeholder="Color (emerald, amber, rose)">
                             <input type="text" id="opt-list-val-${idx}" class="rounded-lg border px-2 py-1.5 text-xs" value="${opt.val}" placeholder="Valor de respuesta">
                         </div>
-                        <input type="text" id="opt-list-title-${idx}" class="w-full rounded-lg border px-2 py-1.5 text-sm font-bold" value="${opt.title}" placeholder="Título de Tarjeta">
-                        <input type="text" id="opt-list-desc-${idx}" class="w-full rounded-lg border px-2 py-1.5 text-xs" value="${opt.desc}" placeholder="Descripción de Tarjeta">
+                        <input type="text" id="opt-list-title-${idx}" class="w-full rounded-lg border px-2 py-1.5 text-sm font-bold shadow-sm bg-white" value="${opt.title}" placeholder="Título de Tarjeta">
+                        <input type="text" id="opt-list-desc-${idx}" class="w-full rounded-lg border px-2 py-1.5 text-xs shadow-sm bg-white" value="${opt.desc}" placeholder="Descripción de Tarjeta">
                     `;
                     container.appendChild(div);
                 });
@@ -1602,12 +1650,11 @@
                     div.innerHTML = `
                         <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Opción Grid ${idx+1}</span>
                         <div class="flex gap-2">
-                            <!-- Emoji Picker dinámico en Grid -->
                             <div class="relative">
                                 <button type="button" onclick="toggleEmojiDropdownVisual(${idx+10})" class="w-12 h-12 text-2xl flex items-center justify-center bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100 transition-apple" id="opt-emoji-display-${idx+10}">
                                     ${opt.icon}
                                 </button>
-                                <input type="hidden" id="opt-grid-icon-${idx}" id="opt-emoji-input-${idx+10}" value="${opt.icon}">
+                                <input type="hidden" id="opt-grid-icon-${idx}" value="${opt.icon}">
                                 
                                 <div id="opt-emoji-dropdown-${idx+10}" class="hidden absolute left-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-xl z-50 p-2 grid grid-cols-6 gap-1 max-h-40 overflow-y-auto no-scrollbar border-2 border-slate-200">
                                     ${popularEmojisScout.map(emoji => `
@@ -1637,8 +1684,11 @@
             const idx = editorPreguntaIndexSeleccionada;
             const q = bancoPreguntas[activeDashboardSection][idx];
 
-            const nuevoTitulo = document.getElementById('editor-pregunta-titulo').value.trim();
-            const nuevoTipo = document.getElementById('editor-pregunta-tipo').value;
+            const titInp = document.getElementById('editor-pregunta-titulo');
+            const tipInp = document.getElementById('editor-pregunta-tipo');
+            
+            const nuevoTitulo = titInp ? titInp.value.trim() : "";
+            const nuevoTipo = tipInp ? tipInp.value : "";
 
             if (nuevoTitulo === "") {
                 lanzarAlert("Falta Título", "Por favor ingresa un título de pregunta válido.");
@@ -1648,50 +1698,69 @@
             q.title = nuevoTitulo;
             q.type = nuevoTipo;
 
-            // Recolectar opciones modificadas según tipo
             if (nuevoTipo === "select") {
                 q.options = [];
                 for(let i=0; i<4; i++) {
-                    const pickedEmoji = document.getElementById(`opt-emoji-display-${i}`).innerText.trim();
+                    const disp = document.getElementById(`opt-emoji-display-${i}`);
+                    const pickedEmoji = disp ? disp.innerText.trim() : "❓";
+                    const valInp = document.getElementById(`opt-val-${i}`);
+                    const textInp = document.getElementById(`opt-text-${i}`);
+                    
                     q.options.push({
-                        val: document.getElementById(`opt-val-${i}`).value || `Opcion-${i+1}`,
+                        val: (valInp ? valInp.value : "") || `Opcion-${i+1}`,
                         icon: pickedEmoji || "❓",
-                        text: document.getElementById(`opt-text-${i}`).value || ""
+                        text: (textInp ? textInp.value : "") || ""
                     });
                 }
             } else if (nuevoTipo === "range") {
-                q.min = Number(document.getElementById('opt-range-min').value || 1);
-                q.max = Number(document.getElementById('opt-range-max').value || 10);
+                const minInp = document.getElementById('opt-range-min');
+                const maxInp = document.getElementById('opt-range-max');
+                const lInp = document.getElementById('opt-range-left');
+                const rInp = document.getElementById('opt-range-right');
+                
+                q.min = Number(minInp ? minInp.value : 1);
+                q.max = Number(maxInp ? maxInp.value : 10);
                 q.def = Math.round((q.min + q.max) / 2);
-                q.left = document.getElementById('opt-range-left').value || "Mínimo";
-                q.right = document.getElementById('opt-range-right').value || "Máximo";
+                q.left = (lInp ? lInp.value : "") || "Mínimo";
+                q.right = (rInp ? rInp.value : "") || "Máximo";
             } else if (nuevoTipo === "list") {
                 q.options = [];
                 for(let i=0; i<3; i++) {
+                    const valInp = document.getElementById(`opt-list-val-${i}`);
+                    const icoInp = document.getElementById(`opt-list-icon-${i}`);
+                    const colInp = document.getElementById(`opt-list-color-${i}`);
+                    const titLiInp = document.getElementById(`opt-list-title-${i}`);
+                    const desLiInp = document.getElementById(`opt-list-desc-${i}`);
+                    
                     q.options.push({
-                        val: document.getElementById(`opt-list-val-${i}`).value || `Opcion-${i+1}`,
-                        icon: document.getElementById(`opt-list-icon-${i}`).value || "fa-hands-holding",
-                        color: document.getElementById(`opt-list-color-${i}`).value || "emerald",
-                        title: document.getElementById(`opt-list-title-${i}`).value || "",
-                        desc: document.getElementById(`opt-list-desc-${i}`).value || ""
+                        val: (valInp ? valInp.value : "") || `Opcion-${i+1}`,
+                        icon: (icoInp ? icoInp.value : "") || "fa-hands-holding",
+                        color: (colInp ? colInp.value : "") || "emerald",
+                        title: (titLiInp ? titLiInp.value : "") || "",
+                        desc: (desLiInp ? desLiInp.value : "") || ""
                     });
                 }
             } else if (nuevoTipo === "grid") {
                 q.options = [];
                 for(let i=0; i<3; i++) {
-                    const pickedGridEmoji = document.getElementById(`opt-emoji-display-${i+10}`).innerText.trim();
+                    const disp = document.getElementById(`opt-emoji-display-${i+10}`);
+                    const pickedGridEmoji = disp ? disp.innerText.trim() : "❓";
+                    const valInp = document.getElementById(`opt-grid-val-${i}`);
+                    const titGrInp = document.getElementById(`opt-grid-title-${i}`);
+                    const desGrInp = document.getElementById(`opt-grid-desc-${i}`);
+                    
                     q.options.push({
-                        val: document.getElementById(`opt-grid-val-${i}`).value || `Opcion-${i+1}`,
+                        val: (valInp ? valInp.value : "") || `Opcion-${i+1}`,
                         icon: pickedGridEmoji || "❓",
-                        title: document.getElementById(`opt-grid-title-${i}`).value || "",
-                        desc: document.getElementById(`opt-grid-desc-${i}`).value || ""
+                        title: (titGrInp ? titGrInp.value : "") || "",
+                        desc: (desGrInp ? desGrInp.value : "") || ""
                     });
                 }
             } else if (nuevoTipo === "textarea") {
-                q.placeholder = document.getElementById('opt-textarea-placeholder').value || "Escribe tu respuesta aquí...";
+                const taInp = document.getElementById('opt-textarea-placeholder');
+                q.placeholder = (taInp ? taInp.value : "") || "Escribe tu respuesta aquí...";
             }
 
-            // Actualizar en memoria y persistir en localStorage
             localStorage.setItem('bancoPreguntas_tequivoz', JSON.stringify(bancoPreguntas));
 
             lanzarAlert("¡Formulario Actualizado! 🎨", `La pregunta ${q.id} para la sección de ${activeDashboardSection} ha sido guardada con éxito y está activa.`);
@@ -1699,7 +1768,7 @@
         }
         window.guardarPreguntaModificada = guardarPreguntaModificada;
 
-        function restablecerPreguntasPredetermiandadas() {
+        function restablecerPreguntasPredeterminadas() {
             if (confirm("¿Estás seguro de restablecer todas las preguntas de todas las secciones a sus configuraciones scouts por defecto?")) {
                 bancoPreguntas = JSON.parse(JSON.stringify(bancoPreguntasPredeterminado));
                 localStorage.setItem('bancoPreguntas_tequivoz', JSON.stringify(bancoPreguntas));
@@ -1707,8 +1776,103 @@
                 inicializarWixEditorPreguntas();
             }
         }
-        window.restablecerPreguntasPredeterminadas = restablecerPreguntasPredetermiandadas;
-    </script>
+        window.restablecerPreguntasPredeterminadas = restablecerPreguntasPredeterminadas;
 
+        // ================= PDF GENERATOR FUNCTION =================
+        async function generarReportePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Colores Institucionales
+            const primaryColor = [20, 54, 38]; // Verde Forestal
+            const secondaryColor = [229, 169, 59]; // Ámbar Tequihua
+            
+            // PAGE 1: Carátula e Introducción
+            doc.setFillColor(...primaryColor);
+            doc.rect(0, 0, 210, 297, "F");
+            
+            doc.setFillColor(...secondaryColor);
+            doc.rect(15, 140, 180, 2, "F");
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(28);
+            doc.text("MiTequihua Analytics ⚜️", 20, 100);
+            
+            doc.setFontSize(20);
+            doc.setTextColor(240, 240, 240);
+            doc.text(`Reporte de Desempeño: ${activeDashboardSection}`, 20, 120);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(200, 200, 200);
+            doc.text(`Fecha de emisión: ${new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}`, 20, 160);
+            doc.text("Desarrollado de manera exclusiva para el Grupo 1 Tequihua, S.L.P.", 20, 170);
+            doc.text("Siempre Listos para Servir", 20, 180);
+            
+            // PAGE 2: KPIs y Análisis (Opción 1 y 3)
+            doc.addPage();
+            doc.setTextColor(33, 33, 33);
+            doc.setFontSize(16);
+            doc.text("1. Análisis de Sentimiento & KPIs Clave", 15, 20);
+            doc.setFillColor(...secondaryColor);
+            doc.rect(15, 23, 180, 1, "F");
+            
+            // KPIs Table
+            const body = [
+                ["ISP (Programa)", document.getElementById('kpi-val-isp').innerText],
+                ["ICS (Cohesión)", document.getElementById('kpi-val-ics').innerText],
+                ["IAP (Avance)", document.getElementById('kpi-val-iap').innerText],
+                ["ISG (Seguridad)", document.getElementById('kpi-val-isg').innerText],
+                ["IVE (Economía)", document.getElementById('kpi-val-ive').innerText]
+            ];
+            
+            doc.autoTable({
+                startY: 30,
+                head: [['Indicador Clave (KPI)', 'Calificación']],
+                body: body,
+                theme: 'grid',
+                headStyles: { fillColor: primaryColor }
+            });
+            
+            let finalY = doc.lastAutoTable.finalY + 15;
+            doc.setFontSize(14);
+            doc.text("2. Mapa de Calor de Recursos (Opción 3)", 15, finalY);
+            
+            finalY += 8;
+            doc.setFontSize(10);
+            const resourcesText = "El balance financiero y la viabilidad de recursos para campamentos se sitúan en un nivel óptimo. La inversión y aportación por sábado resulta moderada de acuerdo al sentir de los alumnos.";
+            const splitResources = doc.splitTextToSize(resourcesText, 180);
+            doc.text(splitResources, 15, finalY);
+            
+            // PAGE 3: Plan de Acción e Histórico (Opción 4 y 5)
+            doc.addPage();
+            doc.setFontSize(16);
+            doc.text("3. Plan de Acción Pedagógico & Historial", 15, 20);
+            doc.setFillColor(...secondaryColor);
+            doc.rect(15, 23, 180, 1, "F");
+            
+            const diagText = document.getElementById('ia-diagnostico-kpi').innerText || "Cargando análisis...";
+            const accionText = document.getElementById('ia-accion-kpi').innerText || "Cargando plan de acción...";
+            
+            doc.setFontSize(12);
+            doc.text("Diagnóstico de la Sección (IA):", 15, 35);
+            doc.setFontSize(10);
+            const splitDiag = doc.splitTextToSize(diagText, 180);
+            doc.text(splitDiag, 15, 43);
+            
+            let actionY = 43 + (splitDiag.length * 5) + 10;
+            doc.setFontSize(12);
+            doc.text("Líneas de Acción Inmediatas sugeridas:", 15, actionY);
+            doc.setFontSize(10);
+            const splitAccion = doc.splitTextToSize(accionText, 180);
+            doc.text(splitAccion, 15, actionY + 8);
+            
+            doc.save(`TequiRadar_${activeDashboardSection}_${Date.now()}.pdf`);
+        }
+        window.generarReportePDF = generarReportePDF;
+        
+        // Inicializar por defecto la vista de Login Scout sin cabecera
+        mostrarSeccion('puerta-autenticacion-scout');
+    </script>
 </body>
 </html>

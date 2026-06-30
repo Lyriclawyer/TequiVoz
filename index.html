@@ -5,12 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TequiVoz - Grupo 1 Tequihua</title>
     
+    <!-- Google Fonts: Plus Jakarta Sans para estética limpia tipo Apple -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para iconografía avanzada -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- Tailwind CSS para diseño fluido y ultra-responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Librerías para Generación de Reportes PDF (jsPDF y autoTable) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     
@@ -36,6 +42,7 @@
     </script>
 
     <style>
+        /* Fondo fluido y orgánico Wix / Interdesign */
         .gradient-bg {
             background: radial-gradient(circle at 10% 20%, rgba(244, 247, 246, 1) 0%, rgba(230, 237, 235, 1) 90%);
             position: fixed;
@@ -62,6 +69,7 @@
             100% { transform: translateY(-50px) translateX(-100px) scale(0.8); }
         }
 
+        /* Glassmorphism al estilo Apple Premium */
         .glass-panel {
             background: rgba(255, 255, 255, 0.78);
             backdrop-filter: blur(20px);
@@ -76,6 +84,7 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
+        /* Animaciones elásticas */
         .transition-apple {
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -88,6 +97,7 @@
             transform: scale(0.98) translateY(0px);
         }
 
+        /* Ocultar scrollbar */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -96,6 +106,7 @@
             scrollbar-width: none;
         }
 
+        /* Estilo premium del slider de rango */
         .apple-range {
             -webkit-appearance: none;
             width: 100%;
@@ -131,8 +142,10 @@
         <div class="blob w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-duration: 35s;"></div>
     </div>
 
-    <!--    <nav class="glass-nav fixed top-0 left-0 w-full z-50 transition-apple px-6 py-4 flex justify-between items-center">
+    <!-- CABECERA FLOTANTE DE APPLE -->
+    <nav class="glass-nav fixed top-0 left-0 w-full z-50 transition-apple px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4 cursor-pointer hover:opacity-90 transition-apple" onclick="regresarAlInicio()">
+            <!-- Logo Oficial sin modificaciones (Clickable para volver al inicio) -->
             <img src="Logo 1.png" alt="Logo Grupo 1 Tequihua" class="h-14 w-auto drop-shadow-md hover:scale-105 transition-apple">
             <div>
                 <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-800 to-indigo-950 bg-clip-text text-transparent">TequiVoz</span>
@@ -150,7 +163,7 @@
     <!-- ÁREA PRINCIPAL -->
     <main class="pt-32 pb-16 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center min-h-[90vh]">
 
-        <!-- ================= BIENVENIDA / HERO ================= -->
+        <!-- ================= BIENVENIDA / HERO (Inspirado en la imagen image_1129a4.png) ================= -->
         <section id="pantalla-inicio" class="text-center transition-apple w-full">
             <span class="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-widest inline-block mb-6 shadow-sm">Representación Juvenil</span>
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
@@ -160,6 +173,7 @@
                 TequiVoz es la plataforma interactiva oficial para evaluar y planificar las mejores actividades de sábado del Grupo 1 Tequihua. Elige tu sección para comenzar.
             </p>
 
+            <!-- Grid de Secciones con Logotipos Oficiales Actualizados -->
             <div id="grid-secciones" class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto mb-8">
                 <!-- Manada -->
                 <button id="btn-home-manada" onclick="empezarEncuesta('Manada')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-manada flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
@@ -206,16 +220,13 @@
                     </div>
                 </button>
             </div>
-
-            <footer class="w-full text-center py-6 mt-16 text-[11px] font-semibold text-gray-400 opacity-60 tracking-wider uppercase">
-                Esta página fue creada por Rafael Magaña Rangel
-            </footer>
         </section>
 
         <!-- ================= PANEL DE ENCUESTA GAMIFICADA ================= -->
         <section id="contenedor-encuesta" class="hidden transition-apple w-full">
             <div class="glass-panel rounded-[32px] p-6 md:p-10 shadow-2xl">
                 
+                <!-- Encabezado de la Encuesta con el Logotipo de Sección Dinámico -->
                 <div class="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
                     <div class="flex items-center gap-4">
                         <img id="seccion-logo-activo" src="Logo 2.png" alt="Logotipo Sección Activa" class="h-16 w-auto object-contain">
@@ -227,17 +238,22 @@
                     <span id="contador-progreso" class="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1.5 rounded-full">Pregunta 1 de 10</span>
                 </div>
 
+                <!-- Sendero de Progreso Creativo -->
                 <div class="mb-10">
+                    <!-- Sendero con textura de cuerda scout -->
                     <div class="relative w-full h-3 bg-gray-200 rounded-full overflow-visible border border-gray-300">
                         <div id="progreso-barra" class="h-full bg-gradient-to-r from-emerald-500 to-indigo-600 rounded-full transition-all duration-500" style="width: 10%;"></div>
+                        <!-- Token flotante -->
                         <div id="token-scout" class="absolute top-[-10px] left-[10%] -translate-x-1/2 transition-all duration-500 text-2xl filter drop-shadow-md">⛺</div>
                     </div>
                 </div>
 
+                <!-- Bloques Dinámicos de Preguntas (Se inyectan desde JS) -->
                 <div id="formulario-preguntas">
-                    <!-- Las preguntas se inyectan mediante JS -->
+                    <!-- Aquí se renderiza la pregunta actual dinámicamente -->
                 </div>
 
+                <!-- Botones de Navegación del Prototipo -->
                 <div class="barra-navegacion flex justify-between mt-8 pt-6 border-t border-gray-100">
                     <button id="btn-anterior" onclick="cambiarP(-1)" class="btn-nav-pop btn-izq text-gray-600 hover:bg-gray-200 px-6 py-3 rounded-xl font-bold transition-apple disabled:opacity-50" disabled>
                         <i class="fa-solid fa-arrow-left mr-2"></i> Atrás
@@ -253,6 +269,7 @@
         <!-- ================= PUERTA DE AUTENTICACIÓN ADM ================= -->
         <section id="puerta-autenticacion" class="hidden transition-apple w-full max-w-md mx-auto text-center">
             <div class="glass-panel rounded-[32px] p-8 shadow-2xl">
+                <!-- FaceID simulator con Logo de Grupo 1 en su interior -->
                 <div class="relative w-28 h-28 mx-auto mb-6 flex items-center justify-center bg-white rounded-full p-2 border border-gray-100 shadow-md">
                     <div id="biometric-ring" class="absolute inset-0 border-4 border-gray-200 rounded-full transition-all duration-[2s]"></div>
                     <img src="Logo 1.png" alt="Logo Grupo 1 Tequihua" class="w-20 h-20 object-contain z-10 rounded-full">
@@ -261,6 +278,7 @@
                 <p class="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-6">Confirmación de Privacidad</p>
                 
                 <div class="flex flex-col gap-4 text-left">
+                    <!-- Caja de opciones para el selector de usuarios -->
                     <div>
                         <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Usuario Scouter</label>
                         <select id="admin-user" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple bg-white">
@@ -272,10 +290,11 @@
                         </select>
                     </div>
 
+                    <!-- Clave Tequihua con Toggle de Ojo para ver caracteres -->
                     <div>
                         <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Clave Tequihua</label>
                         <div class="relative">
-                            <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 pl-4 pr-10 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple bg-white" placeholder="Ingresa la contraseña">
+                            <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 pl-4 pr-10 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Ingresa la contraseña">
                             <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-apple">
                                 <i id="admin-pass-eye" class="fa-solid fa-eye"></i>
                             </button>
@@ -297,6 +316,7 @@
                 <button onclick="cerrarSesionScouter()" class="px-5 py-2 rounded-full border-2 border-red-300 text-red-600 font-bold hover:bg-red-50 transition-apple"><i class="fa-solid fa-power-off mr-2"></i> Cerrar Sesión</button>
             </div>
 
+            <!-- Tabs de Navegación del Panel Scouter -->
             <div class="flex gap-4 border-b border-gray-200 mb-8">
                 <button id="tab-analytics" onclick="cambiarTabScouter('analytics')" class="pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple">
                     <i class="fa-solid fa-chart-line mr-2"></i> Métricas y Reportes
@@ -306,6 +326,7 @@
                 </button>
             </div>
 
+            <!-- VISTA DE MÉTRICAS -->
             <div id="vista-scouter-analytics" class="space-y-8">
                 
                 <div class="flex justify-end">
@@ -314,6 +335,7 @@
                     </button>
                 </div>
                 
+                <!-- Selector de Secciones en Dashboard -->
                 <div id="selector-secciones-dash" class="flex flex-wrap gap-2 mb-8 bg-gray-100 p-1.5 rounded-2xl max-w-2xl">
                     <button id="dash-btn-Manada" onclick="seleccionarSeccionDashboard('Manada')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-yellow-600 shadow-sm border border-yellow-200">Manada</button>
                     <button id="dash-btn-Tropa" onclick="seleccionarSeccionDashboard('Tropa')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-emerald-600">Tropa</button>
@@ -322,11 +344,14 @@
                     <button id="dash-btn-Dirigencia" onclick="seleccionarSeccionDashboard('Dirigencia')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-slate-600">Dirigencia</button>
                 </div>
 
+                <!-- Grid Analítico Principal -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     
+                    <!-- Tarjeta 1: Gráfico Reactivo a Respuestas -->
                     <div class="glass-panel rounded-3xl p-6 shadow-lg md:col-span-2 text-left">
                         <h3 class="font-extrabold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-simple text-indigo-500"></i> Desempeño por Rama Seleccionada</h3>
                         
+                        <!-- Gráfico de Barras Dinámico -->
                         <div class="h-64 flex items-end justify-between px-4 pb-2 border-b border-gray-200 pt-6">
                             <div class="flex flex-col items-center gap-2 w-12">
                                 <div id="chart-fun" class="w-full bg-yellow-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div>
@@ -351,6 +376,7 @@
                         </div>
                     </div>
 
+                    <!-- Tarjeta 2: Métricas del Lector Reciente -->
                     <div class="glass-panel rounded-3xl p-6 shadow-lg flex flex-col justify-between text-left">
                         <div>
                             <h3 class="font-extrabold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-emerald-500"></i> Métricas en la Nube</h3>
@@ -366,12 +392,14 @@
 
                 </div>
 
+                <!-- ================= SECCIÓN DE EVALUACIÓN DE KPIs HÍBRIDOS (80% IA + 20% Humano) ================= -->
                 <div class="glass-panel rounded-[32px] p-6 md:p-8 shadow-xl text-left">
                     <div class="flex items-center gap-3 mb-6">
                         <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider">Módulo de Co-creación Híbrido</span>
                         <h3 class="text-2xl font-extrabold text-slate-800">Evaluador de KPIs Scouts</h3>
                     </div>
 
+                    <!-- Grid de Tacómetros de KPIs scouts -->
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
                         <div id="kpi-card-isp" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
                             <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.P. (Programa)</span>
@@ -395,6 +423,7 @@
                         </div>
                     </div>
 
+                    <!-- Input Cualitativo de Scouter y Registro -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
                             <label class="text-xs font-extrabold text-gray-500 uppercase block tracking-wider">Contexto Cualitativo (20%)</label>
@@ -408,6 +437,7 @@
                     </div>
                 </div>
 
+                <!-- RECOMENDACIÓN IA DINÁMICA -->
                 <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden text-left">
                     <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12">
                         <i class="fa-solid fa-brain text-[200px]"></i>
@@ -435,7 +465,9 @@
                 </div>
             </div>
 
+            <!-- VISTA DE EDITOR DE FORMULARIOS -->
             <div id="vista-scouter-editor" class="hidden text-left">
+                <!-- Editor Wix-Style -->
                 <div class="glass-panel rounded-3xl p-6 md:p-8 shadow-xl">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div class="md:col-span-1 border-r border-gray-100 pr-4">
@@ -555,19 +587,19 @@
                 { id: 1, type: "select", title: "¿Qué tan divertidos y desafiantes estuvieron los juegos y bases de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótonos" }, { val: "Regular", icon: "😐", text: "Regulares" }, { val: "Divertida", icon: "😀", text: "Desafiantes" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épicos!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo, preparación y apoyo de tus Scouters de Tropa hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo se siente la mística, el espíritu y la convivencia interna dentro de tu Patrulla?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Cohesión", desc: "Trabajamos como un solo bloque, mística y apoyo al 100%." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Roces Internos", desc: "Hay desacuerdos de liderazgo o divisiones menores." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se siente apatía o exclusión en el consejo de patrulla." } ] },
-                { id: 4, type: "grid", title: "¿Las actividades de hoy aportaron a tus etapas de progresión (Pistas, Senda, Rumbo)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí o reforcé especialidades técnicas." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de aprendizaje pero faltó más práctica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que no avanzamos en nuestra progresión scout." } ] },
+                { id: 4, type: "grid", title: "¿Las actividades de hoy aportaron a tus etapas de progresión (Pistas, Senda, Rumbo)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí o reforcé especialidades técnicas." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que no avanzamos en nuestra progresión scout." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las excursiones y campamentos de Tropa?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de dinámicas o técnicas scouts te gustaría practicar más en los ciclos de programa?", options: [ { val: "Supervivencia", icon: "🌲", title: "Pionerismo y Campismo", desc: "Construcciones con nudos complejos, refugios y orientación." }, { val: "Servicio", icon: "❤️", title: "Servicios Técnicos", desc: "Apoyo a la comunidad, primeros auxilios avanzados y ecología." }, { val: "Extremo", icon: "🧗", title: "Juegos de Acecho", desc: "Estrategias nocturnas, retos físicos y de aventura." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de nuestra Tropa o Corte de Honor, ¿cuál sería?", placeholder: "Escribe tu sugerencia constructiva para la Corte de Honor..." },
                 { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y los protocolos de riesgo durante los campamentos o excursiones?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Falta de botiquín o supervisión directa en las bases críticas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Monitoreo constante, botiquín visible y zonas seguras." } ] },
                 { id: 9, type: "grid", title: "¿Consideras que existe un ambiente inclusivo y de equidad en el trato de todos en la Tropa?", options: [ { val: "Excelente", icon: "✨", title: "Excelente ambiente", desc: "Todos los scouts y patrullas son tomados en cuenta por igual." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o diferencias de rango marcadas." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
-                { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego nocturno o idea loca para el próximo campamento de Tropa:", placeholder: "¡Ejemplo: Un juego de rol de espionaje nocturno con claves secretas and linternas!" }
+                { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego nocturno o idea loca para el próximo campamento de Tropa:", placeholder: "¡Ejemplo: Un juego de rol de espionaje nocturno con claves secretas y linternas!" }
             ],
             Comunidad: [
                 { id: 1, type: "select", title: "¿Qué tanto te retó y entusiasmó el proyecto o actividad de la Comunidad hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Sin reto" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Retador" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épico!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo y el rol de asesores de tus Scouters de Comunidad hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo marcha la mística, planeación y trabajo interno dentro de tu Equipo?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Unión Fuerte", desc: "Excelente distribución de tareas y apoyo mutuo constante." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Desorganización", desc: "Dificultad para ponernos de acuerdo o apatía temporal." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Equipo", desc: "Se siente recarga de trabajo en pocos integrantes o exclusión." } ] },
-                { id: 4, type: "grid", title: "Sientes que la actividad de hoy aporta a tu progresión de caminante (Búsqueda, Encuentro, Desafío)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Fortalece mis proyectos personales y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que las juntas se volvieron muy teóricas." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que la actividad de hoy aporta a tu progresión de caminante (Búsqueda, Encuentro, Desafío)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Fortalece mis proyectos personales y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que las juntas se volvieron muy teóricas." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles o viables ves los presupuestos para los proyectos de Comunidad?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿En qué área de proyectos te gustaría que la Comunidad de Caminantes se enfocara más?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición", desc: "Retos de montaña, campamento sin huella y cartografía avanzada." }, { val: "Servicio", icon: "❤️", title: "Impacto", desc: "Acción social real, voluntariado ecológico y proyectos comunitarios." }, { val: "Extremo", icon: "🧗", title: "Desafíos Físicos", desc: "Deportes de aventura, rapel, orientación y juegos extremos." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar un artículo del reglamento interno de la Comunidad, ¿cuál sería?", placeholder: "Escribe tu propuesta constructiva para el Congreso de Comunidad..." },
@@ -579,12 +611,12 @@
                 { id: 1, type: "select", title: "¿Qué tan enriquecedora e inspiradora fue la jornada o debate del Clan el día de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótona" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Inspiradora" }, { val: "Excelente", icon: "🤩", text: "¡Trascendente!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el nivel de acompañamiento y consejería de tus Sinodales/Scouters de Clan hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo marcha la mística, el apoyo mutuo y la verdadera hermandad dentro de la comunidad de Clan?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Unión", desc: "Excelente integración, apoyo mutuo en proyectos y plan de vida." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Distanciamiento", desc: "Falta de participación en debates o distanciamiento entre rovers." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se sienten grupos herméticos o apatía generalizada." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la mística de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la reality de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las actividades regionales o nacionales de Clan?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
-                { id: 6, type: "grid", title: "¿Qué tipo de proyectos de impacto o servicio social te gustaría que el Clan organizara?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición Extrema", desc: "Retos de alta montaña, supervivencia pura y autonomía." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Voluntariado social, ecología de impacto and desarrollo comunitario." }, { val: "Extremo", icon: "🧗", title: "Servicios Técnicos", desc: "Apoyo en desastres naturales, primeros auxilios avanzados y capacitación." } ] },
+                { id: 6, type: "grid", title: "¿Qué tipo de proyectos de impacto o servicio social te gustaría que el Clan organizara?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición Extrema", desc: "Retos de alta montaña, supervivencia pura y autonomía." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Voluntariado social, ecología de impacto y desarrollo comunitario." }, { val: "Extremo", icon: "🧗", title: "Servicios Técnicos", desc: "Apoyo en desastres naturales, primeros auxilios avanzados y capacitación." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar una sola norma o acuerdo de nuestro Consejo de Clan, ¿cuál sería?", placeholder: "Escribe tu propuesta o reforma para el Consejo de Clan..." },
                 { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Análisis previo de riesgos, equipamiento y monitoreo constante." } ] },
-                { id: 9, type: "grid", title: "Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
+                { id: 9, type: "grid", title: "¿Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
                 { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego o debate que te gustaría realizar con todo el Clan:", placeholder: "¡Ejemplo: Un debate de temas de impacto social y proyección profesional!" }
             ],
             Dirigencia: [
@@ -594,6 +626,8 @@
                 { id: 14, type: "textarea", title: "¿Qué cuestiones o elementos sugerirías agregar, quitar o mantener para la Regata?", placeholder: "Escribe tus propuestas de mejora para la Regata..." }
             ]
         };
+
+        let bancoPreguntas = JSON.parse(localStorage.getItem('bancoPreguntas_tequivoz')) || bancoPreguntasPredeterminado;
 
         const appId = 'tequivoz-gpo1';
         let firebaseConfig = {
@@ -645,14 +679,16 @@
                 }
             });
 
+            // Visibilidad de botón Scouter en barra superior
             const scouterBtn = document.getElementById('btn-portal-scouter-nav');
             if (idSeccion === 'contenedor-encuesta' || idSeccion === 'panel-scouter' || idSeccion === 'puerta-autenticacion') {
-                if (scouterBtn) scouterBtn.classList.add('hidden');
+                scouterBtn.classList.add('hidden');
             } else {
-                if (scouterBtn) scouterBtn.classList.remove('hidden');
+                scouterBtn.classList.remove('hidden');
             }
         }
 
+        // Modales customizados para reemplazar alert() molestos
         function lanzarAlert(titulo, mensaje) {
             document.getElementById('custom-alert-title').innerText = titulo;
             document.getElementById('custom-alert-message').innerText = mensaje;
@@ -688,6 +724,7 @@
             const body = document.body;
             const logoImg = document.getElementById('seccion-logo-activo');
 
+            // Adaptar paleta de colores dinámicamente y asignar logotipo correspondiente
             if(rama === 'Manada') {
                 body.style.backgroundColor = '#fffbeb';
                 document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-manada)';
@@ -764,6 +801,7 @@
         }
         window.toggleAdminPasswordVisibility = toggleAdminPasswordVisibility;
 
+        // Renderizado dinámico del Wix-Style Question Editor
         function renderPreguntaActiva() {
             const container = document.getElementById('formulario-preguntas');
             const listaPreguntas = bancoPreguntas[seccionActiva];
@@ -779,9 +817,9 @@
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             ${q.options.map(opt => {
-                                const selectedClass = (respuestasSesion[`p${q.id}`] === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
+                                const selectedClass = (respuestasSesion.p1 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
                                 return `
-                                    <button onclick="registrarP(${q.id}, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 shadow-sm hover:shadow-md transition-apple text-center btn-respuesta ${selectedClass}">
+                                    <button onclick="registrarP(1, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 shadow-sm hover:shadow-md transition-apple text-center btn-respuesta ${selectedClass}">
                                         <span class="text-4xl block mb-3">${opt.icon}</span>
                                         <span class="font-bold text-sm text-gray-600">${opt.text}</span>
                                     </button>
@@ -813,9 +851,9 @@
                         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
                         <div class="flex flex-col gap-4">
                             ${q.options.map(opt => {
-                                const selectedClass = (respuestasSesion[`p${q.id}`] === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
+                                const selectedClass = (respuestasSesion.p3 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
                                 return `
-                                    <button onclick="registrarP(${q.id}, '${opt.val}', this)" class="p-5 rounded-2xl border-2 hover:border-indigo-500 text-left font-bold transition-apple flex items-center gap-4 btn-respuesta ${selectedClass}">
+                                    <button onclick="registrarP(3, '${opt.val}', this)" class="p-5 rounded-2xl border-2 hover:border-indigo-500 text-left font-bold transition-apple flex items-center gap-4 btn-respuesta ${selectedClass}">
                                         <div class="w-10 h-10 rounded-full bg-${opt.color}-100 flex items-center justify-center text-${opt.color}-600"><i class="fa-solid ${opt.icon}"></i></div>
                                         <div>
                                             <span class="block text-gray-700">${opt.title}</span>
@@ -861,8 +899,10 @@
 
             container.innerHTML = html;
 
+            // Actualizar interfaz del contador
             document.getElementById('contador-progreso').innerText = `Pregunta ${preguntaActual + 1} de ${totalPreguntas}`;
 
+            // Mover token de aventura elásticamente
             const pct = ((preguntaActual) / (totalPreguntas - 1)) * 100;
             document.getElementById('progreso-barra').style.width = pct + '%';
             document.getElementById('token-scout').style.left = pct + '%';
@@ -873,8 +913,10 @@
                 token.style.transform = 'scale(1) translateX(-50%)';
             }, 300);
 
+            // Bloquear anterior si es el inicio
             document.getElementById('btn-anterior').disabled = (preguntaActual === 0);
             
+            // Texto del botón del final
             if (preguntaActual === totalPreguntas - 1) {
                 document.getElementById('btn-siguiente').innerHTML = 'Terminar Aventura <i class="fa-solid fa-circle-check ml-2"></i>';
             } else {
@@ -882,6 +924,7 @@
             }
         }
 
+        // Registrar respuestas individuales
         function registrarP(pregunta, valor, btn) {
             respuestasSesion[`p${pregunta}`] = valor;
             
@@ -924,6 +967,7 @@
         window.actualizarFeedbackRango = actualizarFeedbackRango;
 
         function cambiarP(direccion) {
+            // Guardar texto abierto de manera explícita si aplica antes de cambiar de índice
             const txtArea = document.getElementById('texto-textarea-dinamico');
             if (txtArea) {
                 const qList = bancoPreguntas[seccionActiva];
@@ -948,6 +992,7 @@
         }
         window.regresarAlInicio = regresarAlInicio;
 
+        // Procesamiento del guardado en Firestore de manera Asíncrona (A prueba de fallos de internet)
         async function procesarEncuestaCompleta() {
             const btnSig = document.getElementById('btn-siguiente');
             if (btnSig) {
@@ -955,6 +1000,7 @@
                 btnSig.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
             }
 
+            // Mapeo unificado para que la encuesta de dirigencia guarde correctamente sus preguntas especiales (11, 12, 13, 14)
             const docData = {
                 rama: respuestasSesion.rama,
                 p1: respuestasSesion.p1 || "Divertida",
@@ -974,16 +1020,6 @@
                 timestamp: new Date().toISOString()
             };
 
-            const txtArea = document.getElementById('texto-textarea-dinamico');
-            if (txtArea) {
-                const qList = bancoPreguntas[seccionActiva];
-                const q = qList[preguntaActual];
-                if (q.id === 13) docData.p13 = txtArea.value;
-                if (q.id === 14) docData.p14 = txtArea.value;
-                if (q.id === 7) docData.p7 = txtArea.value;
-                if (q.id === 10) docData.p10 = txtArea.value;
-            }
-
             const guardarLocalmente = () => {
                 const localData = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
                 localData.push(docData);
@@ -991,6 +1027,7 @@
             };
 
             try {
+                // Agregar documento a Firebase Firestore con timeout de seguridad
                 const firestoreSavePromise = addDoc(surveysCollectionRef, docData);
                 const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout de conexión")), 2000));
                 
@@ -1001,6 +1038,7 @@
                 guardarLocalmente();
                 lanzarAlert("¡Aventura Completada! ⛺", "Tu registro ha sido guardado localmente de forma segura debido a baja señal.");
             } finally {
+                // Esperar que el modal sea leído y recargar el navegador limpio para destruir datos
                 setTimeout(() => {
                     window.location.reload();
                 }, 3000);
@@ -1012,6 +1050,7 @@
         }
         window.cerrarSesionScouter = cerrarSesionScouter;
 
+        // ACCESO MULTI-USUARIOS DE SCOUTERS
         function mostrarModalAutenticar() {
             mostrarSeccion('puerta-autenticacion');
             const ring = document.getElementById('biometric-ring');
@@ -1027,29 +1066,28 @@
         function validarCredenciales() {
             const user = document.getElementById('admin-user').value;
             const pass = document.getElementById('admin-pass').value.trim();
-            const passLower = pass.toLowerCase();
             let loginValido = false;
 
-            // Validar contraseñas de forma flexible (mayúsculas, minúsculas o exactas)
-            if (user === 'manada' && (pass === '100%MaNada' || passLower === '100%manada')) {
+            // Mapeo estricto de contraseñas requeridas con Scouter Manada con su nueva clave
+            if (user === 'manada' && pass === '100%MaNada') {
                 currentRolScouter = "Manada";
                 activeDashboardSection = "Manada";
                 loginValido = true;
-            } else if (user === 'tropa' && passLower === 't1') {
+            } else if (user === 'tropa' && pass === 't1') {
                 currentRolScouter = "Tropa";
                 activeDashboardSection = "Tropa";
                 loginValido = true;
-            } else if (user === 'comunidad' && passLower === 'co1') {
+            } else if (user === 'comunidad' && pass === 'co1') {
                 currentRolScouter = "Comunidad";
                 activeDashboardSection = "Comunidad";
                 loginValido = true;
-            } else if (user === 'clan' && passLower === 'cl1') {
+            } else if (user === 'clan' && pass === 'cl1') {
                 currentRolScouter = "Clan";
                 activeDashboardSection = "Clan";
                 loginValido = true;
-            } else if (user === 'dirigencia' && passLower === 'tequihua1') {
+            } else if (user === 'dirigencia' && pass === 'tequihua1') {
                 currentRolScouter = "Dirigencia";
-                activeDashboardSection = "Manada"; 
+                activeDashboardSection = "Manada"; // Dirigencia abre Manada primero pero puede cambiar
                 loginValido = true;
             }
 
@@ -1057,7 +1095,7 @@
                 configurarVisibilidadSegunRol();
                 seleccionarSeccionDashboard(activeDashboardSection);
                 mostrarSeccion('panel-scouter');
-                document.body.style.backgroundColor = '#f5f5f7'; 
+                document.body.style.backgroundColor = '#f5f5f7'; // fondo premium de analytics
             } else {
                 lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta.");
             }
@@ -1084,6 +1122,7 @@
             inicializarWixEditorPreguntas();
         }
 
+        // Alternar visualización del dashboard para dirigencia de grupo
         function seleccionarSeccionDashboard(seccion) {
             if (currentRolScouter !== "Dirigencia" && currentRolScouter !== seccion) {
                 return;
@@ -1112,6 +1151,7 @@
         }
         window.seleccionarSeccionDashboard = seleccionarSeccionDashboard;
 
+        // Recalcular métricas a partir del histórico y generar Plan de Acción Pedagógico e Indicadores KPIs
         function actualizarDashboardSeccionUI() {
             const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
             const totalSurveys = [...surveysList, ...localFallback];
@@ -1133,6 +1173,7 @@
             if (totalRegistros) totalRegistros.innerText = total;
 
             if (total === 0) {
+                // Limpiar Dashboard ante base de datos vacía
                 const promDiv = document.getElementById('dash-promedio-diversion');
                 const promEco = document.getElementById('dash-promedio-economia');
                 const prefAct = document.getElementById('dash-preferencia-actividades');
@@ -1153,6 +1194,7 @@
                 if (iaAcc) iaAcc.innerText = "Incentiva a los scouts de tu sección a dejar su huella digital en TequiVoz.";
                 if (iaSugContainer) iaSugContainer.classList.add('hidden');
 
+                // Reiniciar KPI Cards
                 setKPICardValue("isp", 0);
                 setKPICardValue("ics", 0);
                 setKPICardValue("iap", 0);
@@ -1161,6 +1203,7 @@
                 return;
             }
 
+            // Calcular promedios
             let funSum = 0, supportSum = 0, teamworkSum = 0, progressionSum = 0, safetySum = 0, economySum = 0, p9Sum = 0;
             let countAburrida = 0, countRegular = 0, countDivertida = 0, countExcelente = 0;
             let countSupervivencia = 0, countServicio = 0, countExtremo = 0;
@@ -1184,6 +1227,7 @@
                 if (promEco) promEco.innerText = "N/A";
                 if (prefAct) prefAct.innerText = "N/A";
                 
+                // Representación de barras para dirigencia
                 actualizarBarrasGrafica((avgP11/10)*100, (avgP12/10)*100, 100, 100, 100);
                 
                 setKPICardValue("isp", Math.round((avgP11/10)*100));
@@ -1251,7 +1295,7 @@
                 }
             });
 
-            const avgFun = (funSum / total) * 10; 
+            const avgFun = (funSum / total) * 10; // Escala 100%
             const avgSupport = ((supportSum / total) / 10) * 100;
             const avgTeamwork = (teamworkSum / total) * 10;
             const avgProgression = (progressionSum / total) * 10;
@@ -1280,18 +1324,21 @@
 
             actualizarBarrasGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
 
+            // CALCULAR KPIs DEL MODELO HÍBRIDO EN TIEMPO REAL (80% Analítica de Base de Datos)
             const kpiISP = Math.round((avgFun + avgSupport) / 2);
             const kpiICS = Math.round((avgTeamwork + avgP9) / 2);
             const kpiIAP = Math.round(avgProgression);
             const kpiISG = Math.round(avgSafety);
             const kpiIVE = Math.round(((5 - (economySum / total)) / 4) * 100);
 
+            // Actualizar Tarjetas de KPIs en el DOM
             setKPICardValue("isp", kpiISP);
             setKPICardValue("ics", kpiICS);
             setKPICardValue("iap", kpiIAP);
             setKPICardValue("isg", kpiISG);
             setKPICardValue("ive", kpiIVE);
 
+            // Generar Reporte Automatizado de IA exclusivo por rama
             const iaSub = document.getElementById('ia-subtitle-seccion-kpi');
             const iaDiag = document.getElementById('ia-diagnostico-kpi');
             const iaAcc = document.getElementById('ia-accion-kpi');
@@ -1361,6 +1408,33 @@
             }
         }
 
+        function setKPICardValue(kpiId, val) {
+            const card = document.getElementById(`kpi-card-${kpiId}`);
+            const valContainer = document.getElementById(`kpi-val-${kpiId}`);
+            if (!card || !valContainer) return;
+
+            valContainer.innerText = `${val}%`;
+
+            // Limpiar clases de colores
+            card.className = "border rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-all duration-300 ";
+            valContainer.className = "w-16 h-16 rounded-full flex items-center justify-center border-4 text-lg font-black transition-all duration-300 ";
+
+            if (val < 60) {
+                // Rojo: Crítico
+                card.classList.add("bg-rose-50", "border-rose-200", "text-rose-900");
+                valContainer.classList.add("border-rose-400", "text-rose-600", "bg-white");
+            } else if (val < 80) {
+                // Amarillo: Alerta
+                card.classList.add("bg-amber-50", "border-amber-200", "text-amber-900");
+                valContainer.classList.add("border-amber-400", "text-amber-600", "bg-white");
+            } else {
+                // Verde: Saludable
+                card.classList.add("bg-emerald-50", "border-emerald-200", "text-emerald-900");
+                valContainer.classList.add("border-emerald-400", "text-emerald-600", "bg-white");
+            }
+        }
+
+        // FUSIONAR MÉTRICAS (80% IA) Y APORTE DE SCOUTER (20% sabiduría humana)
         function validarDiagnosticoSemanal() {
             const scouterNote = document.getElementById('scouter-context-note');
             if (!scouterNote) return;
@@ -1402,6 +1476,7 @@
         }
         window.validarDiagnosticoSemanal = validarDiagnosticoSemanal;
 
+        // Renderizar listado de reportes validados
         function renderReportesValidadosLista() {
             const listContainer = document.getElementById('reportes-validados-lista');
             if (!listContainer) return;
@@ -1516,6 +1591,7 @@
             const dd = document.getElementById(`opt-emoji-dropdown-${optIdx}`);
             if (dd) dd.classList.add('hidden');
         }
+        window.openSelectorEmojiInterno = abrirSelectorEmojiInterno;
         window.abrirSelectorEmojiInterno = abrirSelectorEmojiInterno;
 
         function toggleEmojiDropdownVisual(optIdx) {
@@ -1759,9 +1835,11 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            const primaryColor = [20, 54, 38]; 
-            const secondaryColor = [229, 169, 59]; 
+            // Colores Institucionales
+            const primaryColor = [20, 54, 38]; // Verde Forestal
+            const secondaryColor = [229, 169, 59]; // Ámbar Tequihua
             
+            // PAGE 1: Carátula e Introducción
             doc.setFillColor(...primaryColor);
             doc.rect(0, 0, 210, 297, "F");
             
@@ -1783,6 +1861,7 @@
             doc.text("Desarrollado de manera exclusiva para el Grupo 1 Tequihua, S.L.P.", 20, 170);
             doc.text("Siempre Listos para Servir", 20, 180);
             
+            // PAGE 2: KPIs y Análisis (Opción 1 y 3)
             doc.addPage();
             doc.setTextColor(33, 33, 33);
             doc.setFontSize(16);
@@ -1790,6 +1869,7 @@
             doc.setFillColor(...secondaryColor);
             doc.rect(15, 23, 180, 1, "F");
             
+            // KPIs Table
             const body = [
                 ["ISP (Programa)", document.getElementById('kpi-val-isp').innerText],
                 ["ICS (Cohesión)", document.getElementById('kpi-val-ics').innerText],
@@ -1808,7 +1888,7 @@
             
             let finalY = doc.lastAutoTable.finalY + 15;
             doc.setFontSize(14);
-            doc.text("2. Mapa de Calor de Recursos", 15, finalY);
+            doc.text("2. Mapa de Calor de Recursos (Opción 3)", 15, finalY);
             
             finalY += 8;
             doc.setFontSize(10);
@@ -1816,6 +1896,7 @@
             const splitResources = doc.splitTextToSize(resourcesText, 180);
             doc.text(splitResources, 15, finalY);
             
+            // PAGE 3: Plan de Acción e Histórico (Opción 4 y 5)
             doc.addPage();
             doc.setFontSize(16);
             doc.text("3. Plan de Acción Pedagógico & Historial", 15, 20);
@@ -1841,17 +1922,10 @@
             doc.save(`TequiRadar_${activeDashboardSection}_${Date.now()}.pdf`);
         }
         window.generarReportePDF = generarReportePDF;
-
+        
         window.onload = function () {
             mostrarSeccion('pantalla-inicio');
         }
-
-        window.mostrarSeccion = mostrarSeccion;
-        window.regresarAlInicio = regresarAlInicio;
-        window.validarCredenciales = validarCredenciales;
-        window.cambiarP = cambiarP;
-        window.cambiarTabScouter = cambiarTabScouter;
-        window.seleccionarSeccionDashboard = seleccionarSeccionDashboard;
     </script>
 </body>
 </html>

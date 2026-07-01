@@ -152,6 +152,35 @@
             max-width: 400px;
             width: 100%;
         }
+
+        /* Modal de confirmación para resetear datos */
+        #modal-reset-confirm {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+        }
+        #modal-reset-confirm:not(.hidden) {
+            display: flex;
+        }
+        .reset-confirm-box {
+            max-width: 450px;
+            width: 100%;
+        }
+        #reset-confirm-input {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+        #reset-confirm-input:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen text-appleDark no-scrollbar">
@@ -173,6 +202,38 @@
             <button onclick="cerrarAlert()" class="px-8 py-3 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple shadow-lg active:scale-95">
                 Entendido
             </button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN PARA RESETEAR DATOS -->
+    <div id="modal-reset-confirm" class="hidden">
+        <div class="reset-confirm-box glass-panel rounded-[32px] p-8 shadow-2xl text-center border-2 border-red-200">
+            <div class="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-3xl mx-auto mb-4 border-4 border-red-200">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-gray-900 mb-2">⚠️ ¡ADVERTENCIA!</h3>
+            <p class="text-gray-600 text-sm font-medium leading-relaxed mb-4">
+                Esta acción <span class="text-red-600 font-bold">BORRARÁ PERMANENTEMENTE</span> todos los datos de encuestas para la sección <span id="reset-seccion-nombre" class="font-bold text-indigo-600">Manada</span>.
+            </p>
+            <p class="text-gray-500 text-xs font-semibold mb-4">
+                Esta operación no se puede deshacer. Se eliminarán tanto los datos locales como los de la nube.
+            </p>
+            <div class="bg-red-50 border-2 border-red-200 rounded-xl p-4 mb-4">
+                <p class="text-red-700 text-xs font-bold uppercase tracking-wider">
+                    Para confirmar, escribe exactamente: <span class="text-lg block mt-1">"CONFIRMAR"</span>
+                </p>
+            </div>
+            <div class="space-y-4">
+                <input type="text" id="reset-confirm-input" class="w-full rounded-xl border-2 border-gray-300 px-4 py-3 font-bold text-center text-lg focus:border-red-500 outline-none transition-apple uppercase tracking-widest" placeholder="CONFIRMAR" autocomplete="off">
+                <div class="flex gap-3">
+                    <button onclick="cancelarResetDatos()" class="flex-1 py-3.5 rounded-xl border-2 border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-apple text-sm uppercase tracking-wider">
+                        Cancelar
+                    </button>
+                    <button onclick="ejecutarResetDatos()" id="btn-reset-ejecutar" class="flex-1 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold transition-apple text-sm uppercase tracking-wider shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <i class="fa-solid fa-trash-can mr-2"></i> Borrar Datos
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -347,7 +408,14 @@
                     <h2 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-900 to-violet-700 bg-clip-text text-transparent">TequiRadar Analytics ⚜️</h2>
                     <p id="subtitulo-rol-scouter" class="text-gray-500 text-sm font-medium">Registro continuo de la satisfacción juvenil</p>
                 </div>
-                <button onclick="cerrarSesionScouter()" class="px-5 py-2 rounded-full border-2 border-red-300 text-red-600 font-bold hover:bg-red-50 transition-apple"><i class="fa-solid fa-power-off mr-2"></i> Cerrar Sesión</button>
+                <div class="flex gap-3">
+                    <button onclick="abrirModalResetDatos()" class="px-5 py-2 rounded-full border-2 border-red-300 text-red-600 font-bold hover:bg-red-50 transition-apple flex items-center gap-2">
+                        <i class="fa-solid fa-trash-can"></i> Resetear Datos
+                    </button>
+                    <button onclick="cerrarSesionScouter()" class="px-5 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-bold hover:bg-gray-50 transition-apple">
+                        <i class="fa-solid fa-power-off mr-2"></i> Cerrar Sesión
+                    </button>
+                </div>
             </div>
 
             <!-- Tabs de Navegación del Panel Scouter -->
@@ -572,7 +640,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         let seccionActiva = "";
         let preguntaActual = 0;
@@ -745,6 +813,104 @@
             document.getElementById('custom-alert').classList.add('hidden');
         }
         window.cerrarAlert = cerrarAlert;
+
+        // ============================================================
+        // FUNCIONES PARA RESETEAR DATOS CON CONFIRMACIÓN "CONFIRMAR"
+        // ============================================================
+        function abrirModalResetDatos() {
+            document.getElementById('reset-seccion-nombre').innerText = activeDashboardSection;
+            document.getElementById('reset-confirm-input').value = "";
+            document.getElementById('btn-reset-ejecutar').disabled = true;
+            document.getElementById('modal-reset-confirm').classList.remove('hidden');
+            
+            // Event listener para habilitar/deshabilitar botón según lo que escriba el usuario
+            const input = document.getElementById('reset-confirm-input');
+            input.oninput = function() {
+                const btn = document.getElementById('btn-reset-ejecutar');
+                if (this.value === "CONFIRMAR") {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                } else {
+                    btn.disabled = true;
+                    btn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            };
+            
+            // Enfocar el input automáticamente
+            setTimeout(() => input.focus(), 300);
+        }
+        window.abrirModalResetDatos = abrirModalResetDatos;
+
+        function cancelarResetDatos() {
+            document.getElementById('modal-reset-confirm').classList.add('hidden');
+        }
+        window.cancelarResetDatos = cancelarResetDatos;
+
+        function ejecutarResetDatos() {
+            const input = document.getElementById('reset-confirm-input');
+            if (input.value !== "CONFIRMAR") {
+                lanzarAlert("Verificación Fallida", "Debes escribir exactamente 'CONFIRMAR' en mayúsculas para borrar los datos.");
+                return;
+            }
+
+            // Deshabilitar botón mientras se procesa
+            const btn = document.getElementById('btn-reset-ejecutar');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Borrando...';
+
+            // 1. Eliminar datos locales
+            localStorage.removeItem('tequivoz_fallback');
+            localStorage.removeItem('tequivoz_reportes_kpi_validados');
+            reportesValidadosHistorico = [];
+            surveysList = [];
+
+            // 2. Eliminar datos de Firestore (solo los de la sección activa)
+            eliminarDatosFirestore(activeDashboardSection)
+                .then(() => {
+                    // 3. Cerrar modal y recargar
+                    document.getElementById('modal-reset-confirm').classList.add('hidden');
+                    lanzarAlert("✅ Datos Eliminados", `Todos los datos de la sección ${activeDashboardSection} han sido borrados permanentemente.`);
+                    
+                    // Actualizar UI
+                    actualizarDashboardSeccionUI();
+                    renderReportesValidadosLista();
+                    
+                    // Restaurar botón
+                    btn.innerHTML = '<i class="fa-solid fa-trash-can mr-2"></i> Borrar Datos';
+                    btn.disabled = false;
+                })
+                .catch((error) => {
+                    console.error("Error al eliminar datos de Firestore:", error);
+                    lanzarAlert("⚠️ Error", "Ocurrió un error al eliminar los datos de la nube. Los datos locales han sido eliminados.");
+                    document.getElementById('modal-reset-confirm').classList.add('hidden');
+                    btn.innerHTML = '<i class="fa-solid fa-trash-can mr-2"></i> Borrar Datos';
+                    btn.disabled = false;
+                });
+        }
+        window.ejecutarResetDatos = ejecutarResetDatos;
+
+        async function eliminarDatosFirestore(seccion) {
+            try {
+                // Consultar todos los documentos de la sección
+                const q = query(surveysCollectionRef, where("rama", "==", seccion));
+                const querySnapshot = await getDocs(q);
+                
+                const deletePromises = [];
+                querySnapshot.forEach((doc) => {
+                    deletePromises.push(deleteDoc(doc.ref));
+                });
+                
+                if (deletePromises.length > 0) {
+                    await Promise.all(deletePromises);
+                    console.log(`✅ ${deletePromises.length} documentos eliminados de Firestore para la sección ${seccion}`);
+                } else {
+                    console.log(`ℹ️ No se encontraron documentos en Firestore para la sección ${seccion}`);
+                }
+            } catch (error) {
+                console.error("Error al eliminar datos de Firestore:", error);
+                throw error;
+            }
+        }
 
         // Iniciar encuesta de sección con modal premium para Dirigencia
         function empezarEncuesta(rama) {
@@ -1145,12 +1311,11 @@
                 loginValido = true;
             } else if (user === 'dirigencia' && pass === 'tequihua1') {
                 rolScouter = "Dirigencia";
-                seccionSeleccionada = "Manada"; // Dirigencia abre Manada primero pero puede cambiar
+                seccionSeleccionada = "Manada";
                 loginValido = true;
             }
 
             if (loginValido) {
-                // Asignar las variables globales antes de usarlas
                 currentRolScouter = rolScouter;
                 activeDashboardSection = seccionSeleccionada;
                 
@@ -1158,7 +1323,6 @@
                 seleccionarSeccionDashboard(activeDashboardSection);
                 mostrarSeccion('panel-scouter');
                 document.body.style.backgroundColor = '#f5f5f7';
-                // Actualizar el dashboard con los datos
                 actualizarDashboardSeccionUI();
             } else {
                 lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta.");
@@ -1254,7 +1418,6 @@
             if (totalRegistros) totalRegistros.innerText = total;
 
             if (total === 0) {
-                // Limpiar Dashboard ante base de datos vacía
                 const promDiv = document.getElementById('dash-promedio-diversion');
                 const promEco = document.getElementById('dash-promedio-economia');
                 const prefAct = document.getElementById('dash-preferencia-actividades');
@@ -1275,7 +1438,6 @@
                 if (iaAcc) iaAcc.innerText = "Incentiva a los scouts de tu sección a dejar su huella digital en TequiVoz.";
                 if (iaSugContainer) iaSugContainer.classList.add('hidden');
 
-                // Reiniciar KPI Cards
                 setKPICardValue("isp", 0);
                 setKPICardValue("ics", 0);
                 setKPICardValue("iap", 0);
@@ -1284,7 +1446,6 @@
                 return;
             }
 
-            // Calcular promedios
             let funSum = 0, supportSum = 0, teamworkSum = 0, progressionSum = 0, safetySum = 0, economySum = 0, p9Sum = 0;
             let countAburrida = 0, countRegular = 0, countDivertida = 0, countExcelente = 0;
             let countSupervivencia = 0, countServicio = 0, countExtremo = 0;
@@ -1318,7 +1479,6 @@
                 if (promEco) promEco.innerText = "N/A";
                 if (prefAct) prefAct.innerText = "N/A";
                 
-                // Representación de barras para dirigencia
                 actualizarBarrasGrafica((avgP11/10)*100, (avgP12/10)*100, (avgP15/10)*100, (avgP16/10)*100, (avgP17/10)*100);
                 
                 setKPICardValue("isp", Math.round((avgP11/10)*100));
@@ -1334,10 +1494,7 @@
                 const listContainer = document.getElementById('ia-sugerencias-texto-lista');
 
                 if (iaSub) iaSub.innerText = `Análisis Organizacional de ${activeDashboardSection}`;
-                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. 
-                    Día del Padre: ${avgP11.toFixed(1)}/10 | Regata: ${avgP12.toFixed(1)}/10 
-                    | Logística: ${avgP15.toFixed(1)}/10 | Comunicación: ${avgP16.toFixed(1)}/10 
-                    | Participación: ${avgP17.toFixed(1)}/10 | Seguridad: ${avgP18.toFixed(1)}/10`;
+                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. Día del Padre: ${avgP11.toFixed(1)}/10 | Regata: ${avgP12.toFixed(1)}/10 | Logística: ${avgP15.toFixed(1)}/10 | Comunicación: ${avgP16.toFixed(1)}/10 | Participación: ${avgP17.toFixed(1)}/10 | Seguridad: ${avgP18.toFixed(1)}/10`;
                 if (iaAcc) iaAcc.innerText = "• Revisar las sugerencias logísticas aportadas por los scouters para mejorar las próximas bases e inscripciones del grupo. Fortalecer la comunicación con padres y representantes.";
 
                 if (sugerenciasCambio.length > 0 && iaSugContainer && listContainer) {
@@ -1418,21 +1575,18 @@
 
             actualizarBarrasGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
 
-            // CALCULAR KPIs DEL MODELO HÍBRIDO EN TIEMPO REAL
             const kpiISP = Math.round((avgFun + avgSupport) / 2);
             const kpiICS = Math.round((avgTeamwork + avgP9) / 2);
             const kpiIAP = Math.round(avgProgression);
             const kpiISG = Math.round(avgSafety);
             const kpiIVE = Math.round(((5 - (economySum / total)) / 4) * 100);
 
-            // Actualizar Tarjetas de KPIs en el DOM
             setKPICardValue("isp", kpiISP);
             setKPICardValue("ics", kpiICS);
             setKPICardValue("iap", kpiIAP);
             setKPICardValue("isg", kpiISG);
             setKPICardValue("ive", kpiIVE);
 
-            // Generar Reporte Automatizado de IA exclusivo por rama
             const iaSub = document.getElementById('ia-subtitle-seccion-kpi');
             const iaDiag = document.getElementById('ia-diagnostico-kpi');
             const iaAcc = document.getElementById('ia-accion-kpi');
@@ -1523,26 +1677,21 @@
 
             valContainer.innerText = `${val}%`;
 
-            // Limpiar clases de colores
             card.className = "border rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-all duration-300 ";
             valContainer.className = "w-16 h-16 rounded-full flex items-center justify-center border-4 text-lg font-black transition-all duration-300 ";
 
             if (val < 60) {
-                // Rojo: Crítico
                 card.classList.add("bg-rose-50", "border-rose-200", "text-rose-900");
                 valContainer.classList.add("border-rose-400", "text-rose-600", "bg-white");
             } else if (val < 80) {
-                // Amarillo: Alerta
                 card.classList.add("bg-amber-50", "border-amber-200", "text-amber-900");
                 valContainer.classList.add("border-amber-400", "text-amber-600", "bg-white");
             } else {
-                // Verde: Saludable
                 card.classList.add("bg-emerald-50", "border-emerald-200", "text-emerald-900");
                 valContainer.classList.add("border-emerald-400", "text-emerald-600", "bg-white");
             }
         }
 
-        // FUSIONAR MÉTRICAS (80% IA) Y APORTE DE SCOUTER (20% sabiduría humana)
         function validarDiagnosticoSemanal() {
             const scouterNote = document.getElementById('scouter-context-note');
             if (!scouterNote) return;
@@ -1584,7 +1733,6 @@
         }
         window.validarDiagnosticoSemanal = validarDiagnosticoSemanal;
 
-        // Renderizar listado de reportes validados
         function renderReportesValidadosLista() {
             const listContainer = document.getElementById('reportes-validados-lista');
             if (!listContainer) return;
@@ -1939,491 +2087,449 @@
         }
         window.restablecerPreguntasPredeterminadas = restablecerPreguntasPredeterminadas;
 
-       async function generarReportePDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4');
-    
-    // Colores Institucionales del Grupo 1 Tequihua
-    const PRIMARY_COLOR = [20, 54, 38]; // Verde Forestal
-    const SECONDARY_COLOR = [229, 169, 59]; // Ámbar Tequihua
-    const ACCENT_COLOR = [0, 113, 227]; // Azul Apple
-    const WHITE = [255, 255, 255];
-    const DARK = [30, 30, 30];
-    const RED = [220, 50, 50];
-    const GREEN = [50, 180, 80];
-    
-    // -------------------------------
-    // PAGE 1: PORTADA INSTITUCIONAL
-    // -------------------------------
-    doc.setFillColor(...PRIMARY_COLOR);
-    doc.rect(0, 0, 210, 297, "F");
-    
-    // Línea decorativa
-    doc.setFillColor(...SECONDARY_COLOR);
-    doc.rect(15, 140, 180, 3, "F");
-    doc.rect(15, 145, 80, 1, "F");
-    doc.rect(115, 145, 80, 1, "F");
-    
-    // Título principal
-    doc.setFont("Plus Jakarta Sans", "bold");
-    doc.setTextColor(...WHITE);
-    doc.setFontSize(32);
-    doc.text("⚜️ TequiVoz", 20, 60);
-    
-    doc.setFontSize(18);
-    doc.setTextColor(240, 240, 240);
-    doc.text("Reporte de Desempeño Scout", 20, 80);
-    
-    // Sección evaluada
-    doc.setFontSize(24);
-    doc.setTextColor(...SECONDARY_COLOR);
-    doc.text(activeDashboardSection.toUpperCase(), 20, 110);
-    
-    // Detalles del reporte
-    doc.setFontSize(10);
-    doc.setTextColor(200, 200, 200);
-    const fechaActual = new Date().toLocaleDateString('es-MX', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    });
-    doc.text(`Fecha de emisión: ${fechaActual}`, 20, 160);
-    doc.text("Grupo 1 Tequihua - San Luis Potosí", 20, 170);
-    doc.text("Siempre Listos para Servir", 20, 180);
-    
-    // Número de encuestas
-    const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
-    const totalSurveys = [...surveysList, ...localFallback];
-    const filteredSurveys = totalSurveys.filter(s => s.rama === activeDashboardSection);
-    const total = filteredSurveys.length;
-    
-    doc.setFontSize(12);
-    doc.setTextColor(...SECONDARY_COLOR);
-    doc.text(`📊 ${total} encuestas procesadas`, 20, 200);
-    
-    // Pie de página
-    doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text("© 2026 Grupo 1 Tequihua - Todos los derechos reservados", 20, 285);
-    
-    // -------------------------------
-    // PAGE 2: RESUMEN EJECUTIVO
-    // -------------------------------
-    doc.addPage();
-    doc.setFillColor(245, 245, 247);
-    doc.rect(0, 0, 210, 297, "F");
-    
-    doc.setFont("Plus Jakarta Sans", "bold");
-    doc.setTextColor(...DARK);
-    doc.setFontSize(20);
-    doc.text("📊 Resumen Ejecutivo", 15, 25);
-    doc.setFillColor(...SECONDARY_COLOR);
-    doc.rect(15, 30, 60, 2, "F");
-    
-    // Obtener KPIs
-    const ispEl = document.getElementById('kpi-val-isp');
-    const icsEl = document.getElementById('kpi-val-ics');
-    const iapEl = document.getElementById('kpi-val-iap');
-    const isgEl = document.getElementById('kpi-val-isg');
-    const iveEl = document.getElementById('kpi-val-ive');
-    
-    const kpis = {
-        ISP: parseInt(ispEl ? ispEl.innerText : "0%"),
-        ICS: parseInt(icsEl ? icsEl.innerText : "0%"),
-        IAP: parseInt(iapEl ? iapEl.innerText : "0%"),
-        ISG: parseInt(isgEl ? isgEl.innerText : "0%"),
-        IVE: parseInt(iveEl ? iveEl.innerText : "0%")
-    };
-    
-    // Calcular promedio general
-    const avgKPI = Math.round((kpis.ISP + kpis.ICS + kpis.IAP + kpis.ISG + kpis.IVE) / 5);
-    
-    // Tabla de KPIs
-    const kpiData = [
-        ["ISP (Programa)", kpis.ISP + "%", kpis.ISP >= 80 ? "🟢" : (kpis.ISP >= 60 ? "🟡" : "🔴")],
-        ["ICS (Cohesión)", kpis.ICS + "%", kpis.ICS >= 80 ? "🟢" : (kpis.ICS >= 60 ? "🟡" : "🔴")],
-        ["IAP (Avance)", kpis.IAP + "%", kpis.IAP >= 80 ? "🟢" : (kpis.IAP >= 60 ? "🟡" : "🔴")],
-        ["ISG (Seguridad)", kpis.ISG + "%", kpis.ISG >= 80 ? "🟢" : (kpis.ISG >= 60 ? "🟡" : "🔴")],
-        ["IVE (Economía)", kpis.IVE + "%", kpis.IVE >= 80 ? "🟢" : (kpis.IVE >= 60 ? "🟡" : "🔴")],
-        ["PROMEDIO GENERAL", avgKPI + "%", avgKPI >= 80 ? "🟢" : (avgKPI >= 60 ? "🟡" : "🔴")]
-    ];
-    
-    doc.autoTable({
-        startY: 40,
-        head: [['Indicador', 'Calificación', 'Estado']],
-        body: kpiData,
-        theme: 'grid',
-        headStyles: { fillColor: PRIMARY_COLOR, textColor: WHITE },
-        styles: { fontSize: 10 },
-        columnStyles: {
-            0: { cellWidth: 70 },
-            1: { cellWidth: 50, halign: 'center' },
-            2: { cellWidth: 30, halign: 'center' }
-        }
-    });
-    
-    let yPos = doc.lastAutoTable.finalY + 15;
-    
-    // Nivel de satisfacción general
-    doc.setFontSize(14);
-    doc.setTextColor(...DARK);
-    doc.text("Nivel de Satisfacción General:", 15, yPos);
-    yPos += 10;
-    
-    const nivel = avgKPI >= 80 ? "🌟 EXCELENTE" : (avgKPI >= 60 ? "👍 BUENO" : "⚠️ NECESITA MEJORA");
-    const colorNivel = avgKPI >= 80 ? GREEN : (avgKPI >= 60 ? SECONDARY_COLOR : RED);
-    doc.setFontSize(18);
-    doc.setTextColor(...colorNivel);
-    doc.text(nivel, 15, yPos);
-    
-    yPos += 20;
-    
-    // Datos adicionales
-    doc.setFontSize(10);
-    doc.setTextColor(100, 100, 100);
-    doc.text(`📅 Período analizado: Últimos ${total} registros`, 15, yPos);
-    yPos += 8;
-    doc.text(`📌 Sección: ${activeDashboardSection}`, 15, yPos);
-    yPos += 8;
-    doc.text(`📋 Total de preguntas evaluadas: 10`, 15, yPos);
-    
-    // -------------------------------
-    // PAGE 3: GRÁFICO DE BARRAS DE KPIs
-    // -------------------------------
-    doc.addPage();
-    doc.setFillColor(245, 245, 247);
-    doc.rect(0, 0, 210, 297, "F");
-    
-    doc.setFont("Plus Jakarta Sans", "bold");
-    doc.setTextColor(...DARK);
-    doc.setFontSize(18);
-    doc.text("📈 Desempeño por KPI", 15, 25);
-    doc.setFillColor(...SECONDARY_COLOR);
-    doc.rect(15, 30, 60, 2, "F");
-    
-    // Datos para gráfico
-    const labels = ['ISP', 'ICS', 'IAP', 'ISG', 'IVE'];
-    const values = [kpis.ISP, kpis.ICS, kpis.IAP, kpis.ISG, kpis.IVE];
-    const colors = [
-        [50, 200, 100],  // Verde para ISP
-        [50, 150, 200],  // Azul para ICS
-        [200, 180, 50],  // Amarillo para IAP
-        [200, 80, 80],   // Rojo para ISG
-        [150, 100, 200]  // Púrpura para IVE
-    ];
-    
-    // Dibujar barras
-    const graphY = 50;
-    const graphHeight = 120;
-    const barWidth = 25;
-    const spacing = 10;
-    const startX = 25;
-    
-    // Eje Y
-    doc.setDrawColor(200, 200, 200);
-    doc.setLineWidth(0.5);
-    doc.line(startX - 5, graphY, startX - 5, graphY + graphHeight);
-    doc.line(startX - 5, graphY + graphHeight, startX + 5 + (barWidth + spacing) * 5, graphY + graphHeight);
-    
-    // Etiquetas del eje Y
-    doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    for (let i = 0; i <= 5; i++) {
-        const yPosLabel = graphY + graphHeight - (i / 5) * graphHeight;
-        doc.text((i * 20) + "%", startX - 20, yPosLabel + 2);
-        doc.setDrawColor(220, 220, 220);
-        doc.setLineWidth(0.2);
-        doc.line(startX - 3, yPosLabel, startX + 3 + (barWidth + spacing) * 5, yPosLabel);
-    }
-    
-    // Dibujar barras
-    values.forEach((val, idx) => {
-        const x = startX + idx * (barWidth + spacing);
-        const barHeight = (val / 100) * graphHeight;
-        const y = graphY + graphHeight - barHeight;
-        
-        // Barra
-        doc.setFillColor(...colors[idx]);
-        doc.roundedRect(x, y, barWidth, barHeight, 2, 2, "F");
-        
-        // Valor encima de la barra
-        doc.setFontSize(10);
-        doc.setTextColor(...DARK);
-        doc.text(val + "%", x + barWidth / 2, y - 4, { align: 'center' });
-        
-        // Etiqueta debajo de la barra
-        doc.setFontSize(9);
-        doc.setTextColor(100, 100, 100);
-        doc.text(labels[idx], x + barWidth / 2, graphY + graphHeight + 8, { align: 'center' });
-    });
-    
-    // -------------------------------
-    // PAGE 4: ANÁLISIS POR PREGUNTA Y SUGERENCIAS
-    // -------------------------------
-    doc.addPage();
-    doc.setFillColor(245, 245, 247);
-    doc.rect(0, 0, 210, 297, "F");
-    
-    doc.setFont("Plus Jakarta Sans", "bold");
-    doc.setTextColor(...DARK);
-    doc.setFontSize(18);
-    doc.text("📝 Análisis Detallado", 15, 25);
-    doc.setFillColor(...SECONDARY_COLOR);
-    doc.rect(15, 30, 60, 2, "F");
-    
-    // Análisis por pregunta (solo para secciones con datos)
-    if (total > 0) {
-        doc.setFontSize(12);
-        doc.setTextColor(...DARK);
-        doc.text("Promedios por Pregunta:", 15, 45);
-        
-        const preguntas = bancoPreguntas[activeDashboardSection] || [];
-        const preguntaData = preguntas.map(q => {
-            let sum = 0, count = 0;
-            filteredSurveys.forEach(s => {
-                const val = s[`p${q.id}`];
-                if (val !== undefined && val !== null && val !== "") {
-                    const num = Number(val);
-                    if (!isNaN(num)) {
-                        sum += num;
-                        count++;
-                    }
-                }
+        async function generarReportePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            
+            // Colores Institucionales del Grupo 1 Tequihua
+            const PRIMARY_COLOR = [20, 54, 38];
+            const SECONDARY_COLOR = [229, 169, 59];
+            const WHITE = [255, 255, 255];
+            const DARK = [30, 30, 30];
+            const RED = [220, 50, 50];
+            const GREEN = [50, 180, 80];
+            
+            // PAGE 1: PORTADA
+            doc.setFillColor(...PRIMARY_COLOR);
+            doc.rect(0, 0, 210, 297, "F");
+            
+            doc.setFillColor(...SECONDARY_COLOR);
+            doc.rect(15, 140, 180, 3, "F");
+            doc.rect(15, 145, 80, 1, "F");
+            doc.rect(115, 145, 80, 1, "F");
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setTextColor(...WHITE);
+            doc.setFontSize(32);
+            doc.text("⚜️ TequiVoz", 20, 60);
+            
+            doc.setFontSize(18);
+            doc.setTextColor(240, 240, 240);
+            doc.text("Reporte de Desempeño Scout", 20, 80);
+            
+            doc.setFontSize(24);
+            doc.setTextColor(...SECONDARY_COLOR);
+            doc.text(activeDashboardSection.toUpperCase(), 20, 110);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(200, 200, 200);
+            const fechaActual = new Date().toLocaleDateString('es-MX', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
             });
-            const avg = count > 0 ? (sum / count) : 0;
-            const maxVal = q.type === "range" ? (q.max || 10) : 10;
-            const pct = Math.round((avg / maxVal) * 100);
-            return { id: q.id, title: q.title.substring(0, 30) + "...", avg: pct };
-        });
-        
-        // Filtrar solo preguntas con datos
-        const validPreguntas = preguntaData.filter(p => p.avg > 0);
-        
-        if (validPreguntas.length > 0) {
-            // Tabla de análisis
-            const tableData = validPreguntas.map(p => [
-                `Q${p.id}`,
-                p.title,
-                p.avg + "%"
-            ]);
+            doc.text(`Fecha de emisión: ${fechaActual}`, 20, 160);
+            doc.text("Grupo 1 Tequihua - San Luis Potosí", 20, 170);
+            doc.text("Siempre Listos para Servir", 20, 180);
+            
+            const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
+            const totalSurveys = [...surveysList, ...localFallback];
+            const filteredSurveys = totalSurveys.filter(s => s.rama === activeDashboardSection);
+            const total = filteredSurveys.length;
+            
+            doc.setFontSize(12);
+            doc.setTextColor(...SECONDARY_COLOR);
+            doc.text(`📊 ${total} encuestas procesadas`, 20, 200);
+            
+            doc.setFontSize(8);
+            doc.setTextColor(150, 150, 150);
+            doc.text("© 2026 Grupo 1 Tequihua - Todos los derechos reservados", 20, 285);
+            
+            // PAGE 2: RESUMEN EJECUTIVO
+            doc.addPage();
+            doc.setFillColor(245, 245, 247);
+            doc.rect(0, 0, 210, 297, "F");
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setTextColor(...DARK);
+            doc.setFontSize(20);
+            doc.text("📊 Resumen Ejecutivo", 15, 25);
+            doc.setFillColor(...SECONDARY_COLOR);
+            doc.rect(15, 30, 60, 2, "F");
+            
+            const ispEl = document.getElementById('kpi-val-isp');
+            const icsEl = document.getElementById('kpi-val-ics');
+            const iapEl = document.getElementById('kpi-val-iap');
+            const isgEl = document.getElementById('kpi-val-isg');
+            const iveEl = document.getElementById('kpi-val-ive');
+            
+            const kpis = {
+                ISP: parseInt(ispEl ? ispEl.innerText : "0%"),
+                ICS: parseInt(icsEl ? icsEl.innerText : "0%"),
+                IAP: parseInt(iapEl ? iapEl.innerText : "0%"),
+                ISG: parseInt(isgEl ? isgEl.innerText : "0%"),
+                IVE: parseInt(iveEl ? iveEl.innerText : "0%")
+            };
+            
+            const avgKPI = Math.round((kpis.ISP + kpis.ICS + kpis.IAP + kpis.ISG + kpis.IVE) / 5);
+            
+            const kpiData = [
+                ["ISP (Programa)", kpis.ISP + "%", kpis.ISP >= 80 ? "🟢" : (kpis.ISP >= 60 ? "🟡" : "🔴")],
+                ["ICS (Cohesión)", kpis.ICS + "%", kpis.ICS >= 80 ? "🟢" : (kpis.ICS >= 60 ? "🟡" : "🔴")],
+                ["IAP (Avance)", kpis.IAP + "%", kpis.IAP >= 80 ? "🟢" : (kpis.IAP >= 60 ? "🟡" : "🔴")],
+                ["ISG (Seguridad)", kpis.ISG + "%", kpis.ISG >= 80 ? "🟢" : (kpis.ISG >= 60 ? "🟡" : "🔴")],
+                ["IVE (Economía)", kpis.IVE + "%", kpis.IVE >= 80 ? "🟢" : (kpis.IVE >= 60 ? "🟡" : "🔴")],
+                ["PROMEDIO GENERAL", avgKPI + "%", avgKPI >= 80 ? "🟢" : (avgKPI >= 60 ? "🟡" : "🔴")]
+            ];
             
             doc.autoTable({
-                startY: 55,
-                head: [['ID', 'Pregunta', 'Promedio']],
-                body: tableData,
-                theme: 'striped',
+                startY: 40,
+                head: [['Indicador', 'Calificación', 'Estado']],
+                body: kpiData,
+                theme: 'grid',
                 headStyles: { fillColor: PRIMARY_COLOR, textColor: WHITE },
-                styles: { fontSize: 8 },
+                styles: { fontSize: 10 },
                 columnStyles: {
-                    0: { cellWidth: 20 },
-                    1: { cellWidth: 100 },
+                    0: { cellWidth: 70 },
+                    1: { cellWidth: 50, halign: 'center' },
                     2: { cellWidth: 30, halign: 'center' }
                 }
             });
             
-            let yPos2 = doc.lastAutoTable.finalY + 15;
+            let yPos = doc.lastAutoTable.finalY + 15;
             
-            // Identificar áreas de mejora
-            const bajas = validPreguntas.filter(p => p.avg < 60);
-            if (bajas.length > 0) {
-                doc.setFontSize(12);
-                doc.setTextColor(...RED);
-                doc.text("⚠️ Áreas de Oportunidad:", 15, yPos2);
-                yPos2 += 8;
-                doc.setFontSize(9);
-                doc.setTextColor(100, 100, 100);
-                bajas.forEach((p, idx) => {
-                    doc.text(`${idx + 1}. Pregunta Q${p.id}: ${p.avg}% - Requiere atención prioritaria`, 20, yPos2 + idx * 6);
-                });
-                yPos2 += bajas.length * 6 + 10;
+            doc.setFontSize(14);
+            doc.setTextColor(...DARK);
+            doc.text("Nivel de Satisfacción General:", 15, yPos);
+            yPos += 10;
+            
+            const nivel = avgKPI >= 80 ? "🌟 EXCELENTE" : (avgKPI >= 60 ? "👍 BUENO" : "⚠️ NECESITA MEJORA");
+            const colorNivel = avgKPI >= 80 ? GREEN : (avgKPI >= 60 ? SECONDARY_COLOR : RED);
+            doc.setFontSize(18);
+            doc.setTextColor(...colorNivel);
+            doc.text(nivel, 15, yPos);
+            
+            yPos += 20;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text(`📅 Período analizado: Últimos ${total} registros`, 15, yPos);
+            yPos += 8;
+            doc.text(`📌 Sección: ${activeDashboardSection}`, 15, yPos);
+            yPos += 8;
+            doc.text(`📋 Total de preguntas evaluadas: 10`, 15, yPos);
+            
+            // PAGE 3: GRÁFICO DE BARRAS
+            doc.addPage();
+            doc.setFillColor(245, 245, 247);
+            doc.rect(0, 0, 210, 297, "F");
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setTextColor(...DARK);
+            doc.setFontSize(18);
+            doc.text("📈 Desempeño por KPI", 15, 25);
+            doc.setFillColor(...SECONDARY_COLOR);
+            doc.rect(15, 30, 60, 2, "F");
+            
+            const labels = ['ISP', 'ICS', 'IAP', 'ISG', 'IVE'];
+            const values = [kpis.ISP, kpis.ICS, kpis.IAP, kpis.ISG, kpis.IVE];
+            const colors = [
+                [50, 200, 100],
+                [50, 150, 200],
+                [200, 180, 50],
+                [200, 80, 80],
+                [150, 100, 200]
+            ];
+            
+            const graphY = 50;
+            const graphHeight = 120;
+            const barWidth = 25;
+            const spacing = 10;
+            const startX = 25;
+            
+            doc.setDrawColor(200, 200, 200);
+            doc.setLineWidth(0.5);
+            doc.line(startX - 5, graphY, startX - 5, graphY + graphHeight);
+            doc.line(startX - 5, graphY + graphHeight, startX + 5 + (barWidth + spacing) * 5, graphY + graphHeight);
+            
+            doc.setFontSize(8);
+            doc.setTextColor(150, 150, 150);
+            for (let i = 0; i <= 5; i++) {
+                const yPosLabel = graphY + graphHeight - (i / 5) * graphHeight;
+                doc.text((i * 20) + "%", startX - 20, yPosLabel + 2);
+                doc.setDrawColor(220, 220, 220);
+                doc.setLineWidth(0.2);
+                doc.line(startX - 3, yPosLabel, startX + 3 + (barWidth + spacing) * 5, yPosLabel);
             }
             
-            // Top 3 sugerencias de los scouts
-            const sugerencias = [];
+            values.forEach((val, idx) => {
+                const x = startX + idx * (barWidth + spacing);
+                const barHeight = (val / 100) * graphHeight;
+                const y = graphY + graphHeight - barHeight;
+                
+                doc.setFillColor(...colors[idx]);
+                doc.roundedRect(x, y, barWidth, barHeight, 2, 2, "F");
+                
+                doc.setFontSize(10);
+                doc.setTextColor(...DARK);
+                doc.text(val + "%", x + barWidth / 2, y - 4, { align: 'center' });
+                
+                doc.setFontSize(9);
+                doc.setTextColor(100, 100, 100);
+                doc.text(labels[idx], x + barWidth / 2, graphY + graphHeight + 8, { align: 'center' });
+            });
+            
+            // PAGE 4: ANÁLISIS POR PREGUNTA
+            doc.addPage();
+            doc.setFillColor(245, 245, 247);
+            doc.rect(0, 0, 210, 297, "F");
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setTextColor(...DARK);
+            doc.setFontSize(18);
+            doc.text("📝 Análisis Detallado", 15, 25);
+            doc.setFillColor(...SECONDARY_COLOR);
+            doc.rect(15, 30, 60, 2, "F");
+            
+            if (total > 0) {
+                doc.setFontSize(12);
+                doc.setTextColor(...DARK);
+                doc.text("Promedios por Pregunta:", 15, 45);
+                
+                const preguntas = bancoPreguntas[activeDashboardSection] || [];
+                const preguntaData = preguntas.map(q => {
+                    let sum = 0, count = 0;
+                    filteredSurveys.forEach(s => {
+                        const val = s[`p${q.id}`];
+                        if (val !== undefined && val !== null && val !== "") {
+                            const num = Number(val);
+                            if (!isNaN(num)) {
+                                sum += num;
+                                count++;
+                            }
+                        }
+                    });
+                    const avg = count > 0 ? (sum / count) : 0;
+                    const maxVal = q.type === "range" ? (q.max || 10) : 10;
+                    const pct = Math.round((avg / maxVal) * 100);
+                    return { id: q.id, title: q.title.substring(0, 30) + "...", avg: pct };
+                });
+                
+                const validPreguntas = preguntaData.filter(p => p.avg > 0);
+                
+                if (validPreguntas.length > 0) {
+                    const tableData = validPreguntas.map(p => [
+                        `Q${p.id}`,
+                        p.title,
+                        p.avg + "%"
+                    ]);
+                    
+                    doc.autoTable({
+                        startY: 55,
+                        head: [['ID', 'Pregunta', 'Promedio']],
+                        body: tableData,
+                        theme: 'striped',
+                        headStyles: { fillColor: PRIMARY_COLOR, textColor: WHITE },
+                        styles: { fontSize: 8 },
+                        columnStyles: {
+                            0: { cellWidth: 20 },
+                            1: { cellWidth: 100 },
+                            2: { cellWidth: 30, halign: 'center' }
+                        }
+                    });
+                    
+                    let yPos2 = doc.lastAutoTable.finalY + 15;
+                    
+                    const bajas = validPreguntas.filter(p => p.avg < 60);
+                    if (bajas.length > 0) {
+                        doc.setFontSize(12);
+                        doc.setTextColor(...RED);
+                        doc.text("⚠️ Áreas de Oportunidad:", 15, yPos2);
+                        yPos2 += 8;
+                        doc.setFontSize(9);
+                        doc.setTextColor(100, 100, 100);
+                        bajas.forEach((p, idx) => {
+                            doc.text(`${idx + 1}. Pregunta Q${p.id}: ${p.avg}% - Requiere atención prioritaria`, 20, yPos2 + idx * 6);
+                        });
+                        yPos2 += bajas.length * 6 + 10;
+                    }
+                    
+                    const sugerencias = [];
+                    [7, 10, 13, 14, 19, 20].forEach(qId => {
+                        filteredSurveys.forEach(s => {
+                            const txt = s[`p${qId}`];
+                            if (txt && txt.trim() !== "" && txt.trim().length > 10) {
+                                sugerencias.push(txt.trim());
+                            }
+                        });
+                    });
+                    
+                    if (sugerencias.length > 0) {
+                        doc.setFontSize(12);
+                        doc.setTextColor(...DARK);
+                        doc.text("💡 Top Sugerencias de los Scouts:", 15, yPos2);
+                        yPos2 += 8;
+                        doc.setFontSize(9);
+                        doc.setTextColor(80, 80, 80);
+                        
+                        const topSugerencias = sugerencias
+                            .sort((a, b) => a.length - b.length)
+                            .slice(0, 3);
+                        
+                        topSugerencias.forEach((sug, idx) => {
+                            const lines = doc.splitTextToSize(`"${sug}"`, 170);
+                            doc.text(`📌 ${idx + 1}.`, 20, yPos2 + idx * 12);
+                            doc.text(lines, 30, yPos2 + idx * 12);
+                            yPos2 += lines.length * 5 + 4;
+                        });
+                    }
+                }
+            }
+            
+            // PAGE 5: RECOMENDACIONES
+            doc.addPage();
+            doc.setFillColor(245, 245, 247);
+            doc.rect(0, 0, 210, 297, "F");
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setTextColor(...DARK);
+            doc.setFontSize(18);
+            doc.text("🧠 Recomendaciones Estratégicas", 15, 25);
+            doc.setFillColor(...SECONDARY_COLOR);
+            doc.rect(15, 30, 60, 2, "F");
+            
+            const iaDiagnostico = document.getElementById('ia-diagnostico-kpi');
+            const iaAccion = document.getElementById('ia-accion-kpi');
+            
+            let recomendaciones = [];
+            
+            if (iaDiagnostico && iaDiagnostico.innerText) {
+                recomendaciones.push({
+                    prioridad: "Alta",
+                    accion: iaDiagnostico.innerText.substring(0, 100) + "..."
+                });
+            }
+            
+            if (iaAccion && iaAccion.innerText) {
+                const acciones = iaAccion.innerText.split('•').filter(a => a.trim() !== '');
+                acciones.forEach((acc, idx) => {
+                    const prioridad = idx === 0 ? "Alta" : (idx === 1 ? "Media" : "Baja");
+                    recomendaciones.push({
+                        prioridad: prioridad,
+                        accion: acc.trim()
+                    });
+                });
+            }
+            
+            if (recomendaciones.length === 0) {
+                recomendaciones = [
+                    { prioridad: "Alta", accion: "Realizar una asamblea scout para evaluar el clima organizacional." },
+                    { prioridad: "Media", accion: "Implementar dinámicas de integración entre secciones." },
+                    { prioridad: "Media", accion: "Revisar los protocolos de seguridad en actividades de campo." },
+                    { prioridad: "Baja", accion: "Actualizar el manual de procedimientos del Grupo 1." }
+                ];
+            }
+            
+            const recData = recomendaciones.map(r => [
+                r.prioridad,
+                r.accion
+            ]);
+            
+            doc.autoTable({
+                startY: 45,
+                head: [['Prioridad', 'Acción Recomendada']],
+                body: recData,
+                theme: 'grid',
+                headStyles: { fillColor: PRIMARY_COLOR, textColor: WHITE },
+                styles: { fontSize: 9 },
+                columnStyles: {
+                    0: { cellWidth: 40, halign: 'center' },
+                    1: { cellWidth: 130 }
+                }
+            });
+            
+            let yPos3 = doc.lastAutoTable.finalY + 15;
+            
+            doc.setFontSize(12);
+            doc.setTextColor(...DARK);
+            doc.text("📅 Plazos Sugeridos:", 15, yPos3);
+            yPos3 += 8;
+            doc.setFontSize(9);
+            doc.setTextColor(100, 100, 100);
+            doc.text("• Prioridad Alta: Implementar en los próximos 7 días", 20, yPos3);
+            yPos3 += 6;
+            doc.text("• Prioridad Media: Implementar en los próximos 15 días", 20, yPos3);
+            yPos3 += 6;
+            doc.text("• Prioridad Baja: Implementar en los próximos 30 días", 20, yPos3);
+            
+            // PAGE 6: ANEXO
+            doc.addPage();
+            doc.setFillColor(245, 245, 247);
+            doc.rect(0, 0, 210, 297, "F");
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setTextColor(...DARK);
+            doc.setFontSize(18);
+            doc.text("📋 Anexo: Respuestas Abiertas", 15, 25);
+            doc.setFillColor(...SECONDARY_COLOR);
+            doc.rect(15, 30, 60, 2, "F");
+            
+            const respuestasAbiertas = [];
             [7, 10, 13, 14, 19, 20].forEach(qId => {
-                filteredSurveys.forEach(s => {
+                const q = bancoPreguntas[activeDashboardSection]?.find(p => p.id === qId);
+                filteredSurveys.forEach((s) => {
                     const txt = s[`p${qId}`];
-                    if (txt && txt.trim() !== "" && txt.trim().length > 10) {
-                        sugerencias.push(txt.trim());
+                    if (txt && txt.trim() !== "") {
+                        respuestasAbiertas.push({
+                            pregunta: q ? q.title.substring(0, 40) + "..." : `Pregunta ${qId}`,
+                            respuesta: txt.trim()
+                        });
                     }
                 });
             });
             
-            if (sugerencias.length > 0) {
-                doc.setFontSize(12);
-                doc.setTextColor(...DARK);
-                doc.text("💡 Top Sugerencias de los Scouts:", 15, yPos2);
-                yPos2 += 8;
+            if (respuestasAbiertas.length > 0) {
+                let yPos4 = 45;
                 doc.setFontSize(9);
                 doc.setTextColor(80, 80, 80);
                 
-                // Tomar las 3 más cortas o más representativas
-                const topSugerencias = sugerencias
-                    .sort((a, b) => a.length - b.length)
-                    .slice(0, 3);
+                const maxRespuestas = Math.min(respuestasAbiertas.length, 15);
+                for (let i = 0; i < maxRespuestas; i++) {
+                    const item = respuestasAbiertas[i];
+                    const lines = doc.splitTextToSize(`📌 ${item.pregunta}`, 170);
+                    doc.text(lines, 15, yPos4);
+                    yPos4 += lines.length * 5 + 2;
+                    
+                    const respLines = doc.splitTextToSize(`   "${item.respuesta}"`, 170);
+                    doc.text(respLines, 15, yPos4);
+                    yPos4 += respLines.length * 5 + 6;
+                    
+                    if (yPos4 > 270) {
+                        doc.addPage();
+                        doc.setFillColor(245, 245, 247);
+                        doc.rect(0, 0, 210, 297, "F");
+                        yPos4 = 20;
+                    }
+                }
                 
-                topSugerencias.forEach((sug, idx) => {
-                    const lines = doc.splitTextToSize(`"${sug}"`, 170);
-                    doc.text(`📌 ${idx + 1}.`, 20, yPos2 + idx * 12);
-                    doc.text(lines, 30, yPos2 + idx * 12);
-                    yPos2 += lines.length * 5 + 4;
-                });
+                if (respuestasAbiertas.length > 15) {
+                    doc.text(`... y ${respuestasAbiertas.length - 15} respuestas adicionales no mostradas.`, 15, yPos4 + 5);
+                }
+            } else {
+                doc.setFontSize(10);
+                doc.setTextColor(150, 150, 150);
+                doc.text("No se encontraron respuestas abiertas para esta sección.", 15, 45);
             }
-        }
-    }
-    
-    // -------------------------------
-    // PAGE 5: RECOMENDACIONES ESTRATÉGICAS
-    // -------------------------------
-    doc.addPage();
-    doc.setFillColor(245, 245, 247);
-    doc.rect(0, 0, 210, 297, "F");
-    
-    doc.setFont("Plus Jakarta Sans", "bold");
-    doc.setTextColor(...DARK);
-    doc.setFontSize(18);
-    doc.text("🧠 Recomendaciones Estratégicas", 15, 25);
-    doc.setFillColor(...SECONDARY_COLOR);
-    doc.rect(15, 30, 60, 2, "F");
-    
-    // Obtener recomendaciones de IA
-    const iaDiagnostico = document.getElementById('ia-diagnostico-kpi');
-    const iaAccion = document.getElementById('ia-accion-kpi');
-    
-    let recomendaciones = [];
-    
-    if (iaDiagnostico && iaDiagnostico.innerText) {
-        recomendaciones.push({
-            prioridad: "Alta",
-            accion: iaDiagnostico.innerText.substring(0, 100) + "..."
-        });
-    }
-    
-    if (iaAccion && iaAccion.innerText) {
-        const acciones = iaAccion.innerText.split('•').filter(a => a.trim() !== '');
-        acciones.forEach((acc, idx) => {
-            const prioridad = idx === 0 ? "Alta" : (idx === 1 ? "Media" : "Baja");
-            recomendaciones.push({
-                prioridad: prioridad,
-                accion: acc.trim()
-            });
-        });
-    }
-    
-    // Si no hay recomendaciones, generar algunas por defecto
-    if (recomendaciones.length === 0) {
-        recomendaciones = [
-            { prioridad: "Alta", accion: "Realizar una asamblea scout para evaluar el clima organizacional." },
-            { prioridad: "Media", accion: "Implementar dinámicas de integración entre secciones." },
-            { prioridad: "Media", accion: "Revisar los protocolos de seguridad en actividades de campo." },
-            { prioridad: "Baja", accion: "Actualizar el manual de procedimientos del Grupo 1." }
-        ];
-    }
-    
-    // Tabla de recomendaciones
-    const recData = recomendaciones.map(r => [
-        r.prioridad,
-        r.accion
-    ]);
-    
-    doc.autoTable({
-        startY: 45,
-        head: [['Prioridad', 'Acción Recomendada']],
-        body: recData,
-        theme: 'grid',
-        headStyles: { fillColor: PRIMARY_COLOR, textColor: WHITE },
-        styles: { fontSize: 9 },
-        columnStyles: {
-            0: { cellWidth: 40, halign: 'center' },
-            1: { cellWidth: 130 }
-        }
-    });
-    
-    let yPos3 = doc.lastAutoTable.finalY + 15;
-    
-    // Plazos sugeridos
-    doc.setFontSize(12);
-    doc.setTextColor(...DARK);
-    doc.text("📅 Plazos Sugeridos:", 15, yPos3);
-    yPos3 += 8;
-    doc.setFontSize(9);
-    doc.setTextColor(100, 100, 100);
-    doc.text("• Prioridad Alta: Implementar en los próximos 7 días", 20, yPos3);
-    yPos3 += 6;
-    doc.text("• Prioridad Media: Implementar en los próximos 15 días", 20, yPos3);
-    yPos3 += 6;
-    doc.text("• Prioridad Baja: Implementar en los próximos 30 días", 20, yPos3);
-    
-    // -------------------------------
-    // PAGE 6: ANEXO - RESPUESTAS ABIERTAS
-    // -------------------------------
-    doc.addPage();
-    doc.setFillColor(245, 245, 247);
-    doc.rect(0, 0, 210, 297, "F");
-    
-    doc.setFont("Plus Jakarta Sans", "bold");
-    doc.setTextColor(...DARK);
-    doc.setFontSize(18);
-    doc.text("📋 Anexo: Respuestas Abiertas", 15, 25);
-    doc.setFillColor(...SECONDARY_COLOR);
-    doc.rect(15, 30, 60, 2, "F");
-    
-    // Recopilar respuestas abiertas
-    const respuestasAbiertas = [];
-    [7, 10, 13, 14, 19, 20].forEach(qId => {
-        const q = bancoPreguntas[activeDashboardSection]?.find(p => p.id === qId);
-        filteredSurveys.forEach((s, idx) => {
-            const txt = s[`p${qId}`];
-            if (txt && txt.trim() !== "") {
-                respuestasAbiertas.push({
-                    pregunta: q ? q.title.substring(0, 40) + "..." : `Pregunta ${qId}`,
-                    respuesta: txt.trim()
-                });
-            }
-        });
-    });
-    
-    if (respuestasAbiertas.length > 0) {
-        let yPos4 = 45;
-        doc.setFontSize(9);
-        doc.setTextColor(80, 80, 80);
-        
-        // Mostrar hasta 15 respuestas (para no sobrecargar)
-        const maxRespuestas = Math.min(respuestasAbiertas.length, 15);
-        for (let i = 0; i < maxRespuestas; i++) {
-            const item = respuestasAbiertas[i];
-            const lines = doc.splitTextToSize(`📌 ${item.pregunta}`, 170);
-            doc.text(lines, 15, yPos4);
-            yPos4 += lines.length * 5 + 2;
             
-            const respLines = doc.splitTextToSize(`   "${item.respuesta}"`, 170);
-            doc.text(respLines, 15, yPos4);
-            yPos4 += respLines.length * 5 + 6;
-            
-            if (yPos4 > 270) {
-                doc.addPage();
-                doc.setFillColor(245, 245, 247);
-                doc.rect(0, 0, 210, 297, "F");
-                yPos4 = 20;
-            }
+            const nombreArchivo = `TequiRadar_${activeDashboardSection}_${new Date().toISOString().slice(0, 10)}.pdf`;
+            doc.save(nombreArchivo);
         }
+        window.generarReportePDF = generarReportePDF;
         
-        if (respuestasAbiertas.length > 15) {
-            doc.text(`... y ${respuestasAbiertas.length - 15} respuestas adicionales no mostradas.`, 15, yPos4 + 5);
+        window.onload = function () {
+            mostrarSeccion('pantalla-inicio');
         }
-    } else {
-        doc.setFontSize(10);
-        doc.setTextColor(150, 150, 150);
-        doc.text("No se encontraron respuestas abiertas para esta sección.", 15, 45);
-    }
-    
-    // -------------------------------
-    // GUARDAR PDF
-    // -------------------------------
-    const nombreArchivo = `TequiRadar_${activeDashboardSection}_${new Date().toISOString().slice(0, 10)}.pdf`;
-    doc.save(nombreArchivo);
-}
     </script>
 </body>
 </html>

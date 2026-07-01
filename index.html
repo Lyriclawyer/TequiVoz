@@ -132,6 +132,26 @@
         .apple-range::-webkit-slider-thumb:active {
             transform: scale(1.2);
         }
+
+        /* Modal personalizado */
+        #custom-alert {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
+            padding: 1rem;
+        }
+        #custom-alert:not(.hidden) {
+            display: flex;
+        }
+        .custom-alert-box {
+            max-width: 400px;
+            width: 100%;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen text-appleDark no-scrollbar">
@@ -140,6 +160,20 @@
     <div class="gradient-bg">
         <div class="blob w-[500px] h-[500px] top-[-10%] left-[-10%]"></div>
         <div class="blob w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-duration: 35s;"></div>
+    </div>
+
+    <!-- MODAL PERSONALIZADO -->
+    <div id="custom-alert" class="hidden">
+        <div class="custom-alert-box glass-panel rounded-[32px] p-8 shadow-2xl text-center">
+            <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mx-auto mb-4">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <h3 id="custom-alert-title" class="text-xl font-extrabold text-gray-900 mb-2">Aviso</h3>
+            <p id="custom-alert-message" class="text-gray-600 text-sm font-medium leading-relaxed mb-6">Mensaje</p>
+            <button onclick="cerrarAlert()" class="px-8 py-3 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple shadow-lg active:scale-95">
+                Entendido
+            </button>
+        </div>
     </div>
 
     <!-- CABECERA FLOTANTE DE APPLE -->
@@ -163,7 +197,7 @@
     <!-- ÁREA PRINCIPAL -->
     <main class="pt-32 pb-16 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center min-h-[90vh]">
 
-        <!-- ================= BIENVENIDA / HERO (Inspirado en la imagen image_1129a4.png) ================= -->
+        <!-- ================= BIENVENIDA / HERO ================= -->
         <section id="pantalla-inicio" class="text-center transition-apple w-full">
             <span class="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-widest inline-block mb-6 shadow-sm">Representación Juvenil</span>
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
@@ -564,7 +598,13 @@
             p11: 5,  // Día del padre escala
             p12: 5,  // Regata escala
             p13: "", // Día del padre texto
-            p14: ""  // Regata texto
+            p14: "", // Regata texto
+            p15: 5,  // Logística general
+            p16: 5,  // Comunicación con padres
+            p17: 5,  // Participación juvenil
+            p18: 5,  // Seguridad y protocolos
+            p19: "", // Sugerencias generales
+            p20: ""  // Evaluación semestral
         };
 
         // Estado local de Reportes Semanales de KPIs Validados por Scouters
@@ -611,7 +651,7 @@
                 { id: 1, type: "select", title: "¿Qué tan enriquecedora e inspiradora fue la jornada o debate del Clan el día de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótona" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Inspiradora" }, { val: "Excelente", icon: "🤩", text: "¡Trascendente!" } ] },
                 { id: 2, type: "range", title: "¿Cómo evalúas el nivel de acompañamiento y consejería de tus Sinodales/Scouters de Clan hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
                 { id: 3, type: "list", title: "¿Cómo marcha la mística, el apoyo mutuo y la verdadera hermandad dentro de la comunidad de Clan?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Unión", desc: "Excelente integración, apoyo mutuo en proyectos y plan de vida." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Distanciamiento", desc: "Falta de participación en debates o distanciamiento entre rovers." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se sienten grupos herméticos o apatía generalizada." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la reality de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
+                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la realidad de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
                 { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las actividades regionales o nacionales de Clan?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
                 { id: 6, type: "grid", title: "¿Qué tipo de proyectos de impacto o servicio social te gustaría que el Clan organizara?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición Extrema", desc: "Retos de alta montaña, supervivencia pura y autonomía." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Voluntariado social, ecología de impacto y desarrollo comunitario." }, { val: "Extremo", icon: "🧗", title: "Servicios Técnicos", desc: "Apoyo en desastres naturales, primeros auxilios avanzados y capacitación." } ] },
                 { id: 7, type: "textarea", title: "Si pudieras proponer o modificar una sola norma o acuerdo de nuestro Consejo de Clan, ¿cuál sería?", placeholder: "Escribe tu propuesta o reforma para el Consejo de Clan..." },
@@ -623,7 +663,13 @@
                 { id: 11, type: "range", title: "Del 1 al 10, ¿Cómo calificarías tu experiencia en la actividad de Día del Padre?", min: 1, max: 10, def: 5, left: "Poca experiencia 🛠️", right: "Experiencia Excelente 🌟" },
                 { id: 12, type: "range", title: "Del 1 al 10, ¿Cómo calificarías tu experiencia en la actividad de la Regata?", min: 1, max: 10, def: 5, left: "Poca experiencia 🛠️", right: "Experiencia Excelente 🌟" },
                 { id: 13, type: "textarea", title: "¿Qué cambiarías de la organización del Día del Padre o qué sugerencias tienes?", placeholder: "Escribe tus propuestas de mejora para el Día del Padre..." },
-                { id: 14, type: "textarea", title: "¿Qué cuestiones o elementos sugerirías agregar, quitar o mantener para la Regata?", placeholder: "Escribe tus propuestas de mejora para la Regata..." }
+                { id: 14, type: "textarea", title: "¿Qué cuestiones o elementos sugerirías agregar, quitar o mantener para la Regata?", placeholder: "Escribe tus propuestas de mejora para la Regata..." },
+                { id: 15, type: "range", title: "Del 1 al 10, ¿Cómo calificarías la logística y organización general del Grupo 1 en las últimas actividades?", min: 1, max: 10, def: 5, left: "Mala organización 📋", right: "Excelente organización ⚜️" },
+                { id: 16, type: "range", title: "Del 1 al 10, ¿Cómo evalúas la comunicación con padres y representantes sobre las actividades del grupo?", min: 1, max: 10, def: 5, left: "Mala comunicación 📞", right: "Excelente comunicación 📱" },
+                { id: 17, type: "range", title: "Del 1 al 10, ¿Qué tan participativos se muestran los jóvenes en las actividades planificadas?", min: 1, max: 10, def: 5, left: "Baja participación 👤", right: "Alta participación 👥" },
+                { id: 18, type: "range", title: "Del 1 al 10, ¿Cómo calificarías los protocolos de seguridad y emergencia implementados en las actividades?", min: 1, max: 10, def: 5, left: "Inseguro ⚠️", right: "Muy seguro 🛡️" },
+                { id: 19, type: "textarea", title: "¿Qué sugerencias generales tienes para mejorar las actividades futuras del Grupo 1 Tequihua?", placeholder: "Escribe tus propuestas para el Consejo de Grupo..." },
+                { id: 20, type: "textarea", title: "Evaluación general del semestre scout: ¿Qué aspectos destacarías y qué cambiarías para el próximo ciclo?", placeholder: "Escribe tu evaluación constructiva del semestre..." }
             ]
         };
 
@@ -716,7 +762,9 @@
             seccionActiva = rama;
             respuestasSesion = {
                 rama: rama,
-                p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: "", p11: 5, p12: 5, p13: "", p14: ""
+                p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: "", 
+                p11: 5, p12: 5, p13: "", p14: "",
+                p15: 5, p16: 5, p17: 5, p18: 5, p19: "", p20: ""
             };
             preguntaActual = 0;
             totalPreguntas = bancoPreguntas[rama].length;
@@ -951,11 +999,11 @@
             const feedbackEl = document.getElementById('feedback-slider-dinamico');
             if (feedbackEl) {
                 let extra = "";
-                if (id === 2 || id === 11 || id === 12) {
-                    if (val <= 3) extra = "- Falta Dinamismo 🧭";
-                    else if (val <= 6) extra = "- Neutro / Regular";
-                    else if (val <= 8) extra = "- ¡Muy bueno y amigable! 👍";
-                    else extra = "- ¡Excelente, Leyendas! 🌟";
+                if (id === 2 || id === 11 || id === 12 || id === 15 || id === 16 || id === 17 || id === 18) {
+                    if (val <= 3) extra = "- Crítico";
+                    else if (val <= 6) extra = "- Regular";
+                    else if (val <= 8) extra = "- Bueno";
+                    else extra = "- ¡Excelente!";
                 } else if (id === 5) {
                     if (val <= 2) extra = "- Excelente / Muy accesible 🪙";
                     else if (val == 3) extra = "- Moderado / Balanceado";
@@ -1000,7 +1048,7 @@
                 btnSig.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
             }
 
-            // Mapeo unificado para que la encuesta de dirigencia guarde correctamente sus preguntas especiales (11, 12, 13, 14)
+            // Mapeo unificado para que la encuesta de dirigencia guarde correctamente sus preguntas especiales
             const docData = {
                 rama: respuestasSesion.rama,
                 p1: respuestasSesion.p1 || "Divertida",
@@ -1017,6 +1065,12 @@
                 p12: Number(respuestasSesion.p12 || 5),
                 p13: respuestasSesion.p13 || "",
                 p14: respuestasSesion.p14 || "",
+                p15: Number(respuestasSesion.p15 || 5),
+                p16: Number(respuestasSesion.p16 || 5),
+                p17: Number(respuestasSesion.p17 || 5),
+                p18: Number(respuestasSesion.p18 || 5),
+                p19: respuestasSesion.p19 || "",
+                p20: respuestasSesion.p20 || "",
                 timestamp: new Date().toISOString()
             };
 
@@ -1067,35 +1121,45 @@
             const user = document.getElementById('admin-user').value;
             const pass = document.getElementById('admin-pass').value.trim();
             let loginValido = false;
+            
+            // Variable para guardar la sección seleccionada
+            let seccionSeleccionada = "Manada";
+            let rolScouter = "Dirigencia";
 
-            // Mapeo estricto de contraseñas requeridas con Scouter Manada con su nueva clave
+            // Mapeo estricto de contraseñas requeridas
             if (user === 'manada' && pass === '100%MaNada') {
-                currentRolScouter = "Manada";
-                activeDashboardSection = "Manada";
+                rolScouter = "Manada";
+                seccionSeleccionada = "Manada";
                 loginValido = true;
             } else if (user === 'tropa' && pass === 't1') {
-                currentRolScouter = "Tropa";
-                activeDashboardSection = "Tropa";
+                rolScouter = "Tropa";
+                seccionSeleccionada = "Tropa";
                 loginValido = true;
             } else if (user === 'comunidad' && pass === 'co1') {
-                currentRolScouter = "Comunidad";
-                activeDashboardSection = "Comunidad";
+                rolScouter = "Comunidad";
+                seccionSeleccionada = "Comunidad";
                 loginValido = true;
             } else if (user === 'clan' && pass === 'cl1') {
-                currentRolScouter = "Clan";
-                activeDashboardSection = "Clan";
+                rolScouter = "Clan";
+                seccionSeleccionada = "Clan";
                 loginValido = true;
             } else if (user === 'dirigencia' && pass === 'tequihua1') {
-                currentRolScouter = "Dirigencia";
-                activeDashboardSection = "Manada"; // Dirigencia abre Manada primero pero puede cambiar
+                rolScouter = "Dirigencia";
+                seccionSeleccionada = "Manada"; // Dirigencia abre Manada primero pero puede cambiar
                 loginValido = true;
             }
 
             if (loginValido) {
+                // Asignar las variables globales antes de usarlas
+                currentRolScouter = rolScouter;
+                activeDashboardSection = seccionSeleccionada;
+                
                 configurarVisibilidadSegunRol();
                 seleccionarSeccionDashboard(activeDashboardSection);
                 mostrarSeccion('panel-scouter');
-                document.body.style.backgroundColor = '#f5f5f7'; // fondo premium de analytics
+                document.body.style.backgroundColor = '#f5f5f7';
+                // Actualizar el dashboard con los datos
+                actualizarDashboardSeccionUI();
             } else {
                 lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta.");
             }
@@ -1135,7 +1199,21 @@
                 const btn = document.getElementById(`dash-btn-${s}`);
                 if (btn) {
                     if (s === seccion) {
-                        btn.className = `flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-${s === 'Manada' ? 'yellow-600' : (s === 'Tropa' ? 'emerald-600' : (s === 'Comunidad' ? 'sky-600' : (s === 'Dirigencia' ? 'slate-600' : 'rose-600')))} shadow-sm border border-${s === 'Manada' ? 'yellow-200' : (s === 'Tropa' ? 'emerald-200' : (s === 'Comunidad' ? 'sky-200' : (s === 'Dirigencia' ? 'slate-200' : 'rose-200')))}`;
+                        const colorMap = {
+                            'Manada': 'yellow-600',
+                            'Tropa': 'emerald-600',
+                            'Comunidad': 'sky-600',
+                            'Clan': 'rose-600',
+                            'Dirigencia': 'slate-600'
+                        };
+                        const borderMap = {
+                            'Manada': 'yellow-200',
+                            'Tropa': 'emerald-200',
+                            'Comunidad': 'sky-200',
+                            'Clan': 'rose-200',
+                            'Dirigencia': 'slate-200'
+                        };
+                        btn.className = `flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-${colorMap[s]} shadow-sm border border-${borderMap[s]}`;
                     } else {
                         btn.className = "flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-gray-700";
                     }
@@ -1162,11 +1240,14 @@
             const dashSeccion = document.getElementById('dash-seccion');
             if (dashSeccion) {
                 dashSeccion.innerText = activeDashboardSection;
-                if (activeDashboardSection === "Dirigencia") {
-                    dashSeccion.style.backgroundColor = '#475569';
-                } else {
-                    dashSeccion.style.backgroundColor = `var(--color-${activeDashboardSection.toLowerCase()})`;
-                }
+                const colorMap = {
+                    'Manada': '#ffb703',
+                    'Tropa': '#06d6a0',
+                    'Comunidad': '#118ab2',
+                    'Clan': '#ef476f',
+                    'Dirigencia': '#475569'
+                };
+                dashSeccion.style.backgroundColor = colorMap[activeDashboardSection] || '#475569';
             }
             
             const totalRegistros = document.getElementById('dash-total-registros');
@@ -1210,15 +1291,25 @@
             let sugerenciasCambio = [];
 
             if (activeDashboardSection === "Dirigencia") {
-                let p11Sum = 0, p12Sum = 0;
+                let p11Sum = 0, p12Sum = 0, p15Sum = 0, p16Sum = 0, p17Sum = 0, p18Sum = 0;
                 filteredSurveys.forEach(s => {
                     p11Sum += Number(s.p11 || 5);
                     p12Sum += Number(s.p12 || 5);
+                    p15Sum += Number(s.p15 || 5);
+                    p16Sum += Number(s.p16 || 5);
+                    p17Sum += Number(s.p17 || 5);
+                    p18Sum += Number(s.p18 || 5);
                     if (s.p13 && s.p13.trim() !== "") sugerenciasCambio.push(s.p13);
                     if (s.p14 && s.p14.trim() !== "") sugerenciasCambio.push(s.p14);
+                    if (s.p19 && s.p19.trim() !== "") sugerenciasCambio.push(s.p19);
+                    if (s.p20 && s.p20.trim() !== "") sugerenciasCambio.push(s.p20);
                 });
                 const avgP11 = p11Sum / total;
                 const avgP12 = p12Sum / total;
+                const avgP15 = p15Sum / total;
+                const avgP16 = p16Sum / total;
+                const avgP17 = p17Sum / total;
+                const avgP18 = p18Sum / total;
                 
                 const promDiv = document.getElementById('dash-promedio-diversion');
                 const promEco = document.getElementById('dash-promedio-economia');
@@ -1228,13 +1319,13 @@
                 if (prefAct) prefAct.innerText = "N/A";
                 
                 // Representación de barras para dirigencia
-                actualizarBarrasGrafica((avgP11/10)*100, (avgP12/10)*100, 100, 100, 100);
+                actualizarBarrasGrafica((avgP11/10)*100, (avgP12/10)*100, (avgP15/10)*100, (avgP16/10)*100, (avgP17/10)*100);
                 
                 setKPICardValue("isp", Math.round((avgP11/10)*100));
                 setKPICardValue("ics", Math.round((avgP12/10)*100));
-                setKPICardValue("iap", 100);
-                setKPICardValue("isg", 100);
-                setKPICardValue("ive", 100);
+                setKPICardValue("iap", Math.round((avgP15/10)*100));
+                setKPICardValue("isg", Math.round((avgP16/10)*100));
+                setKPICardValue("ive", Math.round((avgP18/10)*100));
 
                 const iaSub = document.getElementById('ia-subtitle-seccion-kpi');
                 const iaDiag = document.getElementById('ia-diagnostico-kpi');
@@ -1242,9 +1333,12 @@
                 const iaSugContainer = document.getElementById('ia-sugerencias-container');
                 const listContainer = document.getElementById('ia-sugerencias-texto-lista');
 
-                if (iaSub) iaSub.innerText = `Análisis Pedagógico de ${activeDashboardSection}`;
-                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. Calificación promedio Día del Padre: ${avgP11.toFixed(1)}/10. Calificación Regata: ${avgP12.toFixed(1)}/10.`;
-                if (iaAcc) iaAcc.innerText = "• Revisar las sugerencias logísticas aportadas por los scouters para mejorar las próximas bases e inscripciones del grupo.";
+                if (iaSub) iaSub.innerText = `Análisis Organizacional de ${activeDashboardSection}`;
+                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. 
+                    Día del Padre: ${avgP11.toFixed(1)}/10 | Regata: ${avgP12.toFixed(1)}/10 
+                    | Logística: ${avgP15.toFixed(1)}/10 | Comunicación: ${avgP16.toFixed(1)}/10 
+                    | Participación: ${avgP17.toFixed(1)}/10 | Seguridad: ${avgP18.toFixed(1)}/10`;
+                if (iaAcc) iaAcc.innerText = "• Revisar las sugerencias logísticas aportadas por los scouters para mejorar las próximas bases e inscripciones del grupo. Fortalecer la comunicación con padres y representantes.";
 
                 if (sugerenciasCambio.length > 0 && iaSugContainer && listContainer) {
                     iaSugContainer.classList.remove('hidden');
@@ -1295,7 +1389,7 @@
                 }
             });
 
-            const avgFun = (funSum / total) * 10; // Escala 100%
+            const avgFun = (funSum / total) * 10;
             const avgSupport = ((supportSum / total) / 10) * 100;
             const avgTeamwork = (teamworkSum / total) * 10;
             const avgProgression = (progressionSum / total) * 10;
@@ -1324,7 +1418,7 @@
 
             actualizarBarrasGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
 
-            // CALCULAR KPIs DEL MODELO HÍBRIDO EN TIEMPO REAL (80% Analítica de Base de Datos)
+            // CALCULAR KPIs DEL MODELO HÍBRIDO EN TIEMPO REAL
             const kpiISP = Math.round((avgFun + avgSupport) / 2);
             const kpiICS = Math.round((avgTeamwork + avgP9) / 2);
             const kpiIAP = Math.round(avgProgression);
@@ -1406,6 +1500,20 @@
             } else if (iaSugContainer) {
                 iaSugContainer.classList.add('hidden');
             }
+        }
+
+        function actualizarBarrasGrafica(fun, support, teamwork, progression, safety) {
+            const barFun = document.getElementById('chart-fun');
+            const barSupport = document.getElementById('chart-leaders');
+            const barTeamwork = document.getElementById('chart-teamwork');
+            const barProgression = document.getElementById('chart-progression');
+            const barSafety = document.getElementById('chart-safety');
+
+            if (barFun) { barFun.style.height = Math.min(fun, 100) + '%'; barFun.innerText = Math.round(Math.min(fun, 100)) + '%'; }
+            if (barSupport) { barSupport.style.height = Math.min(support, 100) + '%'; barSupport.innerText = Math.round(Math.min(support, 100)) + '%'; }
+            if (barTeamwork) { barTeamwork.style.height = Math.min(teamwork, 100) + '%'; barTeamwork.innerText = Math.round(Math.min(teamwork, 100)) + '%'; }
+            if (barProgression) { barProgression.style.height = Math.min(progression, 100) + '%'; barProgression.innerText = Math.round(Math.min(progression, 100)) + '%'; }
+            if (barSafety) { barSafety.style.height = Math.min(safety, 100) + '%'; barSafety.innerText = Math.round(Math.min(safety, 100)) + '%'; }
         }
 
         function setKPICardValue(kpiId, val) {
@@ -1861,7 +1969,7 @@
             doc.text("Desarrollado de manera exclusiva para el Grupo 1 Tequihua, S.L.P.", 20, 170);
             doc.text("Siempre Listos para Servir", 20, 180);
             
-            // PAGE 2: KPIs y Análisis (Opción 1 y 3)
+            // PAGE 2: KPIs y Análisis
             doc.addPage();
             doc.setTextColor(33, 33, 33);
             doc.setFontSize(16);
@@ -1888,15 +1996,15 @@
             
             let finalY = doc.lastAutoTable.finalY + 15;
             doc.setFontSize(14);
-            doc.text("2. Mapa de Calor de Recursos (Opción 3)", 15, finalY);
+            doc.text("2. Mapa de Calor de Recursos", 15, finalY);
             
             finalY += 8;
             doc.setFontSize(10);
-            const resourcesText = "El balance financiero y la viabilidad de recursos para campamentos se sitúan en un nivel óptimo. La inversión y aportación por sábado resulta moderada de acuerdo al sentir de los alumnos.";
+            const resourcesText = "El balance financiero y la viabilidad de recursos para campamentos se sitúa en un nivel óptimo. La inversión y aportación por sábado resulta moderada de acuerdo al sentir de los alumnos.";
             const splitResources = doc.splitTextToSize(resourcesText, 180);
             doc.text(splitResources, 15, finalY);
             
-            // PAGE 3: Plan de Acción e Histórico (Opción 4 y 5)
+            // PAGE 3: Plan de Acción e Histórico
             doc.addPage();
             doc.setFontSize(16);
             doc.text("3. Plan de Acción Pedagógico & Historial", 15, 20);

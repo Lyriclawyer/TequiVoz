@@ -42,7 +42,6 @@
     </script>
 
     <style>
-        /* Fondo fluido y orgánico Wix / Interdesign */
         .gradient-bg {
             background: radial-gradient(circle at 10% 20%, rgba(244, 247, 246, 1) 0%, rgba(230, 237, 235, 1) 90%);
             position: fixed;
@@ -69,7 +68,6 @@
             100% { transform: translateY(-50px) translateX(-100px) scale(0.8); }
         }
 
-        /* Glassmorphism al estilo Apple Premium */
         .glass-panel {
             background: rgba(255, 255, 255, 0.78);
             backdrop-filter: blur(20px);
@@ -84,7 +82,6 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        /* Animaciones elásticas */
         .transition-apple {
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -97,7 +94,6 @@
             transform: scale(0.98) translateY(0px);
         }
 
-        /* Ocultar scrollbar */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -106,7 +102,6 @@
             scrollbar-width: none;
         }
 
-        /* Estilo premium del slider de rango */
         .apple-range {
             -webkit-appearance: none;
             width: 100%;
@@ -133,7 +128,6 @@
             transform: scale(1.2);
         }
 
-        /* Modal personalizado */
         #custom-alert {
             position: fixed;
             inset: 0;
@@ -153,7 +147,6 @@
             width: 100%;
         }
 
-        /* Modal de confirmación para resetear datos */
         #modal-reset-confirm {
             position: fixed;
             inset: 0;
@@ -182,7 +175,6 @@
             box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
         }
 
-        /* Estilo para la tabla de respuestas estilo Google Forms */
         .respuestas-table-container {
             overflow-x: auto;
             max-height: 500px;
@@ -243,7 +235,6 @@
 </head>
 <body class="antialiased min-h-screen text-appleDark no-scrollbar">
 
-    <!-- Fondo dinámico con blobs de color -->
     <div class="gradient-bg">
         <div class="blob w-[500px] h-[500px] top-[-10%] left-[-10%]"></div>
         <div class="blob w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-duration: 35s;"></div>
@@ -295,7 +286,7 @@
         </div>
     </div>
 
-    <!-- CABECERA FLOTANTE DE APPLE -->
+    <!-- CABECERA FLOTANTE -->
     <nav class="glass-nav fixed top-0 left-0 w-full z-50 transition-apple px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4 cursor-pointer hover:opacity-90 transition-apple" onclick="regresarAlInicio()">
             <img src="Logo 1.png" alt="Logo Grupo 1 Tequihua" class="h-14 w-auto drop-shadow-md hover:scale-105 transition-apple">
@@ -315,7 +306,7 @@
     <!-- ÁREA PRINCIPAL -->
     <main class="pt-32 pb-16 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center min-h-[90vh]">
 
-        <!-- ================= BIENVENIDA / HERO ================= -->
+        <!-- BIENVENIDA -->
         <section id="pantalla-inicio" class="text-center transition-apple w-full">
             <span class="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-widest inline-block mb-6 shadow-sm">Representación Juvenil</span>
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
@@ -325,7 +316,6 @@
                 TequiVoz es la plataforma interactiva oficial para evaluar y planificar las mejores actividades de sábado del Grupo 1 Tequihua. Elige tu sección para comenzar.
             </p>
 
-            <!-- Grid de Secciones con Logotipos Oficiales Actualizados -->
             <div id="grid-secciones" class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto mb-8">
                 <button id="btn-home-manada" onclick="empezarEncuesta('Manada')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-manada flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
                     <img src="Logo 2.png" alt="Logo Manada de Lobatos" class="h-24 w-auto object-contain drop-shadow-sm">
@@ -365,7 +355,7 @@
             </div>
         </section>
 
-        <!-- ================= PANEL DE ENCUESTA GAMIFICADA ================= -->
+        <!-- PANEL DE ENCUESTA -->
         <section id="contenedor-encuesta" class="hidden transition-apple w-full">
             <div class="glass-panel rounded-[32px] p-6 md:p-10 shadow-2xl">
                 <div class="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
@@ -399,7 +389,7 @@
             </div>
         </section>
 
-        <!-- ================= PUERTA DE AUTENTICACIÓN ADM ================= -->
+        <!-- PUERTA DE AUTENTICACIÓN -->
         <section id="puerta-autenticacion" class="hidden transition-apple w-full max-w-md mx-auto text-center">
             <div class="glass-panel rounded-[32px] p-8 shadow-2xl">
                 <div class="relative w-28 h-28 mx-auto mb-6 flex items-center justify-center bg-white rounded-full p-2 border border-gray-100 shadow-md">
@@ -436,7 +426,7 @@
             </div>
         </section>
 
-        <!-- ================= ANALYTICS DASHBOARD & CONFIGURADOR DE PREGUNTAS ================= -->
+        <!-- PANEL SCOUTER -->
         <section id="panel-scouter" class="hidden transition-apple w-full">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <div>
@@ -453,7 +443,7 @@
                 </div>
             </div>
 
-            <!-- Tabs de Navegación del Panel Scouter - AHORA CON 3 TABS -->
+            <!-- Tabs -->
             <div class="flex gap-4 border-b border-gray-200 mb-8">
                 <button id="tab-analytics" onclick="cambiarTabScouter('analytics')" class="pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple">
                     <i class="fa-solid fa-chart-line mr-2"></i> Métricas
@@ -523,7 +513,7 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN DE EVALUACIÓN DE KPIs -->
+                <!-- KPIs -->
                 <div class="glass-panel rounded-[32px] p-6 md:p-8 shadow-xl text-left">
                     <div class="flex items-center gap-3 mb-6">
                         <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider">Módulo de Co-creación Híbrido</span>
@@ -566,7 +556,7 @@
                     </div>
                 </div>
 
-                <!-- RECOMENDACIÓN IA DINÁMICA -->
+                <!-- RECOMENDACIÓN IA -->
                 <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden text-left">
                     <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12">
                         <i class="fa-solid fa-brain text-[200px]"></i>
@@ -593,7 +583,7 @@
                 </div>
             </div>
 
-            <!-- VISTA DE EDITOR DE FORMULARIOS -->
+            <!-- EDITOR -->
             <div id="vista-scouter-editor" class="hidden text-left">
                 <div class="glass-panel rounded-3xl p-6 md:p-8 shadow-xl">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -633,7 +623,7 @@
                 </div>
             </div>
 
-            <!-- ================= VISTA DE RESPUESTAS (TABLA GOOGLE FORMS STYLE) ================= -->
+            <!-- VISTA DE RESPUESTAS con permisos por sección -->
             <div id="vista-scouter-respuestas" class="hidden text-left">
                 <div class="glass-panel rounded-3xl p-6 md:p-8 shadow-xl">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
@@ -645,13 +635,9 @@
                             <p class="text-xs text-gray-500 font-medium mt-1" id="respuestas-contador">Total: 0 registros</p>
                         </div>
                         <div class="flex gap-3 flex-wrap">
+                            <!-- Filtro de sección - SOLO VISIBLE PARA DIRIGENCIA -->
                             <select id="respuestas-filtro-seccion" onchange="filtrarRespuestasPorSeccion(this.value)" class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold focus:border-indigo-500 outline-none transition-apple bg-white">
-                                <option value="Todas">Todas las secciones</option>
-                                <option value="Manada">Manada</option>
-                                <option value="Tropa">Tropa</option>
-                                <option value="Comunidad">Comunidad</option>
-                                <option value="Clan">Clan</option>
-                                <option value="Dirigencia">Dirigencia</option>
+                                <!-- Las opciones se llenarán dinámicamente según el rol -->
                             </select>
                             <button onclick="exportarRespuestasCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-apple shadow-md flex items-center gap-2">
                                 <i class="fa-solid fa-file-csv"></i> Exportar CSV
@@ -705,7 +691,7 @@
 
     </main>
 
-    <!-- ================= MODAL CONTRASEÑA DIRIGENCIA ================= -->
+    <!-- MODAL CONTRASEÑA DIRIGENCIA -->
     <div id="modal-password-dirigencia" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-opacity duration-300">
         <div class="glass-panel p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl border border-white/20">
             <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 text-2xl mx-auto mb-4 border border-gray-200 shadow-sm">
@@ -730,7 +716,7 @@
         </div>
     </div>
 
-    <!-- ACCESIBILIDAD, FIREBASE Y SCRIPTS -->
+    <!-- SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -745,6 +731,7 @@
         let editorPreguntaIndexSeleccionada = 0; 
         let pendingSurveyRama = "";
         let respuestasFiltroSeccion = "Todas";
+        let respuestasSeccionPermitida = null; // null = todas (solo dirigencia)
         
         let respuestasSesion = {
             rama: "",
@@ -907,9 +894,7 @@
         }
         window.cerrarAlert = cerrarAlert;
 
-        // ============================================================
-        // FUNCIONES PARA RESETEAR DATOS
-        // ============================================================
+        // RESETEO DE DATOS
         function abrirModalResetDatos() {
             document.getElementById('reset-seccion-nombre').innerText = activeDashboardSection;
             document.getElementById('reset-confirm-input').value = "";
@@ -1358,7 +1343,6 @@
             let seccionSeleccionada = "Manada";
             let rolScouter = "Dirigencia";
 
-            // CONTRASEÑAS ACTUALIZADAS
             if (user === 'manada' && pass === '100%MaNada') {
                 rolScouter = "Manada";
                 seccionSeleccionada = "Manada";
@@ -1367,7 +1351,7 @@
                 rolScouter = "Tropa";
                 seccionSeleccionada = "Tropa";
                 loginValido = true;
-            } else if (user === 'comunidad' && pass === 'Azulitos123*') {  // ← NUEVA CONTRASEÑA
+            } else if (user === 'comunidad' && pass === 'Azulitos123*') {
                 rolScouter = "Comunidad";
                 seccionSeleccionada = "Comunidad";
                 loginValido = true;
@@ -1385,17 +1369,64 @@
                 currentRolScouter = rolScouter;
                 activeDashboardSection = seccionSeleccionada;
                 
+                // Configurar la sección permitida para respuestas
+                if (currentRolScouter === "Dirigencia") {
+                    respuestasSeccionPermitida = null; // null = todas las secciones
+                } else {
+                    respuestasSeccionPermitida = currentRolScouter;
+                    respuestasFiltroSeccion = currentRolScouter;
+                }
+                
                 configurarVisibilidadSegunRol();
                 seleccionarSeccionDashboard(activeDashboardSection);
                 mostrarSeccion('panel-scouter');
                 document.body.style.backgroundColor = '#f5f5f7';
                 actualizarDashboardSeccionUI();
+                actualizarFiltroRespuestas();
                 renderTablaRespuestas();
             } else {
                 lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta.");
             }
         }
         window.validarCredenciales = validarCredenciales;
+
+        function actualizarFiltroRespuestas() {
+            const select = document.getElementById('respuestas-filtro-seccion');
+            if (!select) return;
+
+            // Limpiar opciones
+            select.innerHTML = '';
+
+            if (currentRolScouter === "Dirigencia") {
+                // Dirigencia puede ver todas las secciones
+                const opciones = [
+                    { value: 'Todas', label: 'Todas las secciones' },
+                    { value: 'Manada', label: 'Manada' },
+                    { value: 'Tropa', label: 'Tropa' },
+                    { value: 'Comunidad', label: 'Comunidad' },
+                    { value: 'Clan', label: 'Clan' },
+                    { value: 'Dirigencia', label: 'Dirigencia' }
+                ];
+                opciones.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.label;
+                    if (opt.value === respuestasFiltroSeccion) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+                select.disabled = false;
+            } else {
+                // Scouters de sección solo ven su propia sección
+                const option = document.createElement('option');
+                option.value = currentRolScouter;
+                option.textContent = currentRolScouter;
+                option.selected = true;
+                select.appendChild(option);
+                select.disabled = true;
+            }
+        }
 
         function configurarVisibilidadSegunRol() {
             const selectorDash = document.getElementById('selector-secciones-dash');
@@ -1831,7 +1862,7 @@
         }
 
         // ============================================================
-        // FUNCIONES PARA LA TABLA DE RESPUESTAS (GOOGLE FORMS STYLE)
+        // FUNCIONES PARA LA TABLA DE RESPUESTAS CON PERMISOS POR SECCIÓN
         // ============================================================
         function renderTablaRespuestas() {
             const tbody = document.getElementById('respuestas-tbody');
@@ -1840,10 +1871,17 @@
             const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
             const totalSurveys = [...surveysList, ...localFallback];
 
-            // Aplicar filtro de sección
+            // FILTRO POR SECCIÓN PERMITIDA
             let filtered = totalSurveys;
-            if (respuestasFiltroSeccion !== "Todas") {
-                filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
+            
+            // Si el usuario NO es dirigencia, solo ve su sección
+            if (currentRolScouter !== "Dirigencia") {
+                filtered = filtered.filter(s => s.rama === currentRolScouter);
+            } else {
+                // Si es dirigencia, aplica el filtro seleccionado
+                if (respuestasFiltroSeccion !== "Todas") {
+                    filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
+                }
             }
 
             // Ordenar por fecha (más reciente primero)
@@ -1917,9 +1955,15 @@
             const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
             const totalSurveys = [...surveysList, ...localFallback];
 
+            // Aplicar los mismos filtros que en renderTablaRespuestas
             let filtered = totalSurveys;
-            if (respuestasFiltroSeccion !== "Todas") {
-                filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
+            
+            if (currentRolScouter !== "Dirigencia") {
+                filtered = filtered.filter(s => s.rama === currentRolScouter);
+            } else {
+                if (respuestasFiltroSeccion !== "Todas") {
+                    filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
+                }
             }
 
             if (filtered.length === 0) {
@@ -1927,7 +1971,6 @@
                 return;
             }
 
-            // Encabezados
             const headers = ['#', 'Sección', 'Fecha', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20'];
             
             let csvRows = [];
@@ -1968,7 +2011,7 @@
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
-            const nombreArchivo = `Respuestas_TequiVoz_${respuestasFiltroSeccion}_${new Date().toISOString().slice(0, 10)}.csv`;
+            const nombreArchivo = `Respuestas_TequiVoz_${currentRolScouter}_${new Date().toISOString().slice(0, 10)}.csv`;
             link.setAttribute('download', nombreArchivo);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
@@ -1988,14 +2031,12 @@
             const vistaEditor = document.getElementById('vista-scouter-editor');
             const vistaRespuestas = document.getElementById('vista-scouter-respuestas');
 
-            // Resetear todos los tabs
             [btnAnalytics, btnEditor, btnRespuestas].forEach(btn => {
                 if (btn) {
                     btn.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple border-b-2 border-transparent";
                 }
             });
 
-            // Ocultar todas las vistas
             if (vistaAnalytics) vistaAnalytics.classList.add('hidden');
             if (vistaEditor) vistaEditor.classList.add('hidden');
             if (vistaRespuestas) vistaRespuestas.classList.add('hidden');

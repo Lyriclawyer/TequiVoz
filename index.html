@@ -231,6 +231,32 @@
         .badge-comunidad { background: #dbeafe; color: #1e40af; }
         .badge-clan { background: #fce4ec; color: #9b1d20; }
         .badge-dirigencia { background: #e2e8f0; color: #1e293b; }
+
+        /* Estilo para los créditos */
+        .credits-bar {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 10px 0;
+            text-align: center;
+            font-size: 11px;
+            color: #6b7280;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+            position: relative;
+            z-index: 10;
+        }
+        .credits-bar span {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .credits-bar i {
+            color: #e67e22;
+            -webkit-text-fill-color: #e67e22;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen text-appleDark no-scrollbar">
@@ -782,66 +808,74 @@
 
         let reportesValidadosHistorico = JSON.parse(localStorage.getItem('tequivoz_reportes_kpi_validados')) || [];
 
+        // ============================================================
+        // NUEVAS PREGUNTAS POR SECCIÓN (10 preguntas cada una)
+        // ============================================================
         const bancoPreguntasPredeterminado = {
+            // ---------- MANADA ----------
             Manada: [
-                { id: 1, type: "select", title: "¿Qué tan divertida estuvo la actividad de la Manada el sábado pasado?", options: [ { val: "Aburrida", icon: "😴", text: "Poco divertida" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Divertida" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épica!" } ] },
-                { id: 2, type: "range", title: "¿Cómo calificarías el entusiasmo y apoyo de tus Viejos Lobos (Scouters de Manada) hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
-                { id: 3, type: "list", title: "¿Cómo se siente la comunicación y el trabajo en equipo dentro de tu Seisena?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Gran Unión", desc: "Nos apoyamos en todo, hay confianza total en la selva." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Leve División", desc: "Hay algunos desacuerdos pequeños entre nosotros." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta Integración", desc: "A veces jugamos de manera separada o excluida." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que los juegos de hoy te ayudaron a conseguir tus huellas o insignias de progresión?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí nuevas técnicas y reforcé habilidades." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de aprendizaje pero faltó más práctica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que repetimos lo mismo del sábado anterior." } ] },
-                { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de los eventos y campamentos de Manada?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
-                { id: 6, type: "grid", title: "¿Qué tipo de actividades o cacerías te gustaría realizar más seguido en la Manada?", options: [ { val: "Supervivencia", icon: "🌲", title: "Grandes Cacerías", desc: "Seguimiento de pistas, rastreo y cabuyería básica." }, { val: "Servicio", icon: "❤️", title: "Buenas Acciones", desc: "Ayuda a la comunidad, ecología y cuidado animal." }, { val: "Extremo", icon: "🧗", title: "Juegos del Libro de la Selva", desc: "Estrategia física, destrezas y retos de agilidad." } ] },
-                { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de la Manada para el próximo sábado, ¿cuál sería?", placeholder: "Escribe aquí tu propuesta constructiva para la selva..." },
-                { id: 8, type: "grid", title: "Cómo consideras la seguridad y el cuidado de los Viejos Lobos durante nuestras salidas?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Faltó cuidado o información sobre los límites del juego." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro con Akela y Baloo cuidándome." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Zonas delimitadas, botiquín y cuidado constante." } ] },
-                { id: 9, type: "grid", title: "¿Sientes que existe un ambiente inclusivo y equitativo en el trato de todos en la Manada?", options: [ { val: "Excelente", icon: "✨", title: "Siempre hay respeto", desc: "Todos los lobatos somos escuchados por igual." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o rechazo en ocasiones." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
-                { id: 10, type: "textarea", title: "Para finalizar, propón un juego loco de selva que te gustaría hacer con toda la Manada:", placeholder: "¡Ejemplo: Una búsqueda del tesoro de Shere Khan con mapas secretos!" }
+                { id: 1, type: "select", title: "¿Qué tan divertido fue el Campamento Árbol Caído?", options: [ { val: "Aburrido", icon: "😴", text: "Aburrido" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertido", icon: "😀", text: "Divertido" }, { val: "Inolvidable", icon: "🤩", text: "¡Inolvidable!" } ] },
+                { id: 2, type: "range", title: "Del 1 al 10, ¿cómo calificas el apoyo de tus Viejos Lobos (jefes) en el campamento?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Increíbles! 🌟" },
+                { id: 3, type: "grid", title: "¿Cómo calificarías la actividad de restauración 'Bosque Escuela' de la Red de Jóvenes?", options: [ { val: "Excelente", icon: "🌳", title: "Excelente", desc: "Aprendí mucho y me divertí" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Estuvo bien, pero faltó algo" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo ser mejor" }, { val: "Malo", icon: "👎", title: "Malo", desc: "No me gustó" } ] },
+                { id: 4, type: "select", title: "¿Cómo te sientes en tu Seisena (equipo) de Manada?", options: [ { val: "Feliz", icon: "😊", text: "Feliz" }, { val: "Normal", icon: "😐", text: "Normal" }, { val: "Excluido", icon: "😟", text: "Me siento excluido" }, { val: "Unido", icon: "🤗", text: "Muy unido" } ] },
+                { id: 5, type: "textarea", title: "¿Qué actividad te gustaría hacer en un próximo campamento de Manada?", placeholder: "Escribe tu idea aquí..." },
+                { id: 6, type: "range", title: "Del 1 al 10, ¿qué tan bien te llevas con tus compañeros lobatos?", min: 1, max: 10, def: 5, left: "Mal 😤", right: "Excelente 🤝" },
+                { id: 7, type: "grid", title: "¿Qué crees que debería mejorar la Dirigencia del Grupo?", options: [ { val: "Comunicacion", icon: "📞", title: "Comunicación", desc: "Mejorar la información" }, { val: "Campamentos", icon: "🏕️", title: "Más campamentos", desc: "Más salidas" }, { val: "Juegos", icon: "🎯", title: "Más juegos", desc: "Más diversión" }, { val: "Costos", icon: "💰", title: "Costos accesibles", desc: "Precios más bajos" } ] },
+                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar las actividades de la Manada?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 9, type: "select", title: "¿Qué tipo de actividad te gusta más?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Reforestacion", icon: "🌳", text: "Reforestación" }, { val: "Juegos", icon: "🎮", text: "Juegos al aire libre" }, { val: "Manualidades", icon: "🎨", text: "Manualidades" } ] },
+                { id: 10, type: "textarea", title: "Si pudieras cambiar una cosa del Grupo 1, ¿qué sería?", placeholder: "Escribe tu propuesta aquí..." }
             ],
+            // ---------- TROPA ----------
             Tropa: [
-                { id: 1, type: "select", title: "¿Qué tan divertidos y desafiantes estuvieron los juegos y bases de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótonos" }, { val: "Regular", icon: "😐", text: "Regulares" }, { val: "Divertida", icon: "😀", text: "Desafiantes" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épicos!" } ] },
-                { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo, preparación y apoyo de tus Scouters de Tropa hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
-                { id: 3, type: "list", title: "¿Cómo se siente la mística, el espíritu y la convivencia interna dentro de tu Patrulla?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Cohesión", desc: "Trabajamos como un solo bloque, mística y apoyo al 100%." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Roces Internos", desc: "Hay desacuerdos de liderazgo o divisiones menores." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se siente apatía o exclusión en el consejo de patrulla." } ] },
-                { id: 4, type: "grid", title: "¿Las actividades de hoy aportaron a tus etapas de progresión (Pistas, Senda, Rumbo)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aprendí o reforcé especialidades técnicas." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que no avanzamos en nuestra progresión scout." } ] },
-                { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las excursiones y campamentos de Tropa?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
-                { id: 6, type: "grid", title: "¿Qué tipo de dinámicas o técnicas scouts te gustaría practicar más en los ciclos de programa?", options: [ { val: "Supervivencia", icon: "🌲", title: "Pionerismo y Campismo", desc: "Construcciones con nudos complejos, refugios y orientación." }, { val: "Servicio", icon: "❤️", title: "Servicios Técnicos", desc: "Apoyo a la comunidad, primeros auxilios avanzados y ecología." }, { val: "Extremo", icon: "🧗", title: "Juegos de Acecho", desc: "Estrategias nocturnas, retos físicos y de aventura." } ] },
-                { id: 7, type: "textarea", title: "Si pudieras cambiar o mejorar una sola regla de nuestra Tropa o Corte de Honor, ¿cuál sería?", placeholder: "Escribe tu sugerencia constructiva para la Corte de Honor..." },
-                { id: 8, type: "grid", title: "¿Cómo consideras la seguridad y los protocolos de riesgo durante los campamentos o excursiones?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Falta de botiquín o supervisión directa en las bases críticas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Monitoreo constante, botiquín visible y zonas seguras." } ] },
-                { id: 9, type: "grid", title: "¿Consideras que existe un ambiente inclusivo y de equidad en el trato de todos en la Tropa?", options: [ { val: "Excelente", icon: "✨", title: "Excelente ambiente", desc: "Todos los scouts y patrullas son tomados en cuenta por igual." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o diferencias de rango marcadas." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
-                { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego nocturno o idea loca para el próximo campamento de Tropa:", placeholder: "¡Ejemplo: Un juego de rol de espionaje nocturno con claves secretas y linternas!" }
+                { id: 1, type: "range", title: "Del 1 al 10, ¿cómo calificas la organización de la Regata?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
+                { id: 2, type: "select", title: "¿Qué fue lo que más te gustó de la Regata?", options: [ { val: "Competencias", icon: "🚣", text: "Competencias" }, { val: "Comida", icon: "🍔", text: "Comida y convivencia" }, { val: "Campamento", icon: "🏕️", text: "Campamento nocturno" }, { val: "Trabajo", icon: "🤝", text: "Trabajo en patrulla" } ] },
+                { id: 3, type: "range", title: "Del 1 al 10, ¿cómo calificas el apoyo de tus Scouters de Tropa?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Increíbles! 🌟" },
+                { id: 4, type: "grid", title: "¿Cómo calificarías la actividad de restauración 'Bosque Escuela' de la Red de Jóvenes?", options: [ { val: "Excelente", icon: "🌳", title: "Excelente", desc: "Aprendí mucho y me divertí" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Estuvo bien, pero faltó algo" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo ser mejor" }, { val: "Malo", icon: "👎", title: "Malo", desc: "No me gustó" } ] },
+                { id: 5, type: "textarea", title: "¿Qué mejorarías para la próxima Regata?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 6, type: "grid", title: "¿Cómo te sientes en tu Patrulla?", options: [ { val: "Unido", icon: "🤝", title: "Unido", desc: "Trabajamos bien juntos" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Podría ser mejor" }, { val: "Conflictos", icon: "😟", title: "Con conflictos", desc: "Hay problemas" }, { val: "Competitivo", icon: "🏆", title: "Muy competitivo", desc: "Siempre queremos ganar" } ] },
+                { id: 7, type: "select", title: "¿Qué tipo de actividad te gusta más?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Reforestacion", icon: "🌳", text: "Reforestación" }, { val: "Acuaticos", icon: "🚣", text: "Eventos acuáticos" }, { val: "Aventura", icon: "🧗", text: "Retos de aventura" } ] },
+                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar la Tropa?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 9, type: "range", title: "Del 1 al 10, ¿cómo calificas la comunicación con la Dirigencia del Grupo?", min: 1, max: 10, def: 5, left: "Mala 📞", right: "Excelente 📱" },
+                { id: 10, type: "textarea", title: "¿Qué actividad propones para futuras juntas ordinarias?", placeholder: "Escribe tu propuesta aquí..." }
             ],
+            // ---------- COMUNIDAD ----------
             Comunidad: [
-                { id: 1, type: "select", title: "¿Qué tanto te retó y entusiasmó el proyecto o actividad de la Comunidad hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Sin reto" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Retador" }, { val: "Excelente", icon: "🤩", text: "¡Súper Épico!" } ] },
-                { id: 2, type: "range", title: "¿Cómo evalúas el entusiasmo y el rol de asesores de tus Scouters de Comunidad hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
-                { id: 3, type: "list", title: "¿Cómo marcha la mística, planeación y trabajo interno dentro de tu Equipo?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Unión Fuerte", desc: "Excelente distribución de tareas y apoyo mutuo constante." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Desorganización", desc: "Dificultad para ponernos de acuerdo o apatía temporal." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Equipo", desc: "Se siente recarga de trabajo en pocos integrantes o exclusión." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que la actividad de hoy aporta a tu progresión de caminante (Búsqueda, Encuentro, Desafío)?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Fortalece mis proyectos personales y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Hubo algo de avance pero faltó mayor claridad pedagógica." }, { val: "No", icon: "❌", title: "No aportó", desc: "Siento que las juntas se volvieron muy teóricas." } ] },
-                { id: 5, type: "range", title: "¿Qué tan accesibles o viables ves los presupuestos para los proyectos de Comunidad?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
-                { id: 6, type: "grid", title: "¿En qué área de proyectos te gustaría que la Comunidad de Caminantes se enfocara más?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición", desc: "Retos de montaña, campamento sin huella y cartografía avanzada." }, { val: "Servicio", icon: "❤️", title: "Impacto", desc: "Acción social real, voluntariado ecológico y proyectos comunitarios." }, { val: "Extremo", icon: "🧗", title: "Desafíos Físicos", desc: "Deportes de aventura, rapel, orientación y juegos extremos." } ] },
-                { id: 7, type: "textarea", title: "Si pudieras proponer o modificar un artículo del reglamento interno de la Comunidad, ¿cuál sería?", placeholder: "Escribe tu propuesta constructiva para el Congreso de Comunidad..." },
-                { id: 8, type: "grid", title: "¿Cómo consideras la gestión de riesgos y seguridad durante las expediciones y campamentos?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Se descuidaron algunos aspectos de seguridad o rutas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro con la planeación de la Jefatura." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Análisis previo de riesgos, equipamiento y monitoreo constante." } ] },
-                { id: 9, type: "grid", title: "¿Sientes que la Comunidad es un espacio de verdadera inclusión, respeto y equidad?", options: [ { val: "Excelente", icon: "✨", title: "Siempre inclusivo", desc: "Todos los caminantes y equipos son valorados y respetados." }, { val: "Excluyente", icon: "💬", title: "Hay exclusión", desc: "Siento favoritismos o rechazo en ocasiones." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
-                { id: 10, type: "textarea", title: "Para finalizar, propón una expedición o proyecto loco que te gustaría realizar en este ciclo de programa:", placeholder: "¡Ejemplo: Una expedición de alta montaña con vivac en la cumbre!" }
+                { id: 1, type: "range", title: "Del 1 al 10, ¿cómo calificas la organización de la Regata?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
+                { id: 2, type: "select", title: "¿Qué fue lo que más te gustó de la Regata?", options: [ { val: "Competencias", icon: "🚣", text: "Competencias" }, { val: "Comida", icon: "🍔", text: "Comida y convivencia" }, { val: "Campamento", icon: "🏕️", text: "Campamento nocturno" }, { val: "Trabajo", icon: "🤝", text: "Trabajo en equipo" } ] },
+                { id: 3, type: "range", title: "Del 1 al 10, ¿cómo calificas el apoyo de tus asesores de Comunidad?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Increíbles! 🌟" },
+                { id: 4, type: "grid", title: "¿Cómo calificarías la actividad de restauración 'Bosque Escuela' de la Red de Jóvenes?", options: [ { val: "Excelente", icon: "🌳", title: "Excelente", desc: "Aprendí mucho y me divertí" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Estuvo bien, pero faltó algo" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo ser mejor" }, { val: "Malo", icon: "👎", title: "Malo", desc: "No me gustó" } ] },
+                { id: 5, type: "textarea", title: "¿Qué mejorarías para la próxima Regata?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 6, type: "grid", title: "¿Cómo te sientes en tu Equipo de Comunidad?", options: [ { val: "Unido", icon: "🤝", title: "Unido", desc: "Trabajamos bien juntos" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Podría ser mejor" }, { val: "Conflictos", icon: "😟", title: "Con conflictos", desc: "Hay problemas" }, { val: "Participativo", icon: "🏆", title: "Muy participativo", desc: "Todos participan" } ] },
+                { id: 7, type: "select", title: "¿Qué tipo de actividad te gusta más?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Reforestacion", icon: "🌳", text: "Reforestación" }, { val: "Acuaticos", icon: "🚣", text: "Eventos acuáticos" }, { val: "Aventura", icon: "🧗", text: "Retos de aventura" } ] },
+                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar la Comunidad?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 9, type: "range", title: "Del 1 al 10, ¿cómo calificas la comunicación con la Dirigencia del Grupo?", min: 1, max: 10, def: 5, left: "Mala 📞", right: "Excelente 📱" },
+                { id: 10, type: "textarea", title: "¿Qué actividad propones para el próximo ciclo de programa?", placeholder: "Escribe tu propuesta aquí..." }
             ],
+            // ---------- CLAN ----------
             Clan: [
-                { id: 1, type: "select", title: "¿Qué tan enriquecedora e inspiradora fue la jornada o debate del Clan el día de hoy?", options: [ { val: "Aburrida", icon: "😴", text: "Monótona" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertida", icon: "😀", text: "Inspiradora" }, { val: "Excelente", icon: "🤩", text: "¡Trascendente!" } ] },
-                { id: 2, type: "range", title: "¿Cómo evalúas el nivel de acompañamiento y consejería de tus Sinodales/Scouters de Clan hoy?", min: 1, max: 10, def: 5, left: "Falta Dinamismo 🧭", right: "¡Estuvieron Increíbles! 🌟" },
-                { id: 3, type: "list", title: "¿Cómo marcha la mística, el apoyo mutuo y la verdadera hermandad dentro de la comunidad de Clan?", options: [ { val: "Fuerte", icon: "fa-hands-holding", color: "emerald", title: "Fuerte Unión", desc: "Excelente integración, apoyo mutuo en proyectos y plan de vida." }, { val: "Division", icon: "fa-bolt", color: "amber", title: "Distanciamiento", desc: "Falta de participación en debates o distanciamiento entre rovers." }, { val: "FaltaIntegracion", icon: "fa-circle-exclamation", color: "rose", title: "Falta de Hermandad", desc: "Se sienten grupos herméticos o apatía generalizada." } ] },
-                { id: 4, type: "grid", title: "¿Sientes que tus proyectos personales o plan de vida se vieron impulsados por las actividades de hoy?", options: [ { val: "Si", icon: "🏅", title: "¡Sí, totalmente!", desc: "Aporta a mi proyecto personal y progresión técnica." }, { val: "Medias", icon: "⏳", title: "A medias", desc: "Falta vincular los debates con la realidad de mi plan personal." }, { val: "No", icon: "❌", title: "No aportó", desc: "Sentí que la sesión no aportó valor a mis metas rovers." } ] },
-                { id: 5, type: "range", title: "¿Qué tan accesibles sientes los costos de las actividades regionales o nacionales de Clan?", min: 1, max: 5, def: 3, left: "Muy Accesibles 🪙", right: "Muy Difícil Costear 💸" },
-                { id: 6, type: "grid", title: "¿Qué tipo de proyectos de impacto o servicio social te gustaría que el Clan organizara?", options: [ { val: "Supervivencia", icon: "🌲", title: "Expedición Extrema", desc: "Retos de alta montaña, supervivencia pura y autonomía." }, { val: "Servicio", icon: "❤️", title: "Proyectos de Impacto", desc: "Voluntariado social, ecología de impacto y desarrollo comunitario." }, { val: "Extremo", icon: "🧗", title: "Servicios Técnicos", desc: "Apoyo en desastres naturales, primeros auxilios avanzados y capacitación." } ] },
-                { id: 7, type: "textarea", title: "Si pudieras proponer o modificar una sola norma o acuerdo de nuestro Consejo de Clan, ¿cuál sería?", placeholder: "Escribe tu propuesta o reforma para el Consejo de Clan..." },
-                { id: 8, type: "grid", title: "¿Cómo consideras el nivel de seguridad y los protocolos físicos/emocionales durante nuestras actividades?", options: [ { val: "Inseguro", icon: "⚠️", title: "Deficiente", desc: "Hubo descuidos o falta de gestión de riesgos en salidas complejas." }, { val: "Bien", icon: "👍", title: "Buena", desc: "Me siento seguro en la mayoría de las dinámicas." }, { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Análisis previo de riesgos, equipamiento y monitoreo constante." } ] },
-                { id: 9, type: "grid", title: "¿Se vive un ambiente libre de prejuicios, inclusivo y plenamente democrático en el Clan?", options: [ { val: "Excelente", icon: "✨", title: "Siempre democrático", desc: "Se debaten las ideas con madurez, equidad y respeto." }, { val: "Excluyente", icon: "💬", title: "A veces excluyente", desc: "Favoritismos o falta de apertura a nuevas formas de pensamiento." }, { val: "Neutro", icon: "😐", title: "Indiferente", desc: "Casi no me involucro de manera personal." } ] },
-                { id: 10, type: "textarea", title: "Para finalizar, propón un gran juego o debate que te gustaría realizar con todo el Clan:", placeholder: "¡Ejemplo: Un debate de temas de impacto social y proyección profesional!" }
+                { id: 1, type: "range", title: "Del 1 al 10, ¿cómo calificas la organización de la Regata?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
+                { id: 2, type: "select", title: "¿Qué fue lo que más te gustó de la Regata?", options: [ { val: "Competencias", icon: "🚣", text: "Competencias" }, { val: "Comida", icon: "🍔", text: "Comida y convivencia" }, { val: "Campamento", icon: "🏕️", text: "Campamento nocturno" }, { val: "Trabajo", icon: "🤝", text: "Trabajo en equipo" } ] },
+                { id: 3, type: "range", title: "Del 1 al 10, ¿cómo calificas el apoyo de tus sinodales de Clan?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Increíbles! 🌟" },
+                { id: 4, type: "grid", title: "¿Cómo calificarías la actividad de restauración 'Bosque Escuela' de la Red de Jóvenes?", options: [ { val: "Excelente", icon: "🌳", title: "Excelente", desc: "Aprendí mucho y me divertí" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Estuvo bien, pero faltó algo" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo ser mejor" }, { val: "Malo", icon: "👎", title: "Malo", desc: "No me gustó" } ] },
+                { id: 5, type: "textarea", title: "¿Qué mejorarías para la próxima Regata?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 6, type: "grid", title: "¿Cómo te sientes en tu comunidad de Clan?", options: [ { val: "Unido", icon: "🤝", title: "Unido", desc: "Trabajamos bien juntos" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Podría ser mejor" }, { val: "Conflictos", icon: "😟", title: "Con conflictos", desc: "Hay problemas" }, { val: "Activo", icon: "🏆", title: "Muy activo", desc: "Siempre participo" } ] },
+                { id: 7, type: "select", title: "¿Qué tipo de actividad te gusta más?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Reforestacion", icon: "🌳", text: "Reforestación" }, { val: "Acuaticos", icon: "🚣", text: "Eventos acuáticos" }, { val: "Aventura", icon: "🧗", text: "Retos de aventura" } ] },
+                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar el Clan?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 9, type: "range", title: "Del 1 al 10, ¿cómo calificas la comunicación con la Dirigencia del Grupo?", min: 1, max: 10, def: 5, left: "Mala 📞", right: "Excelente 📱" },
+                { id: 10, type: "textarea", title: "¿Qué actividad propones para el próximo ciclo de programa?", placeholder: "Escribe tu propuesta aquí..." }
             ],
+            // ---------- DIRIGENCIA ----------
             Dirigencia: [
-                { id: 11, type: "range", title: "Del 1 al 10, ¿Cómo calificarías tu experiencia en la actividad de Día del Padre?", min: 1, max: 10, def: 5, left: "Poca experiencia 🛠️", right: "Experiencia Excelente 🌟" },
-                { id: 12, type: "range", title: "Del 1 al 10, ¿Cómo calificarías tu experiencia en la actividad de la Regata?", min: 1, max: 10, def: 5, left: "Poca experiencia 🛠️", right: "Experiencia Excelente 🌟" },
-                { id: 13, type: "textarea", title: "¿Qué cambiarías de la organización del Día del Padre o qué sugerencias tienes?", placeholder: "Escribe tus propuestas de mejora para el Día del Padre..." },
-                { id: 14, type: "textarea", title: "¿Qué cuestiones o elementos sugerirías agregar, quitar o mantener para la Regata?", placeholder: "Escribe tus propuestas de mejora para la Regata..." },
-                { id: 15, type: "range", title: "Del 1 al 10, ¿Cómo calificarías la logística y organización general del Grupo 1 en las últimas actividades?", min: 1, max: 10, def: 5, left: "Mala organización 📋", right: "Excelente organización ⚜️" },
-                { id: 16, type: "range", title: "Del 1 al 10, ¿Cómo evalúas la comunicación con padres y representantes sobre las actividades del grupo?", min: 1, max: 10, def: 5, left: "Mala comunicación 📞", right: "Excelente comunicación 📱" },
-                { id: 17, type: "range", title: "Del 1 al 10, ¿Qué tan participativos se muestran los jóvenes en las actividades planificadas?", min: 1, max: 10, def: 5, left: "Baja participación 👤", right: "Alta participación 👥" },
-                { id: 18, type: "range", title: "Del 1 al 10, ¿Cómo calificarías los protocolos de seguridad y emergencia implementados en las actividades?", min: 1, max: 10, def: 5, left: "Inseguro ⚠️", right: "Muy seguro 🛡️" },
-                { id: 19, type: "textarea", title: "¿Qué sugerencias generales tienes para mejorar las actividades futuras del Grupo 1 Tequihua?", placeholder: "Escribe tus propuestas para el Consejo de Grupo..." },
-                { id: 20, type: "textarea", title: "Evaluación general del semestre scout: ¿Qué aspectos destacarías y qué cambiarías para el próximo ciclo?", placeholder: "Escribe tu evaluación constructiva del semestre..." }
+                { id: 1, type: "range", title: "Del 1 al 10, ¿cómo calificas tu experiencia en el Día del Padre?", min: 1, max: 10, def: 5, left: "Mala 🛠️", right: "Excelente 🌟" },
+                { id: 2, type: "range", title: "Del 1 al 10, ¿cómo calificas tu experiencia en la Regata?", min: 1, max: 10, def: 5, left: "Mala 🛠️", right: "Excelente 🌟" },
+                { id: 3, type: "textarea", title: "¿Qué cambiarías de la organización del Día del Padre?", placeholder: "Escribe tus propuestas aquí..." },
+                { id: 4, type: "textarea", title: "¿Qué cambiarías de la organización de la Regata?", placeholder: "Escribe tus propuestas aquí..." },
+                { id: 5, type: "range", title: "Del 1 al 10, ¿cómo calificas la logística general del Grupo 1?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
+                { id: 6, type: "range", title: "Del 1 al 10, ¿cómo calificas la comunicación entre Scouters?", min: 1, max: 10, def: 5, left: "Mala 📞", right: "Excelente 📱" },
+                { id: 7, type: "grid", title: "¿Qué área del Grupo 1 necesita más atención?", options: [ { val: "Organizacion", icon: "📋", title: "Organización", desc: "Mejorar la planeación" }, { val: "Comunicacion", icon: "📞", title: "Comunicación", desc: "Mejorar la información" }, { val: "Finanzas", icon: "💰", title: "Finanzas", desc: "Optimizar recursos" }, { val: "Formacion", icon: "👥", title: "Formación de líderes", desc: "Capacitar mejor" } ] },
+                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar la Dirigencia?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 9, type: "select", title: "¿Qué actividad scout crees que más motiva a los jóvenes?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Servicio", icon: "🌳", text: "Servicio comunitario" }, { val: "Juegos", icon: "🎮", text: "Juegos y retos" }, { val: "Expediciones", icon: "🧭", text: "Expediciones" } ] },
+                { id: 10, type: "textarea", title: "¿Qué plan de acción propones para el próximo semestre?", placeholder: "Escribe tu propuesta aquí..." }
             ]
         };
 
@@ -885,7 +919,7 @@
         });
 
         // ============================================================
-        // FUNCIONES DE LA APLICACIÓN (Manteniendo toda tu lógica)
+        // FUNCIONES DE LA APLICACIÓN
         // ============================================================
         function mostrarSeccion(idSeccion) {
             const secciones = ['pantalla-inicio', 'contenedor-encuesta', 'puerta-autenticacion', 'panel-scouter'];
@@ -1037,19 +1071,19 @@
 
             if(rama === 'Manada') {
                 body.style.backgroundColor = '#fffbeb';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-manada)';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = '#ffb703';
                 logoImg.src = 'Logo 2.png';
             } else if(rama === 'Tropa') {
                 body.style.backgroundColor = '#f0fdf4';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-tropa)';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = '#06d6a0';
                 logoImg.src = 'Logo 3.png';
             } else if(rama === 'Comunidad') {
                 body.style.backgroundColor = '#ecfeff';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-comunidad)';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = '#118ab2';
                 logoImg.src = 'Logo 4.png';
             } else if(rama === 'Clan') {
                 body.style.backgroundColor = '#fff5f5';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = 'var(--color-clan)';
+                document.getElementById('badge-seccion-activa').style.backgroundColor = '#ef476f';
                 logoImg.src = 'Logo 5.png';
             } else if(rama === 'Dirigencia') {
                 body.style.backgroundColor = '#f8fafc';
@@ -2829,5 +2863,17 @@
             mostrarSeccion('pantalla-inicio');
         }
     </script>
+
+    <!-- ============================================================ -->
+    <!-- CRÉDITOS DEL DESARROLLADOR -->
+    <!-- ============================================================ -->
+    <div class="credits-bar">
+        <i class="fa-solid fa-code"></i> 
+        Página desarrollada por 
+        <span>Rafael Magaña Rangel</span> 
+        <i class="fa-regular fa-heart" style="-webkit-text-fill-color: #e74c3c; color: #e74c3c;"></i> 
+        · Grupo 1 Tequihua ⚜️
+    </div>
+
 </body>
 </html>

@@ -232,30 +232,33 @@
         .badge-clan { background: #fce4ec; color: #9b1d20; }
         .badge-dirigencia { background: #e2e8f0; color: #1e293b; }
 
-        /* Estilo para los créditos */
+  /* Estilo para los créditos - Apple Glassmorphism */
         .credits-bar {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 10px 0;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 14px 0;
             text-align: center;
-            font-size: 11px;
-            color: #6b7280;
-            letter-spacing: 0.3px;
+            font-size: 12px;
             font-weight: 500;
+            letter-spacing: 0.3px;
+            color: rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 10;
+            transition: all 0.3s ease;
         }
         .credits-bar span {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            background: linear-gradient(135deg, #1a1a2e, #2d2d44);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 700;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
-        .credits-bar i {
-            color: #e67e22;
-            -webkit-text-fill-color: #e67e22;
+        .credits-bar:hover {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
         }
     </style>
 </head>

@@ -722,6 +722,29 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // ============================================================
+        // 🔥 CONFIGURACIÓN DE FIREBASE CON TUS CREDENCIALES REALES
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCR2wXjTM8COFaVxoH2c-8yr7A-PaBjLf8",
+            authDomain: "tequivoz.firebaseapp.com",
+            projectId: "tequivoz",
+            storageBucket: "tequivoz.firebasestorage.app",
+            messagingSenderId: "357765566752",
+            appId: "1:357765566752:web:3e0ec6053ceeeaaa46c745",
+            measurementId: "G-V870MVYNHQ"
+        };
+
+        // ============================================================
+        // INICIALIZACIÓN DE FIREBASE
+        // ============================================================
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // ============================================================
+        // VARIABLES GLOBALES
+        // ============================================================
         let seccionActiva = "";
         let preguntaActual = 0;
         let totalPreguntas = 10;
@@ -825,43 +848,45 @@
         let bancoPreguntas = JSON.parse(localStorage.getItem('bancoPreguntas_tequivoz')) || bancoPreguntasPredeterminado;
 
         const appId = 'tequivoz-gpo1';
-        let firebaseConfig = {
-            apiKey: "AIzaSyAs-demo-key-for-github-pages",
-            authDomain: "tequivoz-demo.firebaseapp.com",
-            projectId: "tequivoz-demo",
-            storageBucket: "tequivoz-demo.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef"
-        };
+        
+        // ============================================================
+        // REFERENCIA A LA COLECCIÓN DE FIRESTORE
+        // ============================================================
+        const surveysCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'surveys');
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-
+        // ============================================================
+        // AUTENTICACIÓN ANÓNIMA
+        // ============================================================
         async function authenticateUser() {
             try {
                 await signInAnonymously(auth);
+                console.log("✅ Autenticación anónima exitosa");
             } catch (e) {
-                console.warn("Utilizando persistencia local de seguridad para ambiente desconectado.");
+                console.warn("⚠️ Utilizando persistencia local de seguridad para ambiente desconectado:", e);
             }
         }
         await authenticateUser();
 
-        const surveysCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'surveys');
-
+        // ============================================================
+        // ESCUCHAR CAMBIOS EN FIRESTORE
+        // ============================================================
         onSnapshot(surveysCollectionRef, (snapshot) => {
             surveysList = [];
             snapshot.forEach((doc) => {
                 surveysList.push(doc.data());
             });
+            console.log(`📊 ${surveysList.length} respuestas sincronizadas desde Firestore`);
             if (!document.getElementById('panel-scouter').classList.contains('hidden')) {
                 actualizarDashboardSeccionUI();
                 renderTablaRespuestas();
             }
         }, (error) => {
-            console.error("Error al sincronizar datos en la nube:", error);
+            console.error("❌ Error al sincronizar datos en la nube:", error);
         });
 
+        // ============================================================
+        // FUNCIONES DE LA APLICACIÓN (Manteniendo toda tu lógica)
+        // ============================================================
         function mostrarSeccion(idSeccion) {
             const secciones = ['pantalla-inicio', 'contenedor-encuesta', 'puerta-autenticacion', 'panel-scouter'];
             secciones.forEach(id => {
@@ -894,7 +919,9 @@
         }
         window.cerrarAlert = cerrarAlert;
 
+        // ============================================================
         // RESETEO DE DATOS
+        // ============================================================
         function abrirModalResetDatos() {
             document.getElementById('reset-seccion-nombre').innerText = activeDashboardSection;
             document.getElementById('reset-confirm-input').value = "";
@@ -980,6 +1007,9 @@
             }
         }
 
+        // ============================================================
+        // FUNCIONES DE LA ENCUESTA
+        // ============================================================
         function empezarEncuesta(rama) {
             if (rama === 'Dirigencia') {
                 pendingSurveyRama = rama;
@@ -1306,7 +1336,7 @@
                 const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout de conexión")), 2000));
                 
                 await Promise.race([firestoreSavePromise, timeoutPromise]);
-                lanzarAlert("¡Aventura Completada! ⛺", `Tu registro para la sección de ${seccionActiva} ha sido enviado de manera segura.`);
+                lanzarAlert("¡Aventura Completada! ⛺", `Tu registro para la sección de ${seccionActiva} ha sido enviado de manera segura a Firebase.`);
             } catch (e) {
                 console.warn("Firestore timeout, guardando localmente en fallback offline:", e);
                 guardarLocalmente();
@@ -1335,6 +1365,9 @@
         }
         window.mostrarModalAutenticar = mostrarModalAutenticar;
 
+        // ============================================================
+        // VALIDACIÓN DE CREDENCIALES
+        // ============================================================
         function validarCredenciales() {
             const user = document.getElementById('admin-user').value;
             const pass = document.getElementById('admin-pass').value.trim();
@@ -1369,9 +1402,8 @@
                 currentRolScouter = rolScouter;
                 activeDashboardSection = seccionSeleccionada;
                 
-                // Configurar la sección permitida para respuestas
                 if (currentRolScouter === "Dirigencia") {
-                    respuestasSeccionPermitida = null; // null = todas las secciones
+                    respuestasSeccionPermitida = null;
                 } else {
                     respuestasSeccionPermitida = currentRolScouter;
                     respuestasFiltroSeccion = currentRolScouter;
@@ -1394,11 +1426,9 @@
             const select = document.getElementById('respuestas-filtro-seccion');
             if (!select) return;
 
-            // Limpiar opciones
             select.innerHTML = '';
 
             if (currentRolScouter === "Dirigencia") {
-                // Dirigencia puede ver todas las secciones
                 const opciones = [
                     { value: 'Todas', label: 'Todas las secciones' },
                     { value: 'Manada', label: 'Manada' },
@@ -1418,7 +1448,6 @@
                 });
                 select.disabled = false;
             } else {
-                // Scouters de sección solo ven su propia sección
                 const option = document.createElement('option');
                 option.value = currentRolScouter;
                 option.textContent = currentRolScouter;
@@ -1491,6 +1520,9 @@
         }
         window.seleccionarSeccionDashboard = seleccionarSeccionDashboard;
 
+        // ============================================================
+        // ACTUALIZAR DASHBOARD
+        // ============================================================
         function actualizarDashboardSeccionUI() {
             const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
             const totalSurveys = [...surveysList, ...localFallback];
@@ -1862,7 +1894,7 @@
         }
 
         // ============================================================
-        // FUNCIONES PARA LA TABLA DE RESPUESTAS CON PERMISOS POR SECCIÓN
+        // FUNCIONES PARA LA TABLA DE RESPUESTAS
         // ============================================================
         function renderTablaRespuestas() {
             const tbody = document.getElementById('respuestas-tbody');
@@ -1871,20 +1903,16 @@
             const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
             const totalSurveys = [...surveysList, ...localFallback];
 
-            // FILTRO POR SECCIÓN PERMITIDA
             let filtered = totalSurveys;
             
-            // Si el usuario NO es dirigencia, solo ve su sección
             if (currentRolScouter !== "Dirigencia") {
                 filtered = filtered.filter(s => s.rama === currentRolScouter);
             } else {
-                // Si es dirigencia, aplica el filtro seleccionado
                 if (respuestasFiltroSeccion !== "Todas") {
                     filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
                 }
             }
 
-            // Ordenar por fecha (más reciente primero)
             filtered.sort((a, b) => {
                 if (a.timestamp && b.timestamp) {
                     return new Date(b.timestamp) - new Date(a.timestamp);
@@ -1906,7 +1934,6 @@
                 return;
             }
 
-            // Construir filas
             let html = '';
             filtered.forEach((s, index) => {
                 const fecha = s.timestamp ? new Date(s.timestamp).toLocaleDateString('es-MX') : 'Sin fecha';
@@ -1955,7 +1982,6 @@
             const localFallback = JSON.parse(localStorage.getItem('tequivoz_fallback') || '[]');
             const totalSurveys = [...surveysList, ...localFallback];
 
-            // Aplicar los mismos filtros que en renderTablaRespuestas
             let filtered = totalSurveys;
             
             if (currentRolScouter !== "Dirigencia") {

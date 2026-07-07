@@ -232,35 +232,41 @@
         .badge-clan { background: #fce4ec; color: #9b1d20; }
         .badge-dirigencia { background: #e2e8f0; color: #1e293b; }
 
-              /* Estilo para los créditos - Texto flotante sin recuadro */
+                 /* Estilo para los créditos - Misma tipografía que "nuestras aventuras" */
         .credits-bar {
             text-align: center;
-            padding: 25px 0 15px 0;
+            padding: 20px 0 10px 0;
             position: relative;
             z-index: 10;
             background: transparent;
             border: none;
         }
         .credits-bar span {
-            font-size: 13px;
+            font-family: 'Plus Jakarta Sans', 'sans-serif';
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.85);
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25), 0 1px 8px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.7), rgba(99, 102, 241, 0.7), rgba(139, 92, 246, 0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 1px 20px rgba(16, 185, 129, 0.1);
             display: inline-block;
-            background: transparent;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
             padding: 0;
             border: none;
             border-radius: 0;
+            background-color: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
             box-shadow: none;
             transition: all 0.3s ease;
+            text-transform: none;
         }
         .credits-bar span:hover {
-            color: rgba(255, 255, 255, 1);
-            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35), 0 0 40px rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.9));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             transform: scale(1.02);
         }
     </style>

@@ -821,72 +821,73 @@
 
         // ============================================================
         // NUEVAS PREGUNTAS POR SECCIÓN (10 preguntas cada una)
+        // Actualizadas con las preguntas del Aniversario 19 años
         // ============================================================
         const bancoPreguntasPredeterminado = {
-            // ---------- MANADA ----------
+            // ---------- MANADA (Lobatos) ----------
             Manada: [
-                { id: 1, type: "select", title: "¿Qué tan divertido fue el Campamento Árbol Caído?", options: [ { val: "Aburrido", icon: "😴", text: "Aburrido" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertido", icon: "😀", text: "Divertido" }, { val: "Inolvidable", icon: "🤩", text: "¡Inolvidable!" } ] },
-                { id: 2, type: "range", title: "Del 1 al 10, ¿cómo calificas el apoyo de tus Viejos Lobos (jefes) en el campamento?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Increíbles! 🌟" },
-                { id: 3, type: "grid", title: "¿Cómo calificarías la actividad de restauración 'Bosque Escuela' de la Red de Jóvenes?", options: [ { val: "Excelente", icon: "🌳", title: "Excelente", desc: "Aprendí mucho y me divertí" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Estuvo bien, pero faltó algo" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo ser mejor" }, { val: "Malo", icon: "👎", title: "Malo", desc: "No me gustó" } ] },
-                { id: 4, type: "select", title: "¿Cómo te sientes en tu Seisena (equipo) de Manada?", options: [ { val: "Feliz", icon: "😊", text: "Feliz" }, { val: "Normal", icon: "😐", text: "Normal" }, { val: "Excluido", icon: "😟", text: "Me siento excluido" }, { val: "Unido", icon: "🤗", text: "Muy unido" } ] },
-                { id: 5, type: "textarea", title: "¿Qué actividad te gustaría hacer en un próximo campamento de Manada?", placeholder: "Escribe tu idea aquí..." },
-                { id: 6, type: "range", title: "Del 1 al 10, ¿qué tan bien te llevas con tus compañeros lobatos?", min: 1, max: 10, def: 5, left: "Mal 😤", right: "Excelente 🤝" },
-                { id: 7, type: "grid", title: "¿Qué crees que debería mejorar la Dirigencia del Grupo?", options: [ { val: "Comunicacion", icon: "📞", title: "Comunicación", desc: "Mejorar la información" }, { val: "Campamentos", icon: "🏕️", title: "Más campamentos", desc: "Más salidas" }, { val: "Juegos", icon: "🎯", title: "Más juegos", desc: "Más diversión" }, { val: "Costos", icon: "💰", title: "Costos accesibles", desc: "Precios más bajos" } ] },
-                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar las actividades de la Manada?", placeholder: "Escribe tus sugerencias aquí..." },
-                { id: 9, type: "select", title: "¿Qué tipo de actividad te gusta más?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Reforestacion", icon: "🌳", text: "Reforestación" }, { val: "Juegos", icon: "🎮", text: "Juegos al aire libre" }, { val: "Manualidades", icon: "🎨", text: "Manualidades" } ] },
-                { id: 10, type: "textarea", title: "Si pudieras cambiar una cosa del Grupo 1, ¿qué sería?", placeholder: "Escribe tu propuesta aquí..." }
+                { id: 1, type: "select", title: "¿Qué te pareció la comida tradicional y los puestos de juegos en la Kermess tarde mexicana?", options: [ { val: "Aburrido", icon: "😴", text: "Aburrido" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Divertido", icon: "😀", text: "Divertido" }, { val: "Inolvidable", icon: "🤩", text: "¡Inolvidable!" } ] },
+                { id: 2, type: "range", title: "Del 1 al 10, ¿qué tan divertido estuvo el Rally de los 19 años con tus Viejos Lobos y tu Seisena?", min: 1, max: 10, def: 5, left: "Poco divertido 🧭", right: "¡Increíble! 🌟" },
+                { id: 3, type: "textarea", title: "¿Cuál fue tu base o juego favorito de todo el rally de aniversario?", placeholder: "Escribe el nombre de tu base favorita..." },
+                { id: 4, type: "grid", title: "¿Qué tan fácil o difícil fue entender las reglas de las bases del rally?", options: [ { val: "MuyFacil", icon: "👌", title: "Muy fácil", desc: "Entendí todo a la primera" }, { val: "Facil", icon: "🙂", title: "Fácil", desc: "Entendí casi todo" }, { val: "Dificil", icon: "😕", title: "Difícil", desc: "Me costó entender" }, { val: "MuyDificil", icon: "😵", title: "Muy difícil", desc: "Casi no entendí" } ] },
+                { id: 5, type: "select", title: "¿Te sentiste seguro y bien cuidado durante los juegos de la Kermess y el Rally?", options: [ { val: "MuySeguro", icon: "🛡️", text: "Muy seguro" }, { val: "Seguro", icon: "👍", text: "Seguro" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Inseguro", icon: "⚠️", text: "Inseguro" } ] },
+                { id: 6, type: "range", title: "¿Qué tanto te ayudaron los Viejos Lobos a animarte y participar en las actividades?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Mucho apoyo! 🌟" },
+                { id: 7, type: "select", title: "¿Te gustó convivir con los scouts de las otras secciones durante la tarde mexicana?", options: [ { val: "Mucho", icon: "🤗", text: "¡Muchísimo!" }, { val: "Bastante", icon: "😊", text: "Bastante" }, { val: "Poco", icon: "😐", text: "Poco" }, { val: "Nada", icon: "😟", text: "Nada" } ] },
+                { id: 8, type: "range", title: "¿Qué tan accesibles sentiste los costos de los boletos para los puestos de la Kermess?", min: 1, max: 10, def: 5, left: "Muy caro 💸", right: "Muy accesible 🪙" },
+                { id: 9, type: "select", title: "¿Te gustaría que repitiéramos un rally de aniversario con esta misma temática el próximo año?", options: [ { val: "Si", icon: "✅", text: "¡Sí, totalmente!" }, { val: "TalVez", icon: "🤔", text: "Tal vez" }, { val: "No", icon: "❌", text: "No" } ] },
+                { id: 10, type: "textarea", title: "Escribe una idea loca o un juego que te gustaría agregar para el vigésimo aniversario del Grupo.", placeholder: "¡Ejemplo: Una búsqueda del tesoro por todo el grupo!" }
             ],
-            // ---------- TROPA ----------
+            // ---------- TROPA (Scouts) ----------
             Tropa: [
-                { id: 1, type: "range", title: "Del 1 al 10, ¿cómo calificas la organización de la Regata?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
-                { id: 2, type: "select", title: "¿Qué fue lo que más te gustó de la Regata?", options: [ { val: "Competencias", icon: "🚣", text: "Competencias" }, { val: "Comida", icon: "🍔", text: "Comida y convivencia" }, { val: "Campamento", icon: "🏕️", text: "Campamento nocturno" }, { val: "Trabajo", icon: "🤝", text: "Trabajo en patrulla" } ] },
-                { id: 3, type: "range", title: "Del 1 al 10, ¿cómo calificas el apoyo de tus Scouters de Tropa?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Increíbles! 🌟" },
-                { id: 4, type: "grid", title: "¿Cómo calificarías la actividad de restauración 'Bosque Escuela' de la Red de Jóvenes?", options: [ { val: "Excelente", icon: "🌳", title: "Excelente", desc: "Aprendí mucho y me divertí" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Estuvo bien, pero faltó algo" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo ser mejor" }, { val: "Malo", icon: "👎", title: "Malo", desc: "No me gustó" } ] },
-                { id: 5, type: "textarea", title: "¿Qué mejorarías para la próxima Regata?", placeholder: "Escribe tus sugerencias aquí..." },
-                { id: 6, type: "grid", title: "¿Cómo te sientes en tu Patrulla?", options: [ { val: "Unido", icon: "🤝", title: "Unido", desc: "Trabajamos bien juntos" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Podría ser mejor" }, { val: "Conflictos", icon: "😟", title: "Con conflictos", desc: "Hay problemas" }, { val: "Competitivo", icon: "🏆", title: "Muy competitivo", desc: "Siempre queremos ganar" } ] },
-                { id: 7, type: "select", title: "¿Qué tipo de actividad te gusta más?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Reforestacion", icon: "🌳", text: "Reforestación" }, { val: "Acuaticos", icon: "🚣", text: "Eventos acuáticos" }, { val: "Aventura", icon: "🧗", text: "Retos de aventura" } ] },
-                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar la Tropa?", placeholder: "Escribe tus sugerencias aquí..." },
-                { id: 9, type: "range", title: "Del 1 al 10, ¿cómo calificas la comunicación con la Dirigencia del Grupo?", min: 1, max: 10, def: 5, left: "Mala 📞", right: "Excelente 📱" },
-                { id: 10, type: "textarea", title: "¿Qué actividad propones para futuras juntas ordinarias?", placeholder: "Escribe tu propuesta aquí..." }
+                { id: 1, type: "range", title: "¿Cómo evaluarías la organización y variedad de los puestos de comida y juegos tradicionales en la Kermess?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
+                { id: 2, type: "range", title: "Durante el Rally de los 19 años, ¿qué tan desafiantes y dinámicas fueron las bases en comparación con otros eventos?", min: 1, max: 10, def: 5, left: "Poco desafiantes 😴", right: "Muy desafiantes 🔥" },
+                { id: 3, type: "grid", title: "¿Cómo se vivió el espíritu de patrulla y la competencia sana entre patrullas durante el rally?", options: [ { val: "Excelente", icon: "🏆", title: "Excelente", desc: "Competencia sana y unión" }, { val: "Buena", icon: "👍", title: "Buena", desc: "Buena convivencia" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Poca integración" }, { val: "Mala", icon: "👎", title: "Mala", desc: "Conflictos entre patrullas" } ] },
+                { id: 4, type: "range", title: "¿Qué tan clara fue la asignación de puntajes, jueces y reglas durante todo el circuito del rally?", min: 1, max: 10, def: 5, left: "Muy confuso 📋", right: "Muy claro ✅" },
+                { id: 5, type: "select", title: "¿Consideras que los horarios y el itinerario se cumplieron de manera fluida desde el inicio hasta la clausura?", options: [ { val: "Si", icon: "✅", text: "Sí, todo a tiempo" }, { val: "Casi", icon: "🕐", text: "Casi siempre" }, { val: "Algunos", icon: "😐", text: "Algunos retrasos" }, { val: "No", icon: "❌", text: "Muchos retrasos" } ] },
+                { id: 6, type: "range", title: "¿Cómo valoras la participación activa de los Scouters como animadores y jueces en ambas actividades?", min: 1, max: 10, def: 5, left: "Poco participativos 🧭", right: "Muy participativos 🌟" },
+                { id: 7, type: "grid", title: "¿Qué tan adecuado fue el espacio y la delimitación de las zonas de juego y la Kermess?", options: [ { val: "Excelente", icon: "✨", title: "Excelente", desc: "Espacios perfectos" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Adecuado" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo mejorar" }, { val: "Malo", icon: "👎", title: "Malo", desc: "Espacios reducidos" } ] },
+                { id: 8, type: "range", title: "Del 1 al 10, ¿qué tanto fortaleció este festejo de aniversario tu orgullo de pertenecer al Grupo 1 Tequihua?", min: 1, max: 10, def: 5, left: "Poco orgullo 😔", right: "¡Muchísimo orgullo! 🌟" },
+                { id: 9, type: "textarea", title: "¿Qué cambiarías o mejorarías de la logística general para el próximo evento de aniversario?", placeholder: "Escribe tus sugerencias aquí..." },
+                { id: 10, type: "textarea", title: "Escribe una propuesta de base o reto extremo que te gustaría ver en el próximo rally del grupo.", placeholder: "¡Ejemplo: Una base de tirolesa o rapel!" }
             ],
-            // ---------- COMUNIDAD ----------
+            // ---------- COMUNIDAD (Caminantes) ----------
             Comunidad: [
-                { id: 1, type: "range", title: "Del 1 al 10, ¿cómo calificas la organización de la Regata?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
-                { id: 2, type: "select", title: "¿Qué fue lo que más te gustó de la Regata?", options: [ { val: "Competencias", icon: "🚣", text: "Competencias" }, { val: "Comida", icon: "🍔", text: "Comida y convivencia" }, { val: "Campamento", icon: "🏕️", text: "Campamento nocturno" }, { val: "Trabajo", icon: "🤝", text: "Trabajo en equipo" } ] },
-                { id: 3, type: "range", title: "Del 1 al 10, ¿cómo calificas el apoyo de tus asesores de Comunidad?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Increíbles! 🌟" },
-                { id: 4, type: "grid", title: "¿Cómo calificarías la actividad de restauración 'Bosque Escuela' de la Red de Jóvenes?", options: [ { val: "Excelente", icon: "🌳", title: "Excelente", desc: "Aprendí mucho y me divertí" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Estuvo bien, pero faltó algo" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo ser mejor" }, { val: "Malo", icon: "👎", title: "Malo", desc: "No me gustó" } ] },
-                { id: 5, type: "textarea", title: "¿Qué mejorarías para la próxima Regata?", placeholder: "Escribe tus sugerencias aquí..." },
-                { id: 6, type: "grid", title: "¿Cómo te sientes en tu Equipo de Comunidad?", options: [ { val: "Unido", icon: "🤝", title: "Unido", desc: "Trabajamos bien juntos" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Podría ser mejor" }, { val: "Conflictos", icon: "😟", title: "Con conflictos", desc: "Hay problemas" }, { val: "Participativo", icon: "🏆", title: "Muy participativo", desc: "Todos participan" } ] },
-                { id: 7, type: "select", title: "¿Qué tipo de actividad te gusta más?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Reforestacion", icon: "🌳", text: "Reforestación" }, { val: "Acuaticos", icon: "🚣", text: "Eventos acuáticos" }, { val: "Aventura", icon: "🧗", text: "Retos de aventura" } ] },
-                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar la Comunidad?", placeholder: "Escribe tus sugerencias aquí..." },
-                { id: 9, type: "range", title: "Del 1 al 10, ¿cómo calificas la comunicación con la Dirigencia del Grupo?", min: 1, max: 10, def: 5, left: "Mala 📞", right: "Excelente 📱" },
-                { id: 10, type: "textarea", title: "¿Qué actividad propones para el próximo ciclo de programa?", placeholder: "Escribe tu propuesta aquí..." }
+                { id: 1, type: "range", title: "¿Cómo percibiste la integración, ambiente festivo y el sentido de comunidad durante la tarde mexicana?", min: 1, max: 10, def: 5, left: "Poco ambiente 😔", right: "¡Excelente ambiente! 🎉" },
+                { id: 2, type: "grid", title: "¿Qué tan estimulantes y bien diseñadas estuvieron las pruebas de estrategia y destreza en el Rally de los 19 años?", options: [ { val: "Excelente", icon: "🧠", title: "Excelentes", desc: "Muy retadoras y bien hechas" }, { val: "Buenas", icon: "👍", title: "Buenas", desc: "Bien diseñadas" }, { val: "Regulares", icon: "😐", title: "Regulares", desc: "Podrían mejorar" }, { val: "Malas", icon: "👎", title: "Malas", desc: "Poco estimulantes" } ] },
+                { id: 3, type: "range", title: "¿Cómo evaluaría tu equipo la equidad y transparencia de los jueces en las bases del rally?", min: 1, max: 10, def: 5, left: "Poco justo ⚖️", right: "Muy justo ✅" },
+                { id: 4, type: "select", title: "¿Qué tan eficiente fue la gestión de tiempos y la puntualidad en el programa del aniversario?", options: [ { val: "MuyEficiente", icon: "⏱️", text: "Muy eficiente" }, { val: "Eficiente", icon: "👍", text: "Eficiente" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Ineficiente", icon: "❌", text: "Ineficiente" } ] },
+                { id: 5, type: "range", title: "¿Los costos y la accesibilidad económica de la Kermess y el Rally fueron adecuados para la comunidad?", min: 1, max: 10, def: 5, left: "Muy caro 💸", right: "Muy accesible 🪙" },
+                { id: 6, type: "grid", title: "¿Cómo calificas el nivel de seguridad y gestión de riesgos implementado por la Jefatura en ambas actividades?", options: [ { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Muy seguro" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Adecuado" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo mejorar" }, { val: "Deficiente", icon: "⚠️", title: "Deficiente", desc: "Faltó cuidado" } ] },
+                { id: 7, type: "select", title: "Como caminantes, ¿tuvieron un espacio adecuado para colaborar, convivir o apoyar en la logística del evento?", options: [ { val: "Si", icon: "✅", text: "Sí, totalmente" }, { val: "Parcialmente", icon: "🤔", text: "Parcialmente" }, { val: "Poco", icon: "😐", text: "Muy poco" }, { val: "No", icon: "❌", text: "No tuvimos espacio" } ] },
+                { id: 8, type: "range", title: "¿Qué tan fuerte sentiste el sentido de pertenencia e historia del Grupo 1 durante la celebración de los 19 años?", min: 1, max: 10, def: 5, left: "Poco sentido 🤔", right: "¡Muchísimo! 🌟" },
+                { id: 9, type: "textarea", title: "¿Qué área de oportunidad principal le dejarías al Consejo de Grupo para mejorar futuros eventos masivos?", placeholder: "Escribe tu propuesta al Consejo..." },
+                { id: 10, type: "textarea", title: "Propón un proyecto o dinámica especial de aniversario que la Comunidad pueda liderar para el próximo año.", placeholder: "¡Ejemplo: Un festival scout con exposiciones!" }
             ],
-            // ---------- CLAN ----------
+            // ---------- CLAN (Rovers) ----------
             Clan: [
-                { id: 1, type: "range", title: "Del 1 al 10, ¿cómo calificas la organización de la Regata?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
-                { id: 2, type: "select", title: "¿Qué fue lo que más te gustó de la Regata?", options: [ { val: "Competencias", icon: "🚣", text: "Competencias" }, { val: "Comida", icon: "🍔", text: "Comida y convivencia" }, { val: "Campamento", icon: "🏕️", text: "Campamento nocturno" }, { val: "Trabajo", icon: "🤝", text: "Trabajo en equipo" } ] },
-                { id: 3, type: "range", title: "Del 1 al 10, ¿cómo calificas el apoyo de tus sinodales de Clan?", min: 1, max: 10, def: 5, left: "Poco apoyo 🧭", right: "¡Increíbles! 🌟" },
-                { id: 4, type: "grid", title: "¿Cómo calificarías la actividad de restauración 'Bosque Escuela' de la Red de Jóvenes?", options: [ { val: "Excelente", icon: "🌳", title: "Excelente", desc: "Aprendí mucho y me divertí" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Estuvo bien, pero faltó algo" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo ser mejor" }, { val: "Malo", icon: "👎", title: "Malo", desc: "No me gustó" } ] },
-                { id: 5, type: "textarea", title: "¿Qué mejorarías para la próxima Regata?", placeholder: "Escribe tus sugerencias aquí..." },
-                { id: 6, type: "grid", title: "¿Cómo te sientes en tu comunidad de Clan?", options: [ { val: "Unido", icon: "🤝", title: "Unido", desc: "Trabajamos bien juntos" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Podría ser mejor" }, { val: "Conflictos", icon: "😟", title: "Con conflictos", desc: "Hay problemas" }, { val: "Activo", icon: "🏆", title: "Muy activo", desc: "Siempre participo" } ] },
-                { id: 7, type: "select", title: "¿Qué tipo de actividad te gusta más?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Reforestacion", icon: "🌳", text: "Reforestación" }, { val: "Acuaticos", icon: "🚣", text: "Eventos acuáticos" }, { val: "Aventura", icon: "🧗", text: "Retos de aventura" } ] },
-                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar el Clan?", placeholder: "Escribe tus sugerencias aquí..." },
-                { id: 9, type: "range", title: "Del 1 al 10, ¿cómo calificas la comunicación con la Dirigencia del Grupo?", min: 1, max: 10, def: 5, left: "Mala 📞", right: "Excelente 📱" },
-                { id: 10, type: "textarea", title: "¿Qué actividad propones para el próximo ciclo de programa?", placeholder: "Escribe tu propuesta aquí..." }
+                { id: 1, type: "range", title: "¿Cómo evaluarías el impacto general del evento de aniversario (Kermess y Rally) en la mística y hermandad del Grupo?", min: 1, max: 10, def: 5, left: "Poco impacto 😔", right: "¡Mucho impacto! 🌟" },
+                { id: 2, type: "grid", title: "¿Qué tan bien estructurado y retador fue el diseño técnico de las bases del Rally de los 19 años para todas las secciones?", options: [ { val: "Excelente", icon: "🔧", title: "Excelente", desc: "Muy bien estructurado" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Bien diseñado" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo mejorar" }, { val: "Deficiente", icon: "👎", title: "Deficiente", desc: "Poco retador" } ] },
+                { id: 3, type: "range", title: "¿Qué tan claros fueron los criterios de evaluación, arbitraje y control de puntos durante el rally?", min: 1, max: 10, def: 5, left: "Muy confuso ❌", right: "Muy claro ✅" },
+                { id: 4, type: "select", title: "¿Cómo percibiste el cumplimiento de los horarios y la fluidez logística del itinerario de aniversario?", options: [ { val: "Excelente", icon: "⏱️", text: "Excelente" }, { val: "Bueno", icon: "👍", text: "Bueno" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Deficiente", icon: "❌", text: "Deficiente" } ] },
+                { id: 5, type: "grid", title: "Desde la perspectiva rover, ¿cómo valoras la seguridad, el orden y el cuidado de los espacios durante la tarde mexicana?", options: [ { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Muy seguro y ordenado" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Adecuado" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudo mejorar" }, { val: "Deficiente", icon: "⚠️", title: "Deficiente", desc: "Faltó cuidado" } ] },
+                { id: 6, type: "range", title: "¿Qué tan accesible y equilibrada fue la estructura económica y de costos para los asistentes al evento?", min: 1, max: 10, def: 5, left: "Muy caro 💸", right: "Muy accesible 🪙" },
+                { id: 7, type: "select", title: "¿Cómo consideras la participación y el liderazgo de los scouters y dirigentes durante las actividades?", options: [ { val: "Excelente", icon: "🌟", text: "Excelente" }, { val: "Bueno", icon: "👍", text: "Bueno" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Deficiente", icon: "👎", text: "Deficiente" } ] },
+                { id: 8, type: "range", title: "Del 1 al 10, ¿qué tanto coadyuvó esta celebración de 19 años a proyectar una imagen positiva y sólida del Grupo 1?", min: 1, max: 10, def: 5, left: "Poco 😔", right: "¡Muchísimo! 🌟" },
+                { id: 9, type: "textarea", title: "¿Qué elementos logísticos eliminarías y cuáles conservarías obligatoriamente para los festejos de los siguientes años?", placeholder: "Escribe qué eliminar y qué conservar..." },
+                { id: 10, type: "textarea", title: "Escribe una aportación o estrategia de innovación que el Clan sugiere integrar para el vigésimo aniversario.", placeholder: "¡Ejemplo: Un rally nocturno con tecnología!" }
             ],
-            // ---------- DIRIGENCIA ----------
+            // ---------- DIRIGENCIA (Scouters) ----------
             Dirigencia: [
-                { id: 1, type: "range", title: "Del 1 al 10, ¿cómo calificas tu experiencia en el Día del Padre?", min: 1, max: 10, def: 5, left: "Mala 🛠️", right: "Excelente 🌟" },
-                { id: 2, type: "range", title: "Del 1 al 10, ¿cómo calificas tu experiencia en la Regata?", min: 1, max: 10, def: 5, left: "Mala 🛠️", right: "Excelente 🌟" },
-                { id: 3, type: "textarea", title: "¿Qué cambiarías de la organización del Día del Padre?", placeholder: "Escribe tus propuestas aquí..." },
-                { id: 4, type: "textarea", title: "¿Qué cambiarías de la organización de la Regata?", placeholder: "Escribe tus propuestas aquí..." },
-                { id: 5, type: "range", title: "Del 1 al 10, ¿cómo calificas la logística general del Grupo 1?", min: 1, max: 10, def: 5, left: "Mala 📋", right: "Excelente ⚜️" },
-                { id: 6, type: "range", title: "Del 1 al 10, ¿cómo calificas la comunicación entre Scouters?", min: 1, max: 10, def: 5, left: "Mala 📞", right: "Excelente 📱" },
-                { id: 7, type: "grid", title: "¿Qué área del Grupo 1 necesita más atención?", options: [ { val: "Organizacion", icon: "📋", title: "Organización", desc: "Mejorar la planeación" }, { val: "Comunicacion", icon: "📞", title: "Comunicación", desc: "Mejorar la información" }, { val: "Finanzas", icon: "💰", title: "Finanzas", desc: "Optimizar recursos" }, { val: "Formacion", icon: "👥", title: "Formación de líderes", desc: "Capacitar mejor" } ] },
-                { id: 8, type: "textarea", title: "¿Qué sugerencias tienes para mejorar la Dirigencia?", placeholder: "Escribe tus sugerencias aquí..." },
-                { id: 9, type: "select", title: "¿Qué actividad scout crees que más motiva a los jóvenes?", options: [ { val: "Campamentos", icon: "🏕️", text: "Campamentos" }, { val: "Servicio", icon: "🌳", text: "Servicio comunitario" }, { val: "Juegos", icon: "🎮", text: "Juegos y retos" }, { val: "Expediciones", icon: "🧭", text: "Expediciones" } ] },
-                { id: 10, type: "textarea", title: "¿Qué plan de acción propones para el próximo semestre?", placeholder: "Escribe tu propuesta aquí..." }
+                { id: 1, type: "range", title: "¿Cómo evaluarías la afluencia, respuesta y participación general de los jóvenes en la Kermess tarde mexicana?", min: 1, max: 10, def: 5, left: "Baja participación 👤", right: "Alta participación 👥" },
+                { id: 2, type: "range", title: "¿Qué tan fluido y efectivo fue el desarrollo del Rally de los 19 años en cuanto a tiempos y rotación de bases?", min: 1, max: 10, def: 5, left: "Poco fluido ❌", right: "Muy fluido ✅" },
+                { id: 3, type: "select", title: "¿Cómo percibiste el apoyo y la colaboración de los padres de familia y comités en la Kermess?", options: [ { val: "Excelente", icon: "🤝", text: "Excelente" }, { val: "Bueno", icon: "👍", text: "Bueno" }, { val: "Regular", icon: "😐", text: "Regular" }, { val: "Deficiente", icon: "👎", text: "Deficiente" } ] },
+                { id: 4, type: "grid", title: "¿Qué tan claros y eficientes fueron los reportes de puntaje y la premiación final del rally de aniversario?", options: [ { val: "Excelente", icon: "📊", title: "Excelente", desc: "Muy claros y rápidos" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Adecuados" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Pudieron mejorar" }, { val: "Deficiente", icon: "👎", title: "Deficiente", desc: "Confusos" } ] },
+                { id: 5, type: "grid", title: "¿Cómo calificarías la seguridad, delimitación de áreas y el saldo blanco durante ambos eventos?", options: [ { val: "Excelente", icon: "🛡️", title: "Excelente", desc: "Saldo blanco total" }, { val: "Bueno", icon: "👍", title: "Bueno", desc: "Sin incidentes graves" }, { val: "Regular", icon: "😐", title: "Regular", desc: "Algún incidente menor" }, { val: "Deficiente", icon: "⚠️", title: "Deficiente", desc: "Incidentes importantes" } ] },
+                { id: 6, type: "range", title: "¿Qué tan equilibrados y funcionales resultaron los costos, el presupuesto y la recuperación económica del evento?", min: 1, max: 10, def: 5, left: "Poco equilibrado 💸", right: "Muy equilibrado 🪙" },
+                { id: 7, type: "range", title: "¿Qué tan motivados y participativos observaste a los dirigentes y scouters de cada rama durante la jornada?", min: 1, max: 10, def: 5, left: "Poco motivados 😔", right: "¡Muy motivados! 🌟" },
+                { id: 8, type: "range", title: "Del 1 al 10, ¿qué tan satisfecho estás con el cumplimiento de los objetivos pedagógicos y de mística del aniversario?", min: 1, max: 10, def: 5, left: "Poco satisfecho ❌", right: "¡Muy satisfecho! ✅" },
+                { id: 9, type: "textarea", title: "¿Qué problema logístico imprevisto se presentó y cómo sugieres prevenirlo para el próximo gran evento?", placeholder: "Escribe el problema y tu propuesta de prevención..." },
+                { id: 10, type: "textarea", title: "Escribe tus conclusiones y recomendaciones maestras directas para el Consejo de Grupo rumbo al vigésimo aniversario.", placeholder: "Escribe tus recomendaciones maestras..." }
             ]
         };
 
@@ -1668,7 +1669,7 @@
                 const listContainer = document.getElementById('ia-sugerencias-texto-lista');
 
                 if (iaSub) iaSub.innerText = `Análisis Organizacional de ${activeDashboardSection}`;
-                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. Día del Padre: ${avgP11.toFixed(1)}/10 | Regata: ${avgP12.toFixed(1)}/10 | Logística: ${avgP15.toFixed(1)}/10 | Comunicación: ${avgP16.toFixed(1)}/10 | Participación: ${avgP17.toFixed(1)}/10 | Seguridad: ${avgP18.toFixed(1)}/10`;
+                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. Afluencia: ${avgP11.toFixed(1)}/10 | Rotación: ${avgP12.toFixed(1)}/10 | Apoyo padres: ${avgP15.toFixed(1)}/10 | Puntajes: ${avgP16.toFixed(1)}/10 | Seguridad: ${avgP17.toFixed(1)}/10 | Motivación: ${avgP18.toFixed(1)}/10`;
                 if (iaAcc) iaAcc.innerText = "• Revisar las sugerencias logísticas aportadas por los scouters para mejorar las próximas bases e inscripciones del grupo. Fortalecer la comunicación con padres y representantes.";
 
                 if (sugerenciasCambio.length > 0 && iaSugContainer && listContainer) {
@@ -2542,7 +2543,7 @@
             doc.setFont("Plus Jakarta Sans", "normal");
             doc.setFontSize(11);
             doc.setTextColor(...GRAY);
-            const introText = `El presente reporte tiene como objetivo presentar los resultados de la evaluación de satisfacción correspondiente a la sección de ${activeDashboardSection} del Grupo 1 Tequihua. Este análisis se basa en las respuestas obtenidas a través de la plataforma TequiVoz, que recopila la opinión de los jóvenes sobre las actividades realizadas durante el ciclo de programa.`;
+            const introText = `El presente reporte tiene como objetivo presentar los resultados de la evaluación de satisfacción correspondiente a la sección de ${activeDashboardSection} del Grupo 1 Tequihua, enfocado en las actividades del Aniversario 19 años (Kermess Tarde Mexicana y Rally de Aniversario). Este análisis se basa en las respuestas obtenidas a través de la plataforma TequiVoz.`;
             const introLines = doc.splitTextToSize(introText, 180);
             doc.text(introLines, 15, 48);
             
@@ -2556,7 +2557,7 @@
             doc.setFont("Plus Jakarta Sans", "normal");
             doc.setFontSize(11);
             doc.setTextColor(...GRAY);
-            const metodoText = `Se aplicó una encuesta de 10 preguntas a los miembros de la sección ${activeDashboardSection}, abarcando temas como la satisfacción con actividades específicas (Campamento Árbol Caído, Regata, Día del Padre, Reforestación "Bosque Escuela"), el apoyo de los líderes de sección, la integración dentro de los equipos, la comunicación con la Dirigencia y sugerencias de mejora. Las respuestas fueron recolectadas de manera anónima a través de la plataforma digital TequiVoz, con un total de ${total} registros procesados.`;
+            const metodoText = `Se aplicó una encuesta de 10 preguntas a los miembros de la sección ${activeDashboardSection}, abarcando temas como la organización de la Kermess, el desarrollo del Rally de los 19 años, la claridad de las reglas, la seguridad, la integración entre secciones, la accesibilidad de costos, el liderazgo de los scouters y sugerencias para el vigésimo aniversario. Las respuestas fueron recolectadas de manera anónima a través de la plataforma digital TequiVoz, con un total de ${total} registros procesados.`;
             const metodoLines = doc.splitTextToSize(metodoText, 180);
             doc.text(metodoLines, 15, 102);
             
@@ -2773,6 +2774,42 @@
                 doc.text("Se recomienda esperar a tener al menos 3 respuestas para obtener", 15, 70);
                 doc.text("resultados significativos.", 15, 82);
             }
+            
+            // ============================================================
+            // PÁGINA 5: FIRMA Y CIERRE
+            // ============================================================
+            doc.addPage();
+            doc.setFillColor(...PRIMARY_COLOR);
+            doc.rect(0, 0, 210, 297, "F");
+            
+            doc.setFillColor(...SECONDARY_COLOR);
+            doc.rect(15, 100, 180, 2, "F");
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setTextColor(...WHITE);
+            doc.setFontSize(22);
+            doc.text("Compromiso con la Mejora Continua", 105, 130, { align: 'center' });
+            
+            doc.setFont("Plus Jakarta Sans", "normal");
+            doc.setFontSize(12);
+            doc.setTextColor(220, 220, 220);
+            const cierreText = `Este reporte es una herramienta para la toma de decisiones. La información aquí presentada permitirá a los jefes de sección y a la Dirigencia del Grupo 1 Tequihua identificar fortalezas y áreas de oportunidad, con el objetivo de seguir construyendo experiencias scout de calidad para todos nuestros jóvenes.`;
+            const cierreLines = doc.splitTextToSize(cierreText, 160);
+            doc.text(cierreLines, 25, 160);
+            
+            doc.setFontSize(14);
+            doc.setTextColor(...SECONDARY_COLOR);
+            doc.text("⚜️", 105, 220, { align: 'center' });
+            
+            doc.setFont("Plus Jakarta Sans", "bold");
+            doc.setFontSize(12);
+            doc.setTextColor(...WHITE);
+            doc.text("Rafael Magaña Rangel", 105, 250, { align: 'center' });
+            doc.setFont("Plus Jakarta Sans", "normal");
+            doc.setFontSize(10);
+            doc.setTextColor(200, 200, 200);
+            doc.text("Representante Juvenil", 105, 263, { align: 'center' });
+            doc.text("Grupo 1 Tequihua", 105, 275, { align: 'center' });
             
             // ============================================================
             // GUARDAR PDF

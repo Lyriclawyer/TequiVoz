@@ -757,7 +757,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, deleteDoc, writeBatch, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // ============================================================
         // 🔥 CONFIGURACIÓN DE FIREBASE CON TUS CREDENCIALES REALES
@@ -791,37 +791,19 @@
         let editorPreguntaIndexSeleccionada = 0; 
         let pendingSurveyRama = "";
         let respuestasFiltroSeccion = "Todas";
-        let respuestasSeccionPermitida = null; // null = todas (solo dirigencia)
+        let respuestasSeccionPermitida = null;
         
         let respuestasSesion = {
             rama: "",
-            p1: "",
-            p2: 5,
-            p3: "",
-            p4: "",
-            p5: 3,
-            p6: "",
-            p7: "",
-            p8: "",
-            p9: "",
-            p10: "",
-            p11: 5,
-            p12: 5,
-            p13: "",
-            p14: "",
-            p15: 5,
-            p16: 5,
-            p17: 5,
-            p18: 5,
-            p19: "",
-            p20: ""
+            p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: "",
+            p11: 5, p12: 5, p13: "", p14: "",
+            p15: 5, p16: 5, p17: 5, p18: 5, p19: "", p20: ""
         };
 
         let reportesValidadosHistorico = JSON.parse(localStorage.getItem('tequivoz_reportes_kpi_validados')) || [];
 
         // ============================================================
         // NUEVAS PREGUNTAS POR SECCIÓN (10 preguntas cada una)
-        // Actualizadas con las preguntas del Aniversario 19 años
         // ============================================================
         const bancoPreguntasPredeterminado = {
             // ---------- MANADA (Lobatos) ----------
@@ -901,6 +883,111 @@
         const surveysCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'surveys');
 
         // ============================================================
+        // DATOS SIMULADOS - 88 RESPUESTAS (15 Manada, 24 Tropa, 13 Comunidad, 15 Clan, 21 Dirigencia)
+        // ============================================================
+        const datosSimulados = {
+            Manada: [
+                { p1: "Excelente", p2: 9, p3: "La búsqueda del tesoro", p4: "MuyFacil", p5: "MuySeguro", p6: 10, p7: "Mucho", p8: 8, p9: "Si", p10: "Una carrera de obstáculos con globos de agua" },
+                { p1: "Divertido", p2: 8, p3: "El juego de las sillas", p4: "Facil", p5: "Seguro", p6: 9, p7: "Bastante", p8: 7, p9: "Si", p10: "Un concurso de disfraces de animales" },
+                { p1: "Inolvidable", p2: 10, p3: "El tiro al blanco", p4: "MuyFacil", p5: "MuySeguro", p6: 10, p7: "Mucho", p8: 10, p9: "Si", p10: "Una búsqueda del tesoro con pistas por todo el parque" },
+                { p1: "Regular", p2: 6, p3: "Los puestos de comida", p4: "Dificil", p5: "Regular", p6: 7, p7: "Poco", p8: 5, p9: "TalVez", p10: "Un juego de pintura con los dedos" },
+                { p1: "Divertido", p2: 8, p3: "La carrera de sacos", p4: "Facil", p5: "Seguro", p6: 8, p7: "Bastante", p8: 6, p9: "Si", p10: "Una piñata gigante con forma de lobo" },
+                { p1: "Excelente", p2: 9, p3: "El juego de las estatuas", p4: "MuyFacil", p5: "MuySeguro", p6: 9, p7: "Mucho", p8: 9, p9: "Si", p10: "Una guerra de almohadas gigante" },
+                { p1: "Aburrido", p2: 4, p3: "Ninguna", p4: "MuyDificil", p5: "Inseguro", p6: 4, p7: "Nada", p8: 3, p9: "No", p10: "Un parque de trampolines" },
+                { p1: "Divertido", p2: 7, p3: "El juego de las sillas", p4: "Facil", p5: "Seguro", p6: 8, p7: "Bastante", p8: 7, p9: "Si", p10: "Una fiesta de espuma" },
+                { p1: "Inolvidable", p2: 10, p3: "El rally completo", p4: "MuyFacil", p5: "MuySeguro", p6: 10, p7: "Mucho", p8: 10, p9: "Si", p10: "Un rally con temática de piratas" },
+                { p1: "Regular", p2: 5, p3: "Los puestos de comida", p4: "Dificil", p5: "Regular", p6: 6, p7: "Poco", p8: 6, p9: "TalVez", p10: "Un juego de cocina para niños" },
+                { p1: "Divertido", p2: 8, p3: "La búsqueda del tesoro", p4: "Facil", p5: "Seguro", p6: 9, p7: "Bastante", p8: 8, p9: "Si", p10: "Una búsqueda del tesoro con mapas" },
+                { p1: "Excelente", p2: 9, p3: "El tiro al blanco", p4: "MuyFacil", p5: "MuySeguro", p6: 9, p7: "Mucho", p8: 9, p9: "Si", p10: "Un torneo de canicas" },
+                { p1: "Divertido", p2: 7, p3: "El juego de las estatuas", p4: "Facil", p5: "Seguro", p6: 8, p7: "Bastante", p8: 7, p9: "Si", p10: "Un juego de aviones de papel" },
+                { p1: "Inolvidable", p2: 10, p3: "La carrera de sacos", p4: "MuyFacil", p5: "MuySeguro", p6: 10, p7: "Mucho", p8: 10, p9: "Si", p10: "Una gymkhana con 20 bases" },
+                { p1: "Regular", p2: 6, p3: "Los puestos de comida", p4: "Dificil", p5: "Regular", p6: 7, p7: "Poco", p8: 5, p9: "TalVez", p10: "Un juego de pompas de jabón gigantes" }
+            ],
+            Tropa: [
+                { p1: 9, p2: 9, p3: "Excelente", p4: 9, p5: "Si", p6: 9, p7: "Excelente", p8: 10, p9: "Mejorar la señalización de las bases", p10: "Una base de tirolesa" },
+                { p1: 8, p2: 8, p3: "Buena", p4: 8, p5: "Casi", p6: 8, p7: "Bueno", p8: 8, p9: "Más tiempo entre bases", p10: "Una base de rapel" },
+                { p1: 10, p2: 10, p3: "Excelente", p4: 10, p5: "Si", p6: 10, p7: "Excelente", p8: 10, p9: "Nada, estuvo perfecto", p10: "Una base de escalada" },
+                { p1: 7, p2: 7, p3: "Regular", p4: 7, p5: "Algunos", p6: 7, p7: "Regular", p8: 7, p9: "Más jueces por base", p10: "Una base de puenting" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: 9, p5: "Si", p6: 9, p7: "Excelente", p8: 9, p9: "Mejorar la logística de comida", p10: "Una base de parkour" },
+                { p1: 8, p2: 8, p3: "Buena", p4: 8, p5: "Casi", p6: 8, p7: "Bueno", p8: 8, p9: "Más bases de agua", p10: "Una base de surf" },
+                { p1: 6, p2: 6, p3: "Regular", p4: 6, p5: "Algunos", p6: 6, p7: "Regular", p8: 6, p9: "Mejorar los premios", p10: "Una base de skate" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: 9, p5: "Si", p6: 9, p7: "Excelente", p8: 9, p9: "Nada, todo bien", p10: "Una base de bicicletas" },
+                { p1: 10, p2: 10, p3: "Excelente", p4: 10, p5: "Si", p6: 10, p7: "Excelente", p8: 10, p9: "Más actividades nocturnas", p10: "Una base de campamento" },
+                { p1: 7, p2: 7, p3: "Regular", p4: 7, p5: "Algunos", p6: 7, p7: "Regular", p8: 7, p9: "Más variedad de juegos", p10: "Una base de cocina" },
+                { p1: 8, p2: 8, p3: "Buena", p4: 8, p5: "Casi", p6: 8, p7: "Bueno", p8: 8, p9: "Mejorar los horarios", p10: "Una base de primeros auxilios" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: 9, p5: "Si", p6: 9, p7: "Excelente", p8: 9, p9: "Nada, excelente", p10: "Una base de orientación" },
+                { p1: 6, p2: 6, p3: "Mala", p4: 6, p5: "No", p6: 6, p7: "Malo", p8: 6, p9: "Mejorar la organización", p10: "Una base de nudos" },
+                { p1: 8, p2: 8, p3: "Buena", p4: 8, p5: "Casi", p6: 8, p7: "Bueno", p8: 8, p9: "Más juegos de equipo", p10: "Una base de señales" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: 9, p5: "Si", p6: 9, p7: "Excelente", p8: 9, p9: "Nada, muy bien", p10: "Una base de fogatas" },
+                { p1: 7, p2: 7, p3: "Regular", p4: 7, p5: "Algunos", p6: 7, p7: "Regular", p8: 7, p9: "Mejorar la comunicación", p10: "Una base de rastreo" },
+                { p1: 10, p2: 10, p3: "Excelente", p4: 10, p5: "Si", p6: 10, p7: "Excelente", p8: 10, p9: "Nada, increíble", p10: "Una base de supervivencia" },
+                { p1: 8, p2: 8, p3: "Buena", p4: 8, p5: "Casi", p6: 8, p7: "Bueno", p8: 8, p9: "Más bases acuáticas", p10: "Una base de natación" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: 9, p5: "Si", p6: 9, p7: "Excelente", p8: 9, p9: "Nada, perfecto", p10: "Una base de tiro con arco" },
+                { p1: 6, p2: 6, p3: "Regular", p4: 6, p5: "Algunos", p6: 6, p7: "Regular", p8: 6, p9: "Mejorar los premios", p10: "Una base de paintball" },
+                { p1: 8, p2: 8, p3: "Buena", p4: 8, p5: "Casi", p6: 8, p7: "Bueno", p8: 8, p9: "Más retos extremos", p10: "Una base de escalada en roca" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: 9, p5: "Si", p6: 9, p7: "Excelente", p8: 9, p9: "Nada, todo excelente", p10: "Una base de espeleología" },
+                { p1: 7, p2: 7, p3: "Regular", p4: 7, p5: "Algunos", p6: 7, p7: "Regular", p8: 7, p9: "Mejorar el sonido", p10: "Una base de rapel urbano" },
+                { p1: 10, p2: 10, p3: "Excelente", p4: 10, p5: "Si", p6: 10, p7: "Excelente", p8: 10, p9: "Nada, espectacular", p10: "Una base de paracaidismo" }
+            ],
+            Comunidad: [
+                { p1: 9, p2: "Excelente", p3: 9, p4: "MuyEficiente", p5: 8, p6: "Excelente", p7: "Si", p8: 10, p9: "Mejorar la difusión previa del evento", p10: "Un festival scout con exposiciones y música en vivo" },
+                { p1: 8, p2: "Buenas", p3: 8, p4: "Eficiente", p5: 7, p6: "Bueno", p7: "Parcialmente", p8: 9, p9: "Más espacios de descanso", p10: "Una feria de proyectos juveniles" },
+                { p1: 10, p2: "Excelente", p3: 10, p4: "MuyEficiente", p5: 9, p6: "Excelente", p7: "Si", p8: 10, p9: "Nada, excelente", p10: "Un rally nocturno con luces y tecnología" },
+                { p1: 7, p2: "Regulares", p3: 7, p4: "Regular", p5: 6, p6: "Regular", p7: "Poco", p8: 7, p9: "Mejorar la coordinación entre secciones", p10: "Un concurso de talentos scout" },
+                { p1: 9, p2: "Excelente", p3: 9, p4: "MuyEficiente", p5: 8, p6: "Excelente", p7: "Si", p8: 9, p9: "Más actividades de integración", p10: "Una olimpiada scout con múltiples disciplinas" },
+                { p1: 8, p2: "Buenas", p3: 8, p4: "Eficiente", p5: 7, p6: "Bueno", p7: "Parcialmente", p8: 8, p9: "Mejorar la señalización", p10: "Un campamento inter-secciones" },
+                { p1: 6, p2: "Malas", p3: 6, p4: "Ineficiente", p5: 5, p6: "Deficiente", p7: "No", p8: 6, p9: "Mejorar la logística general", p10: "Un servicio comunitario conjunto" },
+                { p1: 9, p2: "Excelente", p3: 9, p4: "MuyEficiente", p5: 8, p6: "Excelente", p7: "Si", p8: 9, p9: "Nada, muy bien", p10: "Un proyecto de reforestación masiva" },
+                { p1: 10, p2: "Excelente", p3: 10, p4: "MuyEficiente", p5: 9, p6: "Excelente", p7: "Si", p8: 10, p9: "Más participación de los caminantes", p10: "Un festival de arte scout" },
+                { p1: 7, p2: "Regulares", p3: 7, p4: "Regular", p5: 6, p6: "Regular", p7: "Poco", p8: 7, p9: "Mejorar los tiempos", p10: "Un concurso de cocina scout" },
+                { p1: 8, p2: "Buenas", p3: 8, p4: "Eficiente", p5: 7, p6: "Bueno", p7: "Parcialmente", p8: 8, p9: "Más juegos de estrategia", p10: "Una gymkhana temática" },
+                { p1: 9, p2: "Excelente", p3: 9, p4: "MuyEficiente", p5: 8, p6: "Excelente", p7: "Si", p8: 9, p9: "Nada, excelente", p10: "Un campamento de invierno" },
+                { p1: 8, p2: "Buenas", p3: 8, p4: "Eficiente", p5: 7, p6: "Bueno", p7: "Parcialmente", p8: 8, p9: "Mejorar la comunicación", p10: "Una competencia de innovación" }
+            ],
+            Clan: [
+                { p1: 9, p2: "Excelente", p3: 9, p4: "Excelente", p5: "Excelente", p6: 8, p7: "Excelente", p8: 10, p9: "Eliminar la burocracia, conservar la mística", p10: "Un rally nocturno con drones y tecnología" },
+                { p1: 8, p2: "Bueno", p3: 8, p4: "Bueno", p5: "Bueno", p6: 7, p7: "Bueno", p8: 9, p9: "Conservar los juegos tradicionales", p10: "Una expedición de fin de semana" },
+                { p1: 10, p2: "Excelente", p3: 10, p4: "Excelente", p5: "Excelente", p6: 9, p7: "Excelente", p8: 10, p9: "Eliminar tiempos muertos", p10: "Un proyecto de servicio internacional" },
+                { p1: 7, p2: "Regular", p3: 7, p4: "Regular", p5: "Regular", p6: 6, p7: "Regular", p8: 7, p9: "Conservar la premiación, eliminar la espera", p10: "Una competencia de innovación social" },
+                { p1: 9, p2: "Excelente", p3: 9, p4: "Excelente", p5: "Excelente", p6: 8, p7: "Excelente", p8: 9, p9: "Eliminar la comida repetida", p10: "Un festival cultural scout" },
+                { p1: 8, p2: "Bueno", p3: 8, p4: "Bueno", p5: "Bueno", p6: 7, p7: "Bueno", p8: 8, p9: "Conservar los puestos, mejorar los precios", p10: "Un rally con temática de historia scout" },
+                { p1: 6, p2: "Deficiente", p3: 6, p4: "Deficiente", p5: "Deficiente", p6: 5, p7: "Deficiente", p8: 6, p9: "Eliminar la desorganización", p10: "Un campamento de verano internacional" },
+                { p1: 9, p2: "Excelente", p3: 9, p4: "Excelente", p5: "Excelente", p6: 8, p7: "Excelente", p8: 9, p9: "Conservar todo, mejorar la difusión", p10: "Una carrera de aventura" },
+                { p1: 10, p2: "Excelente", p3: 10, p4: "Excelente", p5: "Excelente", p6: 9, p7: "Excelente", p8: 10, p9: "Eliminar las filas, conservar la energía", p10: "Un proyecto de impacto social" },
+                { p1: 7, p2: "Regular", p3: 7, p4: "Regular", p5: "Regular", p6: 6, p7: "Regular", p8: 7, p9: "Conservar la mística, eliminar la prisa", p10: "Un encuentro de jóvenes líderes" },
+                { p1: 8, p2: "Bueno", p3: 8, p4: "Bueno", p5: "Bueno", p6: 7, p7: "Bueno", p8: 8, p9: "Eliminar los tiempos muertos", p10: "Una expedición a la sierra" },
+                { p1: 9, p2: "Excelente", p3: 9, p4: "Excelente", p5: "Excelente", p6: 8, p7: "Excelente", p8: 9, p9: "Conservar la hermandad, mejorar la logística", p10: "Un servicio comunitario internacional" },
+                { p1: 8, p2: "Bueno", p3: 8, p4: "Bueno", p5: "Bueno", p6: 7, p7: "Bueno", p8: 8, p9: "Eliminar la comida chatarra", p10: "Un campamento de invierno" },
+                { p1: 9, p2: "Excelente", p3: 9, p4: "Excelente", p5: "Excelente", p6: 8, p7: "Excelente", p8: 9, p9: "Conservar la tradición, innovar en tecnología", p10: "Un rally con realidad aumentada" },
+                { p1: 10, p2: "Excelente", p3: 10, p4: "Excelente", p5: "Excelente", p6: 9, p7: "Excelente", p8: 10, p9: "Eliminar la burocracia, conservar la esencia", p10: "Un festival scout internacional" }
+            ],
+            Dirigencia: [
+                { p1: 9, p2: 9, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 8, p7: 9, p8: 10, p9: "Faltó señalización en algunas bases", p10: "Fortalecer la comunicación previa con los padres de familia y mejorar la logística de tiempos" },
+                { p1: 8, p2: 8, p3: "Bueno", p4: "Bueno", p5: "Bueno", p6: 7, p7: 8, p8: 9, p9: "Retraso en el inicio del rally", p10: "Iniciar con mayor puntualidad y tener un plan B para contingencias climáticas" },
+                { p1: 10, p2: 10, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 9, p7: 10, p8: 10, p9: "Ninguno, todo salió excelente", p10: "Mantener la misma estructura y agregar más actividades de integración" },
+                { p1: 7, p2: 7, p3: "Regular", p4: "Regular", p5: "Regular", p6: 6, p7: 7, p8: 7, p9: "Problemas con el sonido en la inauguración", p10: "Verificar el equipo de sonido con anticipación y tener respaldo" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 8, p7: 9, p8: 9, p9: "Falta de baños suficientes", p10: "Rentar baños portátiles adicionales para eventos masivos" },
+                { p1: 8, p2: 8, p3: "Bueno", p4: "Bueno", p5: "Bueno", p6: 7, p7: 8, p8: 8, p9: "Algunos padres no respetaron los horarios", p10: "Enviar recordatorios y reglamento claro a los padres con anticipación" },
+                { p1: 6, p2: 6, p3: "Deficiente", p4: "Regular", p5: "Regular", p6: 5, p7: 6, p8: 6, p9: "Confusión en la premiación", p10: "Designar un maestro de ceremonias y tener los premios organizados por categoría" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 8, p7: 9, p8: 9, p9: "Ninguno relevante", p10: "Continuar con el mismo equipo de trabajo y mejorar la difusión en redes" },
+                { p1: 10, p2: 10, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 9, p7: 10, p8: 10, p9: "Ninguno, saldo blanco total", p10: "Documentar todo el proceso para replicarlo en el vigésimo aniversario" },
+                { p1: 7, p2: 7, p3: "Regular", p4: "Regular", p5: "Regular", p6: 6, p7: 7, p8: 7, p9: "Faltó coordinación entre secciones", p10: "Realizar juntas previas de coordinación con todos los jefes de sección" },
+                { p1: 8, p2: 8, p3: "Bueno", p4: "Bueno", p5: "Bueno", p6: 7, p7: 8, p8: 8, p9: "Algunos juegos no funcionaron", p10: "Probar las bases antes del evento con un grupo piloto" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 8, p7: 9, p8: 9, p9: "Ninguno significativo", p10: "Mantener la esencia y agregar más actividades para padres" },
+                { p1: 8, p2: 8, p3: "Bueno", p4: "Bueno", p5: "Bueno", p6: 7, p7: 8, p8: 8, p9: "Faltó apoyo de algunos comités", p10: "Involucrar a los comités desde la planeación inicial" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 8, p7: 9, p8: 9, p9: "Ninguno, todo muy bien", p10: "Crear una comisión permanente de eventos para el vigésimo aniversario" },
+                { p1: 10, p2: 10, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 9, p7: 10, p8: 10, p9: "Ninguno, saldo blanco", p10: "Empezar la planeación del vigésimo aniversario desde ya con metas claras" },
+                { p1: 7, p2: 7, p3: "Regular", p4: "Regular", p5: "Regular", p6: 6, p7: 7, p8: 7, p9: "Problemas con el estacionamiento", p10: "Gestionar permisos de estacionamiento con anticipación" },
+                { p1: 8, p2: 8, p3: "Bueno", p4: "Bueno", p5: "Bueno", p6: 7, p7: 8, p8: 8, p9: "Faltó agua para los participantes", p10: "Tener puntos de hidratación cada 3 bases" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 8, p7: 9, p8: 9, p9: "Ninguno relevante", p10: "Ampliar el número de bases para el próximo rally" },
+                { p1: 8, p2: 8, p3: "Bueno", p4: "Bueno", p5: "Bueno", p6: 7, p7: 8, p8: 8, p9: "Faltó sombra en algunas bases", p10: "Ubicar bases en zonas con sombra o colocar carpas" },
+                { p1: 9, p2: 9, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 8, p7: 9, p8: 9, p9: "Ninguno, muy bien", p10: "Involucrar a los rovers en la organización del vigésimo aniversario" },
+                { p1: 10, p2: 10, p3: "Excelente", p4: "Excelente", p5: "Excelente", p6: 9, p7: 10, p8: 10, p9: "Ninguno, saldo blanco total", p10: "Documentar el evento para crear una memoria histórica del grupo" },
+                { p1: 8, p2: 8, p3: "Bueno", p4: "Bueno", p5: "Bueno", p6: 7, p7: 8, p8: 8, p9: "Faltó premiación para todas las categorías", p10: "Crear más categorías de premiación y reconocimientos" }
+            ]
+        };
+
+        // ============================================================
         // AUTENTICACIÓN ANÓNIMA
         // ============================================================
         async function authenticateUser() {
@@ -912,6 +999,116 @@
             }
         }
         await authenticateUser();
+
+        // ============================================================
+        // FUNCIÓN PARA CARGAR DATOS SIMULADOS
+        // ============================================================
+        async function cargarDatosSimulados() {
+            try {
+                const snapshot = await getDocs(surveysCollectionRef);
+                
+                // Verificar si ya hay datos cargados
+                if (snapshot.size > 0) {
+                    console.log(`ℹ️ Ya existen ${snapshot.size} registros en Firestore. No se cargan datos simulados.`);
+                    return;
+                }
+
+                console.log("📊 Cargando datos simulados...");
+                const batch = writeBatch(db);
+                const ahora = new Date();
+
+                // Cargar respuestas por sección
+                const secciones = ['Manada', 'Tropa', 'Comunidad', 'Clan', 'Dirigencia'];
+                
+                for (const seccion of secciones) {
+                    const respuestas = datosSimulados[seccion];
+                    if (!respuestas) continue;
+
+                    for (let i = 0; i < respuestas.length; i++) {
+                        const resp = respuestas[i];
+                        // Generar timestamp variado (últimos 30 días)
+                        const fecha = new Date(ahora.getTime() - (Math.random() * 30 * 24 * 60 * 60 * 1000));
+                        
+                        // Construir el documento base
+                        const docData = {
+                            rama: seccion,
+                            timestamp: fecha.toISOString()
+                        };
+
+                        // Agregar las respuestas según el formato de cada sección
+                        if (seccion === 'Manada') {
+                            docData.p1 = resp.p1;
+                            docData.p2 = Number(resp.p2);
+                            docData.p3 = resp.p3;
+                            docData.p4 = resp.p4;
+                            docData.p5 = resp.p5;
+                            docData.p6 = Number(resp.p6);
+                            docData.p7 = resp.p7;
+                            docData.p8 = Number(resp.p8);
+                            docData.p9 = resp.p9;
+                            docData.p10 = resp.p10;
+                        } else if (seccion === 'Tropa') {
+                            docData.p1 = Number(resp.p1);
+                            docData.p2 = Number(resp.p2);
+                            docData.p3 = resp.p3;
+                            docData.p4 = Number(resp.p4);
+                            docData.p5 = resp.p5;
+                            docData.p6 = Number(resp.p6);
+                            docData.p7 = resp.p7;
+                            docData.p8 = Number(resp.p8);
+                            docData.p9 = resp.p9;
+                            docData.p10 = resp.p10;
+                        } else if (seccion === 'Comunidad') {
+                            docData.p1 = Number(resp.p1);
+                            docData.p2 = resp.p2;
+                            docData.p3 = Number(resp.p3);
+                            docData.p4 = resp.p4;
+                            docData.p5 = Number(resp.p5);
+                            docData.p6 = resp.p6;
+                            docData.p7 = resp.p7;
+                            docData.p8 = Number(resp.p8);
+                            docData.p9 = resp.p9;
+                            docData.p10 = resp.p10;
+                        } else if (seccion === 'Clan') {
+                            docData.p1 = Number(resp.p1);
+                            docData.p2 = resp.p2;
+                            docData.p3 = Number(resp.p3);
+                            docData.p4 = resp.p4;
+                            docData.p5 = resp.p5;
+                            docData.p6 = Number(resp.p6);
+                            docData.p7 = resp.p7;
+                            docData.p8 = Number(resp.p8);
+                            docData.p9 = resp.p9;
+                            docData.p10 = resp.p10;
+                        } else if (seccion === 'Dirigencia') {
+                            docData.p1 = Number(resp.p1);
+                            docData.p2 = Number(resp.p2);
+                            docData.p3 = resp.p3;
+                            docData.p4 = resp.p4;
+                            docData.p5 = resp.p5;
+                            docData.p6 = Number(resp.p6);
+                            docData.p7 = Number(resp.p7);
+                            docData.p8 = Number(resp.p8);
+                            docData.p9 = resp.p9;
+                            docData.p10 = resp.p10;
+                        }
+
+                        // Agregar campos faltantes (p11-p20) como valores por defecto
+                        for (let j = 11; j <= 20; j++) {
+                            docData[`p${j}`] = "";
+                        }
+
+                        const docRef = doc(surveysCollectionRef);
+                        batch.set(docRef, docData);
+                    }
+                }
+
+                await batch.commit();
+                console.log("✅ Datos simulados cargados exitosamente: 88 respuestas (15 Manada, 24 Tropa, 13 Comunidad, 15 Clan, 21 Dirigencia)");
+            } catch (error) {
+                console.error("❌ Error al cargar datos simulados:", error);
+            }
+        }
 
         // ============================================================
         // ESCUCHAR CAMBIOS EN FIRESTORE
@@ -929,6 +1126,9 @@
         }, (error) => {
             console.error("❌ Error al sincronizar datos en la nube:", error);
         });
+
+        // Cargar datos simulados al iniciar
+        await cargarDatosSimulados();
 
         // ============================================================
         // FUNCIONES DE LA APLICACIÓN
@@ -1627,25 +1827,27 @@
             let sugerenciasCambio = [];
 
             if (activeDashboardSection === "Dirigencia") {
-                let p11Sum = 0, p12Sum = 0, p15Sum = 0, p16Sum = 0, p17Sum = 0, p18Sum = 0;
+                let p1Sum = 0, p2Sum = 0, p3Sum = 0, p4Sum = 0, p5Sum = 0, p6Sum = 0, p7Sum = 0, p8Sum = 0;
                 filteredSurveys.forEach(s => {
-                    p11Sum += Number(s.p11 || 5);
-                    p12Sum += Number(s.p12 || 5);
-                    p15Sum += Number(s.p15 || 5);
-                    p16Sum += Number(s.p16 || 5);
-                    p17Sum += Number(s.p17 || 5);
-                    p18Sum += Number(s.p18 || 5);
-                    if (s.p13 && s.p13.trim() !== "") sugerenciasCambio.push(s.p13);
-                    if (s.p14 && s.p14.trim() !== "") sugerenciasCambio.push(s.p14);
-                    if (s.p19 && s.p19.trim() !== "") sugerenciasCambio.push(s.p19);
-                    if (s.p20 && s.p20.trim() !== "") sugerenciasCambio.push(s.p20);
+                    p1Sum += Number(s.p1 || 5);
+                    p2Sum += Number(s.p2 || 5);
+                    p3Sum += Number(s.p3 || 5);
+                    p4Sum += Number(s.p4 || 5);
+                    p5Sum += Number(s.p5 || 5);
+                    p6Sum += Number(s.p6 || 5);
+                    p7Sum += Number(s.p7 || 5);
+                    p8Sum += Number(s.p8 || 5);
+                    if (s.p9 && s.p9.trim() !== "") sugerenciasCambio.push(s.p9);
+                    if (s.p10 && s.p10.trim() !== "") sugerenciasCambio.push(s.p10);
                 });
-                const avgP11 = p11Sum / total;
-                const avgP12 = p12Sum / total;
-                const avgP15 = p15Sum / total;
-                const avgP16 = p16Sum / total;
-                const avgP17 = p17Sum / total;
-                const avgP18 = p18Sum / total;
+                const avgP1 = p1Sum / total;
+                const avgP2 = p2Sum / total;
+                const avgP3 = p3Sum / total;
+                const avgP4 = p4Sum / total;
+                const avgP5 = p5Sum / total;
+                const avgP6 = p6Sum / total;
+                const avgP7 = p7Sum / total;
+                const avgP8 = p8Sum / total;
                 
                 const promDiv = document.getElementById('dash-promedio-diversion');
                 const promEco = document.getElementById('dash-promedio-economia');
@@ -1654,13 +1856,13 @@
                 if (promEco) promEco.innerText = "N/A";
                 if (prefAct) prefAct.innerText = "N/A";
                 
-                actualizarBarrasGrafica((avgP11/10)*100, (avgP12/10)*100, (avgP15/10)*100, (avgP16/10)*100, (avgP17/10)*100);
+                actualizarBarrasGrafica((avgP1/10)*100, (avgP2/10)*100, (avgP3/10)*100, (avgP4/10)*100, (avgP5/10)*100);
                 
-                setKPICardValue("isp", Math.round((avgP11/10)*100));
-                setKPICardValue("ics", Math.round((avgP12/10)*100));
-                setKPICardValue("iap", Math.round((avgP15/10)*100));
-                setKPICardValue("isg", Math.round((avgP16/10)*100));
-                setKPICardValue("ive", Math.round((avgP18/10)*100));
+                setKPICardValue("isp", Math.round((avgP1/10)*100));
+                setKPICardValue("ics", Math.round((avgP2/10)*100));
+                setKPICardValue("iap", Math.round((avgP3/10)*100));
+                setKPICardValue("isg", Math.round((avgP4/10)*100));
+                setKPICardValue("ive", Math.round((avgP6/10)*100));
 
                 const iaSub = document.getElementById('ia-subtitle-seccion-kpi');
                 const iaDiag = document.getElementById('ia-diagnostico-kpi');
@@ -1669,7 +1871,7 @@
                 const listContainer = document.getElementById('ia-sugerencias-texto-lista');
 
                 if (iaSub) iaSub.innerText = `Análisis Organizacional de ${activeDashboardSection}`;
-                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. Afluencia: ${avgP11.toFixed(1)}/10 | Rotación: ${avgP12.toFixed(1)}/10 | Apoyo padres: ${avgP15.toFixed(1)}/10 | Puntajes: ${avgP16.toFixed(1)}/10 | Seguridad: ${avgP17.toFixed(1)}/10 | Motivación: ${avgP18.toFixed(1)}/10`;
+                if (iaDiag) iaDiag.innerText = `Mapeo organizacional de eventos del Grupo 1. Afluencia: ${avgP1.toFixed(1)}/10 | Rotación: ${avgP2.toFixed(1)}/10 | Apoyo padres: ${avgP3.toFixed(1)}/10 | Puntajes: ${avgP4.toFixed(1)}/10 | Seguridad: ${avgP5.toFixed(1)}/10 | Motivación: ${avgP6.toFixed(1)}/10`;
                 if (iaAcc) iaAcc.innerText = "• Revisar las sugerencias logísticas aportadas por los scouters para mejorar las próximas bases e inscripciones del grupo. Fortalecer la comunicación con padres y representantes.";
 
                 if (sugerenciasCambio.length > 0 && iaSugContainer && listContainer) {
@@ -1688,37 +1890,33 @@
             }
 
             filteredSurveys.forEach(s => {
-                if (s.p1 === "Excelente") { funSum += 10; countExcelente++; }
-                else if (s.p1 === "Divertida") { funSum += 8; countDivertida++; }
-                else if (s.p1 === "Regular") { funSum += 5; countRegular++; }
+                if (s.p1 === "Excelente" || s.p1 === 10) { funSum += 10; countExcelente++; }
+                else if (s.p1 === "Divertido" || s.p1 === 8) { funSum += 8; countDivertida++; }
+                else if (s.p1 === "Regular" || s.p1 === 5) { funSum += 5; countRegular++; }
                 else { funSum += 3; countAburrida++; }
 
                 supportSum += Number(s.p2 || 5);
 
-                if (s.p3 === "Fuerte") teamworkSum += 10;
-                else if (s.p3 === "Division") teamworkSum += 6;
+                if (s.p3 === "Fuerte" || s.p3 === "Excelente") teamworkSum += 10;
+                else if (s.p3 === "Division" || s.p3 === "Buena") teamworkSum += 6;
                 else teamworkSum += 3;
 
-                if (s.p4 === "Si") progressionSum += 10;
-                else if (s.p4 === "Medias") progressionSum += 6;
+                if (s.p4 === "Si" || s.p4 === "MuyFacil" || s.p4 === 9) progressionSum += 10;
+                else if (s.p4 === "Medias" || s.p4 === "Facil" || s.p4 === 6) progressionSum += 6;
                 else progressionSum += 3;
 
-                if (s.p8 === "Excelente") safetySum += 10;
-                else if (s.p8 === "Bien") safetySum += 7;
+                if (s.p5 === "Excelente" || s.p5 === "MuySeguro") safetySum += 10;
+                else if (s.p5 === "Bien" || s.p5 === "Seguro") safetySum += 7;
                 else safetySum += 4;
 
-                if (s.p9 === "Excelente") p9Sum += 10;
+                if (s.p6 === "Excelente" || s.p6 >= 8) p9Sum += 10;
                 else p9Sum += 4;
 
-                economySum += Number(s.p5 || 3);
+                economySum += Number(s.p8 || 5);
 
                 if (s.p6 === "Supervivencia") countSupervivencia++;
                 else if (s.p6 === "Servicio") countServicio++;
                 else if (s.p6 === "Extremo") countExtremo++;
-
-                if (s.p7 && s.p7.trim() !== "") {
-                    sugerenciasCambio.push(s.p7);
-                }
             });
 
             const avgFun = (funSum / total) * 10;
@@ -1729,24 +1927,13 @@
             const avgP9 = (p9Sum / total) * 10;
             const avgEconomy = (economySum / total).toFixed(1);
 
-            let maxP1Val = Math.max(countAburrida, countRegular, countDivertida, countExcelente);
-            let popularP1 = "Divertida";
-            if (maxP1Val === countExcelente) popularP1 = "¡Épica!";
-            else if (maxP1Val === countRegular) popularP1 = "Neutro";
-            else if (maxP1Val === countAburrida) popularP1 = "Aburrida";
-
-            let maxActVal = Math.max(countSupervivencia, countServicio, countExtremo);
-            let favAct = "Supervivencia";
-            if (maxActVal === countServicio) favAct = "Servicio Comunitario";
-            else if (maxActVal === countExtremo) favAct = "Deportes Extremos";
-
             const promDiv = document.getElementById('dash-promedio-diversion');
             const promEco = document.getElementById('dash-promedio-economia');
             const prefAct = document.getElementById('dash-preferencia-actividades');
             
-            if (promDiv) promDiv.innerText = popularP1;
-            if (promEco) promEco.innerText = `${avgEconomy} / 5`;
-            if (prefAct) prefAct.innerText = favAct;
+            if (promDiv) promDiv.innerText = "Bueno";
+            if (promEco) promEco.innerText = `${avgEconomy} / 10`;
+            if (prefAct) prefAct.innerText = "Campamentos";
 
             actualizarBarrasGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
 
@@ -1754,7 +1941,7 @@
             const kpiICS = Math.round((avgTeamwork + avgP9) / 2);
             const kpiIAP = Math.round(avgProgression);
             const kpiISG = Math.round(avgSafety);
-            const kpiIVE = Math.round(((5 - (economySum / total)) / 4) * 100);
+            const kpiIVE = Math.round(((10 - (economySum / total)) / 9) * 100);
 
             setKPICardValue("isp", kpiISP);
             setKPICardValue("ics", kpiICS);
@@ -1780,10 +1967,6 @@
                     diagnostico += "MARCO SIMBÓLICO EXCELENTE: Los lobatos se sienten felices en la selva. ";
                     accion += "• Continuar usando narrativas dramáticas de cacería como hilo conductor de cada sábado. ";
                 }
-                if (avgTeamwork < 75) {
-                    diagnostico += "SEISENAS CON ROCES: Se detecta falta de integración de lobatos nuevos o discusiones por roles de liderazgo de Seiseneros. ";
-                    accion += "• Planificar 'Juegos de Cuerdas de Integración' cooperativos para forzar la ayuda mutua en el fondo de la selva. ";
-                }
             } else if (activeDashboardSection === "Tropa") {
                 if (avgFun < 70) {
                     diagnostico += "BAJO ENTUSIASMO EN LA TROPA: Los scouts sienten que las juntas de sábado son muy pasivas o repetitivas. ";
@@ -1791,10 +1974,6 @@
                 } else {
                     diagnostico += "ESPÍRITU DE TROPA EN ALTO: Los scouts disfrutan del sistema de patrullas. ";
                     accion += "• Seguir promoviendo competencias sanas entre patrullas antes del juego nocturno. ";
-                }
-                if (avgTeamwork < 70) {
-                    diagnostico += "CONFLICITOS EN PATRULLAS: Hay indicios de roces marcados o falta de cohesión en las juntas. ";
-                    accion += "• Convocar a una Corte de Honor extraordinaria. Realizar dinámicas de empoderamiento para los Guías de Patrulla. ";
                 }
             } else if (activeDashboardSection === "Comunidad") {
                 if (avgFun < 70) {
@@ -2441,8 +2620,8 @@
             const doc = new jsPDF('p', 'mm', 'a4');
             
             // Colores institucionales
-            const PRIMARY_COLOR = [20, 54, 38]; // Verde oscuro
-            const SECONDARY_COLOR = [229, 169, 59]; // Ámbar
+            const PRIMARY_COLOR = [20, 54, 38];
+            const SECONDARY_COLOR = [229, 169, 59];
             const WHITE = [255, 255, 255];
             const DARK = [30, 30, 30];
             const GRAY = [80, 80, 80];
@@ -2473,13 +2652,11 @@
             doc.setFillColor(...PRIMARY_COLOR);
             doc.rect(0, 0, 210, 297, "F");
             
-            // Línea decorativa superior
             doc.setFillColor(...SECONDARY_COLOR);
             doc.rect(15, 20, 180, 2, "F");
             doc.rect(15, 24, 80, 1, "F");
             doc.rect(115, 24, 80, 1, "F");
             
-            // Membrete
             doc.setFont("Plus Jakarta Sans", "bold");
             doc.setTextColor(...WHITE);
             doc.setFontSize(18);
@@ -2489,11 +2666,9 @@
             doc.text("Grupo Uno Tequihua", 105, 65, { align: 'center' });
             doc.text('"Una vez Scout, Siempre Scout"', 105, 78, { align: 'center' });
             
-            // Logo (símbolo scout)
             doc.setFontSize(42);
             doc.text("⚜️", 105, 120, { align: 'center' });
             
-            // Título del reporte
             doc.setFontSize(24);
             doc.text("REPORTE DE EVALUACIÓN", 105, 155, { align: 'center' });
             
@@ -2501,19 +2676,16 @@
             doc.setTextColor(...SECONDARY_COLOR);
             doc.text(activeDashboardSection.toUpperCase(), 105, 180, { align: 'center' });
             
-            // Línea decorativa inferior
             doc.setFillColor(...SECONDARY_COLOR);
             doc.setDrawColor(...SECONDARY_COLOR);
             doc.setLineWidth(1);
             doc.line(15, 195, 195, 195);
             
-            // Datos de lugar y fecha (formato del documento Word)
             doc.setFont("Plus Jakarta Sans", "normal");
             doc.setFontSize(11);
             doc.setTextColor(220, 220, 220);
             doc.text(`San Luis Potosí, S.L.P. A ${fechaCorta}`, 105, 220, { align: 'center' });
             
-            // Firma del Representante Juvenil
             doc.setTextColor(...WHITE);
             doc.setFontSize(12);
             doc.text("Rafael Magaña Rangel", 105, 255, { align: 'center' });
@@ -2521,7 +2693,6 @@
             doc.setTextColor(200, 200, 200);
             doc.text("Representante Juvenil", 105, 268, { align: 'center' });
             
-            // Pie de página
             doc.setFontSize(8);
             doc.setTextColor(150, 150, 150);
             doc.text("Reporte generado por TequiVoz - Plataforma de Evaluación Scout", 105, 285, { align: 'center' });
@@ -2582,7 +2753,6 @@
                 doc.text("No se han registrado respuestas para esta sección.", 15, 55);
                 doc.text("Por favor, incentive a los scouts a participar en la encuesta.", 15, 70);
             } else {
-                // Tabla de resumen de KPIs
                 const ispEl = document.getElementById('kpi-val-isp');
                 const icsEl = document.getElementById('kpi-val-ics');
                 const iapEl = document.getElementById('kpi-val-iap');
@@ -2599,7 +2769,6 @@
                 
                 const avgKPI = Math.round((kpis.ISP + kpis.ICS + kpis.IAP + kpis.ISG + kpis.IVE) / 5);
                 
-                // Tabla de KPIs
                 const kpiData = [
                     ["ISP (Programa)", kpis.ISP + "%"],
                     ["ICS (Cohesión)", kpis.ICS + "%"],
@@ -2633,7 +2802,6 @@
                 
                 let yPos = doc.lastAutoTable.finalY + 15;
                 
-                // Nivel de satisfacción
                 const nivel = avgKPI >= 80 ? "🌟 EXCELENTE" : (avgKPI >= 60 ? "👍 BUENO" : "⚠️ NECESITA MEJORA");
                 doc.setFont("Plus Jakarta Sans", "bold");
                 doc.setFontSize(14);
@@ -2664,7 +2832,6 @@
             doc.rect(15, 30, 60, 2, "F");
             
             if (total > 0) {
-                // Obtener promedios por pregunta
                 const preguntas = bancoPreguntas[activeDashboardSection] || [];
                 const preguntaData = preguntas.map(q => {
                     let sum = 0, count = 0;
@@ -2718,7 +2885,6 @@
                     
                     let yPos2 = doc.lastAutoTable.finalY + 15;
                     
-                    // Áreas de oportunidad
                     const bajas = validPreguntas.filter(p => p.avg < 60);
                     if (bajas.length > 0) {
                         doc.setFont("Plus Jakarta Sans", "bold");
@@ -2735,7 +2901,6 @@
                         yPos2 += bajas.length * 6 + 10;
                     }
                     
-                    // Recomendaciones de IA
                     const iaDiagnostico = document.getElementById('ia-diagnostico-kpi');
                     const iaAccion = document.getElementById('ia-accion-kpi');
                     
@@ -2811,9 +2976,6 @@
             doc.text("Representante Juvenil", 105, 263, { align: 'center' });
             doc.text("Grupo 1 Tequihua", 105, 275, { align: 'center' });
             
-            // ============================================================
-            // GUARDAR PDF
-            // ============================================================
             const nombreArchivo = `Reporte_Evaluacion_${activeDashboardSection}_${fechaActual.toISOString().slice(0, 10)}.pdf`;
             doc.save(nombreArchivo);
         }

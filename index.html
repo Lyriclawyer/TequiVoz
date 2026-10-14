@@ -20,17 +20,10 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        manada: '#ffb703',
-                        tropa: '#06d6a0',
-                        comunidad: '#118ab2',
-                        clan: '#ef476f',
-                        appleDark: '#1d1d1f',
-                        appleGray: '#f5f5f7',
-                        appleAccent: '#0071e3'
+                        manada: '#ffb703', tropa: '#06d6a0', comunidad: '#118ab2', clan: '#ef476f',
+                        appleDark: '#1d1d1f', appleGray: '#f5f5f7', appleAccent: '#0071e3'
                     }
                 }
             }
@@ -38,232 +31,43 @@
     </script>
 
     <style>
-        .gradient-bg {
-            background: radial-gradient(circle at 10% 20%, rgba(244, 247, 246, 1) 0%, rgba(230, 237, 235, 1) 90%);
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            z-index: -2;
-            overflow: hidden;
-        }
-
-        .blob {
-            position: absolute;
-            background: linear-gradient(180deg, rgba(6, 214, 160, 0.12) 0%, rgba(17, 138, 178, 0.12) 100%);
-            filter: blur(80px);
-            border-radius: 50%;
-            animation: moveBlobs 25s infinite alternate ease-in-out;
-            z-index: -1;
-        }
-
-        @keyframes moveBlobs {
-            0% { transform: translateY(0px) translateX(0px) scale(1); }
-            50% { transform: translateY(100px) translateX(150px) scale(1.3); }
-            100% { transform: translateY(-50px) translateX(-100px) scale(0.8); }
-        }
-
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.78);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .transition-apple {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .bounce-hover:hover {
-            transform: scale(1.025) translateY(-2px);
-        }
-
-        .bounce-hover:active {
-            transform: scale(0.98) translateY(0px);
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .apple-range {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 8px;
-            border-radius: 4px;
-            background: #e5e5e7;
-            outline: none;
-        }
-
-        .apple-range::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #ffffff;
-            border: 2px solid #0071e3;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .apple-range::-webkit-slider-thumb:active {
-            transform: scale(1.2);
-        }
-
-        #custom-alert {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(8px);
-            padding: 1rem;
-        }
-        #custom-alert:not(.hidden) {
-            display: flex;
-        }
-        .custom-alert-box {
-            max-width: 400px;
-            width: 100%;
-        }
-
-        #modal-reset-confirm {
-            position: fixed;
-            inset: 0;
-            z-index: 300;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
-        }
-        #modal-reset-confirm:not(.hidden) {
-            display: flex;
-        }
-        .reset-confirm-box {
-            max-width: 450px;
-            width: 100%;
-        }
-        #reset-confirm-input {
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 800;
-        }
-        #reset-confirm-input:focus {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
-        }
-
-        .respuestas-table-container {
-            overflow-x: auto;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        .respuestas-table-container table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            min-width: 1200px;
-        }
-        .respuestas-table-container table th {
-            background: #1a1a2e;
-            color: white;
-            padding: 10px 8px;
-            text-align: left;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            font-weight: 600;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-        .respuestas-table-container table td {
-            padding: 8px;
-            border-bottom: 1px solid #e5e7eb;
-            vertical-align: middle;
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .respuestas-table-container table tr:hover td {
-            background: #f3f4f6;
-        }
-        .respuestas-table-container table tr:nth-child(even) td {
-            background: #fafafa;
-        }
-        .respuestas-table-container table tr:nth-child(even):hover td {
-            background: #f3f4f6;
-        }
-        .respuestas-table-container .badge-rama {
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 9px;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: inline-block;
-        }
+        .gradient-bg { background: radial-gradient(circle at 10% 20%, rgba(244, 247, 246, 1) 0%, rgba(230, 237, 235, 1) 90%); position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; z-index: -2; overflow: hidden; }
+        .blob { position: absolute; background: linear-gradient(180deg, rgba(6, 214, 160, 0.12) 0%, rgba(17, 138, 178, 0.12) 100%); filter: blur(80px); border-radius: 50%; animation: moveBlobs 25s infinite alternate ease-in-out; z-index: -1; }
+        @keyframes moveBlobs { 0% { transform: translateY(0px) translateX(0px) scale(1); } 50% { transform: translateY(100px) translateX(150px) scale(1.3); } 100% { transform: translateY(-50px) translateX(-100px) scale(0.8); } }
+        .glass-panel { background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .glass-nav { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .transition-apple { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .bounce-hover:hover { transform: scale(1.025) translateY(-2px); }
+        .bounce-hover:active { transform: scale(0.98) translateY(0px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .apple-range { -webkit-appearance: none; width: 100%; height: 8px; border-radius: 4px; background: #e5e5e7; outline: none; }
+        .apple-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #ffffff; border: 2px solid #0071e3; box-shadow: 0px 4px 10px rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.1s; }
+        .apple-range::-webkit-slider-thumb:active { transform: scale(1.2); }
+        #custom-alert { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); padding: 1rem; }
+        #custom-alert:not(.hidden) { display: flex; }
+        .custom-alert-box { max-width: 400px; width: 100%; }
+        #modal-reset-confirm { position: fixed; inset: 0; z-index: 300; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); padding: 1rem; }
+        #modal-reset-confirm:not(.hidden) { display: flex; }
+        .reset-confirm-box { max-width: 450px; width: 100%; }
+        #reset-confirm-input { text-transform: uppercase; letter-spacing: 2px; font-weight: 800; }
+        #reset-confirm-input:focus { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); }
+        .respuestas-table-container { overflow-x: auto; max-height: 500px; overflow-y: auto; }
+        .respuestas-table-container table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 1200px; }
+        .respuestas-table-container table th { background: #1a1a2e; color: white; padding: 10px 8px; text-align: left; position: sticky; top: 0; z-index: 10; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        .respuestas-table-container table td { padding: 8px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .respuestas-table-container table tr:hover td { background: #f3f4f6; }
+        .respuestas-table-container table tr:nth-child(even) td { background: #fafafa; }
+        .respuestas-table-container table tr:nth-child(even):hover td { background: #f3f4f6; }
+        .respuestas-table-container .badge-rama { padding: 2px 10px; border-radius: 12px; font-size: 9px; font-weight: 700; text-transform: uppercase; display: inline-block; }
         .badge-manada { background: #fef3c7; color: #92400e; }
         .badge-tropa { background: #d1fae5; color: #065f46; }
         .badge-comunidad { background: #dbeafe; color: #1e40af; }
         .badge-clan { background: #fce4ec; color: #9b1d20; }
         .badge-dirigencia { background: #e2e8f0; color: #1e293b; }
-
-        .credits-bar {
-            text-align: center;
-            padding: 20px 0 10px 0;
-            position: relative;
-            z-index: 10;
-            background: transparent;
-            border: none;
-        }
-        .credits-bar span {
-            font-family: 'Plus Jakarta Sans', 'sans-serif';
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.7), rgba(99, 102, 241, 0.7), rgba(139, 92, 246, 0.7));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 1px 20px rgba(16, 185, 129, 0.1);
-            display: inline-block;
-            padding: 0;
-            border: none;
-            border-radius: 0;
-            background-color: transparent;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            box-shadow: none;
-            transition: all 0.3s ease;
-            text-transform: none;
-        }
-        .credits-bar span:hover {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.9));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transform: scale(1.02);
-        }
+        .credits-bar { text-align: center; padding: 20px 0 10px 0; position: relative; z-index: 10; background: transparent; border: none; }
+        .credits-bar span { font-family: 'Plus Jakarta Sans', 'sans-serif'; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.7), rgba(99, 102, 241, 0.7), rgba(139, 92, 246, 0.7)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 1px 20px rgba(16, 185, 129, 0.1); display: inline-block; padding: 0; border: none; border-radius: 0; background-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; transition: all 0.3s ease; text-transform: none; }
+        .credits-bar span:hover { background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.9)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; transform: scale(1.02); }
     </style>
 </head>
 <body class="antialiased min-h-screen text-appleDark no-scrollbar">
@@ -273,7 +77,6 @@
         <div class="blob w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-duration: 35s;"></div>
     </div>
 
-    <!-- MODAL PERSONALIZADO -->
     <div id="custom-alert" class="hidden">
         <div class="custom-alert-box glass-panel rounded-[32px] p-8 shadow-2xl text-center">
             <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mx-auto mb-4">
@@ -281,45 +84,30 @@
             </div>
             <h3 id="custom-alert-title" class="text-xl font-extrabold text-gray-900 mb-2">Aviso</h3>
             <p id="custom-alert-message" class="text-gray-600 text-sm font-medium leading-relaxed mb-6">Mensaje</p>
-            <button onclick="cerrarAlert()" class="px-8 py-3 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple shadow-lg active:scale-95">
-                Entendido
-            </button>
+            <button onclick="cerrarAlert()" class="px-8 py-3 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple shadow-lg active:scale-95">Entendido</button>
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMACIÓN PARA RESETEAR DATOS -->
     <div id="modal-reset-confirm" class="hidden">
         <div class="reset-confirm-box glass-panel rounded-[32px] p-8 shadow-2xl text-center border-2 border-red-200">
             <div class="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-3xl mx-auto mb-4 border-4 border-red-200">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
             <h3 class="text-2xl font-extrabold text-gray-900 mb-2">⚠️ ¡ADVERTENCIA!</h3>
-            <p class="text-gray-600 text-sm font-medium leading-relaxed mb-4">
-                Esta acción <span class="text-red-600 font-bold">BORRARÁ PERMANENTEMENTE</span> todos los datos de encuestas para la sección <span id="reset-seccion-nombre" class="font-bold text-indigo-600">Manada</span>.
-            </p>
-            <p class="text-gray-500 text-xs font-semibold mb-4">
-                Esta operación no se puede deshacer. Se eliminarán tanto los datos locales como los de la nube.
-            </p>
+            <p class="text-gray-600 text-sm font-medium leading-relaxed mb-4">Esta acción <span class="text-red-600 font-bold">BORRARÁ PERMANENTEMENTE</span> todos los datos de encuestas para la sección <span id="reset-seccion-nombre" class="font-bold text-indigo-600">Manada</span>.</p>
             <div class="bg-red-50 border-2 border-red-200 rounded-xl p-4 mb-4">
-                <p class="text-red-700 text-xs font-bold uppercase tracking-wider">
-                    Para confirmar, escribe exactamente: <span class="text-lg block mt-1">"CONFIRMAR"</span>
-                </p>
+                <p class="text-red-700 text-xs font-bold uppercase tracking-wider">Para confirmar, escribe exactamente: <span class="text-lg block mt-1">"CONFIRMAR"</span></p>
             </div>
             <div class="space-y-4">
                 <input type="text" id="reset-confirm-input" class="w-full rounded-xl border-2 border-gray-300 px-4 py-3 font-bold text-center text-lg focus:border-red-500 outline-none transition-apple uppercase tracking-widest" placeholder="CONFIRMAR" autocomplete="off">
                 <div class="flex gap-3">
-                    <button onclick="cancelarResetDatos()" class="flex-1 py-3.5 rounded-xl border-2 border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-apple text-sm uppercase tracking-wider">
-                        Cancelar
-                    </button>
-                    <button onclick="ejecutarResetDatos()" id="btn-reset-ejecutar" class="flex-1 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold transition-apple text-sm uppercase tracking-wider shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                        <i class="fa-solid fa-trash-can mr-2"></i> Borrar Datos
-                    </button>
+                    <button onclick="cancelarResetDatos()" class="flex-1 py-3.5 rounded-xl border-2 border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-apple text-sm uppercase tracking-wider">Cancelar</button>
+                    <button onclick="ejecutarResetDatos()" id="btn-reset-ejecutar" class="flex-1 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold transition-apple text-sm uppercase tracking-wider shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled><i class="fa-solid fa-trash-can mr-2"></i> Borrar Datos</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- CABECERA FLOTANTE -->
     <nav class="glass-nav fixed top-0 left-0 w-full z-50 transition-apple px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4 cursor-pointer hover:opacity-90 transition-apple" onclick="regresarAlInicio()">
             <img src="Logo 1.png" alt="Logo Grupo 1 Tequihua" class="h-14 w-auto drop-shadow-md hover:scale-105 transition-apple">
@@ -328,11 +116,8 @@
                 <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest leading-none">Grupo 1 SLP</p>
             </div>
         </div>
-        
         <div class="flex items-center gap-4">
-            <button id="btn-portal-scouter-nav" onclick="mostrarModalAutenticar()" class="px-5 py-2.5 rounded-full bg-appleDark text-white text-sm font-semibold hover:bg-black transition-apple shadow-lg hover:shadow-xl active:scale-95 flex items-center gap-2">
-                <i class="fa-solid fa-user-shield"></i> Portal Scouter
-            </button>
+            <button id="btn-portal-scouter-nav" onclick="mostrarModalAutenticar()" class="px-5 py-2.5 rounded-full bg-appleDark text-white text-sm font-semibold hover:bg-black transition-apple shadow-lg hover:shadow-xl active:scale-95 flex items-center gap-2"><i class="fa-solid fa-user-shield"></i> Portal Scouter</button>
         </div>
     </nav>
 
@@ -340,48 +125,29 @@
 
         <section id="pantalla-inicio" class="text-center transition-apple w-full">
             <span class="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-widest inline-block mb-6 shadow-sm">Representación Juvenil</span>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
-                Tu voz es el mapa de <br><span class="bg-gradient-to-r from-emerald-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent">nuestras aventuras.</span>
-            </h1>
-            <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto mb-12 font-medium">
-                TequiVoz es la plataforma interactiva oficial para evaluar y planificar las mejores actividades de sábado del Grupo 1 Tequihua. Elige tu sección para comenzar.
-            </p>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight">Tu voz es el mapa de <br><span class="bg-gradient-to-r from-emerald-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent">nuestras aventuras.</span></h1>
+            <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto mb-12 font-medium">TequiVoz es la plataforma interactiva oficial para evaluar y planificar las mejores actividades de sábado del Grupo 1 Tequihua. Elige tu sección para comenzar.</p>
 
             <div id="grid-secciones" class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto mb-8">
                 <button id="btn-home-manada" onclick="empezarEncuesta('Manada')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-manada flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <img src="Logo 2.png" alt="Logo Manada de Lobatos" class="h-24 w-auto object-contain drop-shadow-sm">
-                    <div class="text-center">
-                        <span class="font-extrabold text-lg block">Manada</span>
-                        <p class="text-[10px] text-yellow-600 font-bold uppercase tracking-wider">Lobatos</p>
-                    </div>
+                    <img src="Logo 2.png" alt="Logo Manada" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center"><span class="font-extrabold text-lg block">Manada</span><p class="text-[10px] text-yellow-600 font-bold uppercase tracking-wider">Lobatos</p></div>
                 </button>
                 <button id="btn-home-tropa" onclick="empezarEncuesta('Tropa')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-tropa flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <img src="Logo 3.png" alt="Logo Tropa de Scouts" class="h-24 w-auto object-contain drop-shadow-sm">
-                    <div class="text-center">
-                        <span class="font-extrabold text-lg block">Tropa</span>
-                        <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">Scouts</p>
-                    </div>
+                    <img src="Logo 3.png" alt="Logo Tropa" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center"><span class="font-extrabold text-lg block">Tropa</span><p class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">Scouts</p></div>
                 </button>
                 <button id="btn-home-comunidad" onclick="empezarEncuesta('Comunidad')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-comunidad flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <img src="Logo 4.png" alt="Logo Comunidad de Caminantes" class="h-24 w-auto object-contain drop-shadow-sm">
-                    <div class="text-center">
-                        <span class="font-extrabold text-lg block">Comunidad</span>
-                        <p class="text-[10px] text-sky-600 font-bold uppercase tracking-wider">Caminantes</p>
-                    </div>
+                    <img src="Logo 4.png" alt="Logo Comunidad" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center"><span class="font-extrabold text-lg block">Comunidad</span><p class="text-[10px] text-sky-600 font-bold uppercase tracking-wider">Caminantes</p></div>
                 </button>
                 <button id="btn-home-clan" onclick="empezarEncuesta('Clan')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-clan flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
-                    <img src="Logo 5.png" alt="Logo Clan de Rovers" class="h-24 w-auto object-contain drop-shadow-sm">
-                    <div class="text-center">
-                        <span class="font-extrabold text-lg block">Clan</span>
-                        <p class="text-[10px] text-rose-600 font-bold uppercase tracking-wider">Rovers</p>
-                    </div>
+                    <img src="Logo 5.png" alt="Logo Clan" class="h-24 w-auto object-contain drop-shadow-sm">
+                    <div class="text-center"><span class="font-extrabold text-lg block">Clan</span><p class="text-[10px] text-rose-600 font-bold uppercase tracking-wider">Rovers</p></div>
                 </button>
                 <button id="btn-home-dirigencia" onclick="empezarEncuesta('Dirigencia')" class="glass-panel p-6 rounded-[28px] border-2 border-transparent hover:border-slate-800 flex flex-col items-center gap-4 transition-apple bounce-hover shadow-md">
                     <img src="Logo 1.png" alt="Logo Dirigencia" class="h-24 w-auto object-contain drop-shadow-sm">
-                    <div class="text-center">
-                        <span class="font-extrabold text-lg block">Dirigencia</span>
-                        <p class="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Scouters</p>
-                    </div>
+                    <div class="text-center"><span class="font-extrabold text-lg block">Dirigencia</span><p class="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Scouters</p></div>
                 </button>
             </div>
         </section>
@@ -390,7 +156,7 @@
             <div class="glass-panel rounded-[32px] p-6 md:p-10 shadow-2xl">
                 <div class="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
                     <div class="flex items-center gap-4">
-                        <img id="seccion-logo-activo" src="Logo 2.png" alt="Logotipo Sección Activa" class="h-16 w-auto object-contain">
+                        <img id="seccion-logo-activo" src="Logo 2.png" alt="Logo Sección" class="h-16 w-auto object-contain">
                         <div>
                             <span id="badge-seccion-activa" class="text-xs font-black uppercase px-3 py-1 rounded-full text-white tracking-widest shadow-sm">Sección</span>
                             <h3 class="text-lg font-extrabold mt-1 text-gray-700">Encuesta de Satisfacción</h3>
@@ -398,23 +164,16 @@
                     </div>
                     <span id="contador-progreso" class="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1.5 rounded-full">Pregunta 1 de 10</span>
                 </div>
-
                 <div class="mb-10">
                     <div class="relative w-full h-3 bg-gray-200 rounded-full overflow-visible border border-gray-300">
                         <div id="progreso-barra" class="h-full bg-gradient-to-r from-emerald-500 to-indigo-600 rounded-full transition-all duration-500" style="width: 10%;"></div>
                         <div id="token-scout" class="absolute top-[-10px] left-[10%] -translate-x-1/2 transition-all duration-500 text-2xl filter drop-shadow-md">⛺</div>
                     </div>
                 </div>
-
                 <div id="formulario-preguntas"></div>
-
                 <div class="barra-navegacion flex justify-between mt-8 pt-6 border-t border-gray-100">
-                    <button id="btn-anterior" onclick="cambiarP(-1)" class="btn-nav-pop btn-izq text-gray-600 hover:bg-gray-200 px-6 py-3 rounded-xl font-bold transition-apple disabled:opacity-50" disabled>
-                        <i class="fa-solid fa-arrow-left mr-2"></i> Atrás
-                    </button>
-                    <button id="btn-siguiente" onclick="cambiarP(1)" class="btn-nav-pop btn-der text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-bold transition-apple">
-                        Siguiente <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </button>
+                    <button id="btn-anterior" onclick="cambiarP(-1)" class="btn-nav-pop btn-izq text-gray-600 hover:bg-gray-200 px-6 py-3 rounded-xl font-bold transition-apple disabled:opacity-50" disabled><i class="fa-solid fa-arrow-left mr-2"></i> Atrás</button>
+                    <button id="btn-siguiente" onclick="cambiarP(1)" class="btn-nav-pop btn-der text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-bold transition-apple">Siguiente <i class="fa-solid fa-arrow-right ml-2"></i></button>
                 </div>
             </div>
         </section>
@@ -423,11 +182,10 @@
             <div class="glass-panel rounded-[32px] p-8 shadow-2xl">
                 <div class="relative w-28 h-28 mx-auto mb-6 flex items-center justify-center bg-white rounded-full p-2 border border-gray-100 shadow-md">
                     <div id="biometric-ring" class="absolute inset-0 border-4 border-gray-200 rounded-full transition-all duration-[2s]"></div>
-                    <img src="Logo 1.png" alt="Logo Grupo 1 Tequihua" class="w-20 h-20 object-contain z-10 rounded-full">
+                    <img src="Logo 1.png" alt="Logo" class="w-20 h-20 object-contain z-10 rounded-full">
                 </div>
                 <h3 class="text-xl font-extrabold mb-2">Acceso Scouters & Representantes</h3>
                 <p class="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-6">Confirmación de Privacidad</p>
-                
                 <div class="flex flex-col gap-4 text-left">
                     <div>
                         <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Usuario Scouter</label>
@@ -439,14 +197,11 @@
                             <option value="dirigencia">Dirigencia de Grupo</option>
                         </select>
                     </div>
-
                     <div>
                         <label class="text-xs font-extrabold text-gray-500 uppercase block mb-1">Clave Tequihua</label>
                         <div class="relative">
                             <input type="password" id="admin-pass" class="w-full rounded-xl border border-gray-200 pl-4 pr-10 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple" placeholder="Ingresa la contraseña">
-                            <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-apple">
-                                <i id="admin-pass-eye" class="fa-solid fa-eye"></i>
-                            </button>
+                            <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-apple"><i id="admin-pass-eye" class="fa-solid fa-eye"></i></button>
                         </div>
                     </div>
                     <button onclick="validarCredenciales()" class="w-full py-3.5 rounded-xl bg-appleDark text-white font-bold hover:bg-black transition-apple shadow-lg">Verificar Identidad</button>
@@ -462,32 +217,20 @@
                     <p id="subtitulo-rol-scouter" class="text-gray-500 text-sm font-medium">Registro continuo de la satisfacción juvenil</p>
                 </div>
                 <div class="flex gap-3">
-                    <button onclick="abrirModalResetDatos()" class="px-5 py-2 rounded-full border-2 border-red-300 text-red-600 font-bold hover:bg-red-50 transition-apple flex items-center gap-2">
-                        <i class="fa-solid fa-trash-can"></i> Resetear Datos
-                    </button>
-                    <button onclick="cerrarSesionScouter()" class="px-5 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-bold hover:bg-gray-50 transition-apple">
-                        <i class="fa-solid fa-power-off mr-2"></i> Cerrar Sesión
-                    </button>
+                    <button onclick="abrirModalResetDatos()" class="px-5 py-2 rounded-full border-2 border-red-300 text-red-600 font-bold hover:bg-red-50 transition-apple flex items-center gap-2"><i class="fa-solid fa-trash-can"></i> Resetear Datos</button>
+                    <button onclick="cerrarSesionScouter()" class="px-5 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-bold hover:bg-gray-50 transition-apple"><i class="fa-solid fa-power-off mr-2"></i> Cerrar Sesión</button>
                 </div>
             </div>
 
             <div class="flex gap-4 border-b border-gray-200 mb-8">
-                <button id="tab-analytics" onclick="cambiarTabScouter('analytics')" class="pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple">
-                    <i class="fa-solid fa-chart-line mr-2"></i> Métricas
-                </button>
-                <button id="tab-editor" onclick="cambiarTabScouter('editor')" class="pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple">
-                    <i class="fa-solid fa-pen-to-square mr-2"></i> Diseñador
-                </button>
-                <button id="tab-respuestas" onclick="cambiarTabScouter('respuestas')" class="pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple">
-                    <i class="fa-solid fa-table mr-2"></i> Ver Respuestas
-                </button>
+                <button id="tab-analytics" onclick="cambiarTabScouter('analytics')" class="pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple"><i class="fa-solid fa-chart-line mr-2"></i> Métricas</button>
+                <button id="tab-editor" onclick="cambiarTabScouter('editor')" class="pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple"><i class="fa-solid fa-pen-to-square mr-2"></i> Diseñador</button>
+                <button id="tab-respuestas" onclick="cambiarTabScouter('respuestas')" class="pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple"><i class="fa-solid fa-table mr-2"></i> Ver Respuestas</button>
             </div>
 
             <div id="vista-scouter-analytics" class="space-y-8">
                 <div class="flex justify-end">
-                    <button onclick="generarReportePDF()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold transition-apple shadow-lg flex items-center gap-2 active:scale-95">
-                        <i class="fa-solid fa-file-pdf"></i> Descargar Reporte PDF
-                    </button>
+                    <button onclick="generarReportePDF()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold transition-apple shadow-lg flex items-center gap-2 active:scale-95"><i class="fa-solid fa-file-pdf"></i> Descargar Reporte PDF</button>
                 </div>
                 
                 <div id="selector-secciones-dash" class="flex flex-wrap gap-2 mb-8 bg-gray-100 p-1.5 rounded-2xl max-w-2xl">
@@ -502,29 +245,13 @@
                     <div class="glass-panel rounded-3xl p-6 shadow-lg md:col-span-2 text-left">
                         <h3 class="font-extrabold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-simple text-indigo-500"></i> Desempeño por Rama Seleccionada</h3>
                         <div class="h-64 flex items-end justify-between px-4 pb-2 border-b border-gray-200 pt-6">
-                            <div class="flex flex-col items-center gap-2 w-12">
-                                <div id="chart-fun" class="w-full bg-yellow-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div>
-                                <span class="text-[9px] font-black uppercase text-gray-400">Diversión</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2 w-12">
-                                <div id="chart-leaders" class="w-full bg-emerald-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div>
-                                <span class="text-[9px] font-black uppercase text-gray-400">Soporte</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2 w-12">
-                                <div id="chart-teamwork" class="w-full bg-sky-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div>
-                                <span class="text-[9px] font-black uppercase text-gray-400">Unión</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2 w-12">
-                                <div id="chart-progression" class="w-full bg-rose-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div>
-                                <span class="text-[9px] font-black uppercase text-gray-400">Avanzar</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2 w-12">
-                                <div id="chart-safety" class="w-full bg-violet-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div>
-                                <span class="text-[9px] font-black uppercase text-gray-400">Seguro</span>
-                            </div>
+                            <div class="flex flex-col items-center gap-2 w-12"><div id="chart-fun" class="w-full bg-yellow-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div><span class="text-[9px] font-black uppercase text-gray-400">Diversión</span></div>
+                            <div class="flex flex-col items-center gap-2 w-12"><div id="chart-leaders" class="w-full bg-emerald-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div><span class="text-[9px] font-black uppercase text-gray-400">Soporte</span></div>
+                            <div class="flex flex-col items-center gap-2 w-12"><div id="chart-teamwork" class="w-full bg-sky-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div><span class="text-[9px] font-black uppercase text-gray-400">Unión</span></div>
+                            <div class="flex flex-col items-center gap-2 w-12"><div id="chart-progression" class="w-full bg-rose-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div><span class="text-[9px] font-black uppercase text-gray-400">Avanzar</span></div>
+                            <div class="flex flex-col items-center gap-2 w-12"><div id="chart-safety" class="w-full bg-violet-400 rounded-t-lg transition-apple text-center text-[10px] font-black text-slate-900 pt-2" style="height: 0px;">0%</div><span class="text-[9px] font-black uppercase text-gray-400">Seguro</span></div>
                         </div>
                     </div>
-
                     <div class="glass-panel rounded-3xl p-6 shadow-lg flex flex-col justify-between text-left">
                         <div>
                             <h3 class="font-extrabold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-emerald-500"></i> Métricas en la Nube</h3>
@@ -544,30 +271,13 @@
                         <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider">Módulo de Co-creación Híbrido</span>
                         <h3 class="text-2xl font-extrabold text-slate-800">Evaluador de KPIs Scouts</h3>
                     </div>
-
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-                        <div id="kpi-card-isp" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.P. (Programa)</span>
-                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-isp">0%</div>
-                        </div>
-                        <div id="kpi-card-ics" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.C.S. (Cohesión)</span>
-                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-ics">0%</div>
-                        </div>
-                        <div id="kpi-card-iap" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.A.P. (Avance)</span>
-                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-iap">0%</div>
-                        </div>
-                        <div id="kpi-card-isg" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.G. (Seguridad)</span>
-                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-isg">0%</div>
-                        </div>
-                        <div id="kpi-card-ive" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.V.E. (Economía)</span>
-                            <div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-ive">0%</div>
-                        </div>
+                        <div id="kpi-card-isp" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple"><span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.P. (Programa)</span><div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-isp">0%</div></div>
+                        <div id="kpi-card-ics" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple"><span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.C.S. (Cohesión)</span><div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-ics">0%</div></div>
+                        <div id="kpi-card-iap" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple"><span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.A.P. (Avance)</span><div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-iap">0%</div></div>
+                        <div id="kpi-card-isg" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple"><span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.S.G. (Seguridad)</span><div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-isg">0%</div></div>
+                        <div id="kpi-card-ive" class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-apple"><span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">I.V.E. (Economía)</span><div class="w-16 h-16 rounded-full flex items-center justify-center border-4 border-slate-200 text-lg font-black" id="kpi-val-ive">0%</div></div>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
                             <label class="text-xs font-extrabold text-gray-500 uppercase block tracking-wider">Contexto Cualitativo (20%)</label>
@@ -582,23 +292,15 @@
                 </div>
 
                 <div class="bg-gradient-to-r from-emerald-950 to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden text-left">
-                    <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12">
-                        <i class="fa-solid fa-brain text-[200px]"></i>
-                    </div>
+                    <div class="absolute right-0 bottom-0 opacity-10 translate-x-12 translate-y-12"><i class="fa-solid fa-brain text-[200px]"></i></div>
                     <div class="flex items-center gap-3 mb-4">
                         <span class="bg-emerald-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider shadow-md">TequiVoz AI Engine</span>
                         <span id="ia-subtitle-seccion-kpi" class="text-xs text-gray-300 font-semibold">Análisis Pedagógico</span>
                     </div>
                     <h3 class="text-xl md:text-2xl font-extrabold mb-4">Plan de Acción Estratégico</h3>
                     <div class="space-y-6">
-                        <div>
-                            <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Diagnóstico General</span>
-                            <p id="ia-diagnostico-kpi" class="text-gray-300 text-sm font-medium leading-relaxed"></p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Líneas de Acción Inmediatas</span>
-                            <p id="ia-accion-kpi" class="text-gray-300 text-sm font-medium leading-relaxed"></p>
-                        </div>
+                        <div><span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Diagnóstico General</span><p id="ia-diagnostico-kpi" class="text-gray-300 text-sm font-medium leading-relaxed"></p></div>
+                        <div><span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-1">Líneas de Acción Inmediatas</span><p id="ia-accion-kpi" class="text-gray-300 text-sm font-medium leading-relaxed"></p></div>
                         <div id="ia-sugerencias-container" class="hidden bg-white/5 border border-white/10 rounded-2xl p-4">
                             <span class="text-xs font-black uppercase tracking-wider text-emerald-400 block mb-2">Últimas Sugerencias de Cambio</span>
                             <div id="ia-sugerencias-texto-lista" class="text-gray-300 text-xs italic font-medium space-y-1"></div>
@@ -609,40 +311,7 @@
 
             <div id="vista-scouter-editor" class="hidden text-left">
                 <div class="glass-panel rounded-3xl p-6 md:p-8 shadow-xl">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="md:col-span-1 border-r border-gray-100 pr-4">
-                            <h4 class="text-sm font-extrabold text-slate-500 uppercase tracking-widest mb-4">Selecciona Pregunta</h4>
-                            <div class="flex flex-col gap-2 max-h-[350px] overflow-y-auto no-scrollbar" id="editor-selector-preguntas-lista"></div>
-                        </div>
-                        <div class="md:col-span-2 space-y-6">
-                            <h4 class="text-sm font-extrabold text-slate-500 uppercase tracking-widest mb-4">Configuración de Pregunta</h4>
-                            <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl">
-                                <span class="text-xs text-indigo-600 font-extrabold tracking-widest uppercase block">Modificando</span>
-                                <span id="editor-pregunta-label-seleccionada" class="text-lg font-black text-indigo-950">Pregunta 1</span>
-                            </div>
-                            <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase block mb-2">Título de la Pregunta</label>
-                                <input type="text" id="editor-pregunta-titulo" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple">
-                            </div>
-                            <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase block mb-2">Tipo de Interacción</label>
-                                <select id="editor-pregunta-tipo" onchange="alternarCamposOpcionesEditor(this.value)" class="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold focus:border-indigo-500 outline-none transition-apple">
-                                    <option value="select">Fila de Botones con Emojis</option>
-                                    <option value="range">Slider de Escala</option>
-                                    <option value="list">Tarjetas con Descripciones</option>
-                                    <option value="grid">Grid de Opciones con Icono</option>
-                                    <option value="textarea">Caja de Texto Abierto</option>
-                                </select>
-                            </div>
-                            <div id="editor-seccion-opciones" class="space-y-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="editor-campos-dinamicos-opciones"></div>
-                            </div>
-                            <div class="pt-4 border-t border-gray-100 flex gap-4">
-                                <button onclick="guardarPreguntaModificada()" class="flex-1 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-apple shadow-lg">Guardar Cambios</button>
-                                <button onclick="restablecerPreguntasPredeterminadas()" class="py-3.5 px-6 rounded-xl border border-gray-200 text-gray-500 font-bold hover:bg-gray-50 transition-apple">Restablecer</button>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="text-center text-gray-400 italic py-8">Editor en modo demostración. Las preguntas se editan en el código fuente.</p>
                 </div>
             </div>
 
@@ -650,70 +319,42 @@
                 <div class="glass-panel rounded-3xl p-6 md:p-8 shadow-xl">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                         <div>
-                            <h3 class="text-xl font-extrabold text-slate-800 flex items-center gap-3">
-                                <i class="fa-solid fa-table text-emerald-600"></i> 
-                                Respuestas Recaudadas
-                            </h3>
+                            <h3 class="text-xl font-extrabold text-slate-800 flex items-center gap-3"><i class="fa-solid fa-table text-emerald-600"></i> Respuestas Recaudadas</h3>
                             <p class="text-xs text-gray-500 font-medium mt-1" id="respuestas-contador">Total: 0 registros</p>
                         </div>
                         <div class="flex gap-3 flex-wrap">
                             <select id="respuestas-filtro-seccion" onchange="filtrarRespuestasPorSeccion(this.value)" class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold focus:border-indigo-500 outline-none transition-apple bg-white"></select>
-                            <button onclick="exportarRespuestasCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-apple shadow-md flex items-center gap-2">
-                                <i class="fa-solid fa-file-csv"></i> Exportar CSV
-                            </button>
+                            <button onclick="exportarRespuestasCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-apple shadow-md flex items-center gap-2"><i class="fa-solid fa-file-csv"></i> Exportar CSV</button>
                         </div>
                     </div>
-
                     <div class="respuestas-table-container border border-gray-200 rounded-2xl overflow-hidden">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Sección</th>
-                                    <th>Fecha</th>
-                                    <th>P1</th>
-                                    <th>P2</th>
-                                    <th>P3</th>
-                                    <th>P4</th>
-                                    <th>P5</th>
-                                    <th>P6</th>
-                                    <th>P7</th>
-                                    <th>P8</th>
-                                    <th>P9</th>
-                                    <th>P10</th>
+                                    <th>#</th><th>Sección</th><th>Fecha</th>
+                                    <th>P1</th><th>P2</th><th>P3</th><th>P4</th><th>P5</th><th>P6</th><th>P7</th><th>P8</th><th>P9</th><th>P10</th>
                                 </tr>
                             </thead>
                             <tbody id="respuestas-tbody">
-                                <tr>
-                                    <td colspan="13" class="text-center text-gray-400 py-8 text-sm italic">
-                                        No hay respuestas registradas aún.
-                                    </td>
-                                </tr>
+                                <tr><td colspan="13" class="text-center text-gray-400 py-8 text-sm italic">No hay respuestas registradas aún.</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </section>
-
     </main>
 
     <div id="modal-password-dirigencia" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-opacity duration-300">
         <div class="glass-panel p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl border border-white/20">
-            <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 text-2xl mx-auto mb-4 border border-gray-200 shadow-sm">
-                <i class="fa-solid fa-lock text-slate-800"></i>
-            </div>
+            <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 text-2xl mx-auto mb-4 border border-gray-200 shadow-sm"><i class="fa-solid fa-lock text-slate-800"></i></div>
             <h3 class="text-xl font-extrabold text-gray-900 mb-2">Sección Restringida</h3>
             <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-6">Ingresa la clave de Dirigencia</p>
-            
             <div class="space-y-4 text-left">
                 <div class="relative">
                     <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"><i class="fa-solid fa-key"></i></span>
                     <input type="password" id="dirigencia-pass-input" class="w-full rounded-xl border border-gray-200 pl-11 pr-10 py-3.5 font-bold focus:border-indigo-500 bg-gray-50/50 outline-none transition-apple" placeholder="••••">
-                    <button type="button" onclick="toggleDirigenciaPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-apple">
-                        <i id="dirigencia-pass-eye" class="fa-solid fa-eye"></i>
-                    </button>
+                    <button type="button" onclick="toggleDirigenciaPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-apple"><i id="dirigencia-pass-eye" class="fa-solid fa-eye"></i></button>
                 </div>
                 <div class="flex gap-3 pt-2">
                     <button onclick="cancelarPasswordDirigencia()" class="flex-1 py-3 rounded-xl border border-gray-200 text-gray-500 font-bold hover:bg-gray-50 transition-apple text-xs uppercase tracking-wider">Cancelar</button>
@@ -726,7 +367,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCR2wXjTM8COFaVxoH2c-8yr7A-PaBjLf8",
@@ -745,25 +386,24 @@
         let seccionActiva = "";
         let preguntaActual = 0;
         let totalPreguntas = 10;
-        let surveysList = []; 
-        let activeDashboardSection = "Manada"; 
-        let currentRolScouter = "Dirigencia"; 
-        let editorPreguntaIndexSeleccionada = 0; 
+        let surveysList = [];
+        let activeDashboardSection = "Manada";
+        let currentRolScouter = "Dirigencia";
+        let editorPreguntaIndexSeleccionada = 0;
         let pendingSurveyRama = "";
         let respuestasFiltroSeccion = "Todas";
         let respuestasSeccionPermitida = null;
-        
+
         let respuestasSesion = {
             rama: "",
             p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: "",
-            p11: 5, p12: 5, p13: "", p14: "",
-            p15: 5, p16: 5, p17: 5, p18: 5, p19: "", p20: ""
+            p11: 5, p12: 5, p13: "", p14: "", p15: 5, p16: 5, p17: 5, p18: 5, p19: "", p20: ""
         };
 
         let reportesValidadosHistorico = JSON.parse(localStorage.getItem('tequivoz_reportes_kpi_validados')) || [];
 
         // ============================================================
-        // DATOS SIMULADOS - DIRECTAMENTE EN EL CÓDIGO
+        // DATOS SIMULADOS DIRECTAMENTE EN EL CÓDIGO
         // 88 respuestas: 15 Manada, 24 Tropa, 13 Comunidad, 15 Clan, 21 Dirigencia
         // ============================================================
         const datosSimulados = [
@@ -868,7 +508,7 @@
         ];
 
         // ============================================================
-        // NUEVAS PREGUNTAS POR SECCIÓN (10 preguntas cada una)
+        // NUEVAS PREGUNTAS POR SECCIÓN
         // ============================================================
         const bancoPreguntasPredeterminado = {
             Manada: [
@@ -935,52 +575,23 @@
 
         let bancoPreguntas = JSON.parse(localStorage.getItem('bancoPreguntas_tequivoz')) || bancoPreguntasPredeterminado;
 
-        const appId = 'tequivoz-gpo1';
-        const surveysCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'surveys');
-
         // ============================================================
-        // INICIALIZAR CON DATOS SIMULADOS DIRECTAMENTE
+        // ⚡ FORZAR LA CARGA DE DATOS SIMULADOS AL INICIO
         // ============================================================
-        // Forzamos que surveysList tenga los datos simulados
         surveysList = JSON.parse(JSON.stringify(datosSimulados));
-        console.log(`✅ ${surveysList.length} respuestas simuladas cargadas localmente`);
+        console.log(`✅ ${surveysList.length} respuestas simuladas cargadas directamente`);
+        console.log(`   - Manada: ${surveysList.filter(s=>s.rama==='Manada').length}`);
+        console.log(`   - Tropa: ${surveysList.filter(s=>s.rama==='Tropa').length}`);
+        console.log(`   - Comunidad: ${surveysList.filter(s=>s.rama==='Comunidad').length}`);
+        console.log(`   - Clan: ${surveysList.filter(s=>s.rama==='Clan').length}`);
+        console.log(`   - Dirigencia: ${surveysList.filter(s=>s.rama==='Dirigencia').length}`);
 
-        // ============================================================
-        // AUTENTICACIÓN ANÓNIMA
-        // ============================================================
-        async function authenticateUser() {
-            try {
-                await signInAnonymously(auth);
-                console.log("✅ Autenticación anónima exitosa");
-            } catch (e) {
-                console.warn("⚠️ Ambiente desconectado, usando datos locales");
-            }
-        }
-        await authenticateUser();
-
-        // ============================================================
-        // ESCUCHAR CAMBIOS EN FIRESTORE (SI HAY CONEXIÓN)
-        // ============================================================
+        // Intentar autenticación anónima (no bloquea si falla)
         try {
-            onSnapshot(surveysCollectionRef, (snapshot) => {
-                if (snapshot.size > 0) {
-                    surveysList = [];
-                    snapshot.forEach((doc) => {
-                        surveysList.push(doc.data());
-                    });
-                    console.log(`📊 ${surveysList.length} respuestas desde Firestore`);
-                } else {
-                    console.log("📊 Firestore vacío, usando datos simulados locales");
-                }
-                if (!document.getElementById('panel-scouter').classList.contains('hidden')) {
-                    actualizarDashboardSeccionUI();
-                    renderTablaRespuestas();
-                }
-            }, (error) => {
-                console.warn("⚠️ Sin conexión a Firestore, usando datos locales:", error.message);
-            });
+            await signInAnonymously(auth);
+            console.log("✅ Autenticación anónima exitosa");
         } catch (e) {
-            console.warn("⚠️ Firestore no disponible, usando datos locales");
+            console.warn("⚠️ Sin conexión a Firebase. Modo offline.");
         }
 
         // ============================================================
@@ -991,20 +602,13 @@
             secciones.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    if (id === idSeccion) {
-                        el.classList.remove('hidden');
-                    } else {
-                        el.classList.add('hidden');
-                    }
+                    if (id === idSeccion) el.classList.remove('hidden');
+                    else el.classList.add('hidden');
                 }
             });
-
             const scouterBtn = document.getElementById('btn-portal-scouter-nav');
-            if (idSeccion === 'contenedor-encuesta' || idSeccion === 'panel-scouter' || idSeccion === 'puerta-autenticacion') {
-                scouterBtn.classList.add('hidden');
-            } else {
-                scouterBtn.classList.remove('hidden');
-            }
+            if (idSeccion === 'contenedor-encuesta' || idSeccion === 'panel-scouter' || idSeccion === 'puerta-autenticacion') scouterBtn.classList.add('hidden');
+            else scouterBtn.classList.remove('hidden');
         }
 
         function lanzarAlert(titulo, mensaje) {
@@ -1012,10 +616,7 @@
             document.getElementById('custom-alert-message').innerText = mensaje;
             document.getElementById('custom-alert').classList.remove('hidden');
         }
-
-        function cerrarAlert() {
-            document.getElementById('custom-alert').classList.add('hidden');
-        }
+        function cerrarAlert() { document.getElementById('custom-alert').classList.add('hidden'); }
         window.cerrarAlert = cerrarAlert;
 
         function abrirModalResetDatos() {
@@ -1023,44 +624,28 @@
             document.getElementById('reset-confirm-input').value = "";
             document.getElementById('btn-reset-ejecutar').disabled = true;
             document.getElementById('modal-reset-confirm').classList.remove('hidden');
-            
             const input = document.getElementById('reset-confirm-input');
             input.oninput = function() {
                 const btn = document.getElementById('btn-reset-ejecutar');
-                if (this.value === "CONFIRMAR") {
-                    btn.disabled = false;
-                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                } else {
-                    btn.disabled = true;
-                    btn.classList.add('opacity-50', 'cursor-not-allowed');
-                }
+                if (this.value === "CONFIRMAR") { btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed'); }
+                else { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); }
             };
-            
             setTimeout(() => input.focus(), 300);
         }
         window.abrirModalResetDatos = abrirModalResetDatos;
 
-        function cancelarResetDatos() {
-            document.getElementById('modal-reset-confirm').classList.add('hidden');
-        }
+        function cancelarResetDatos() { document.getElementById('modal-reset-confirm').classList.add('hidden'); }
         window.cancelarResetDatos = cancelarResetDatos;
 
         function ejecutarResetDatos() {
             const input = document.getElementById('reset-confirm-input');
-            if (input.value !== "CONFIRMAR") {
-                lanzarAlert("Verificación Fallida", "Debes escribir exactamente 'CONFIRMAR' en mayúsculas para borrar los datos.");
-                return;
-            }
-
+            if (input.value !== "CONFIRMAR") { lanzarAlert("Verificación Fallida", "Debes escribir 'CONFIRMAR' en mayúsculas."); return; }
             const btn = document.getElementById('btn-reset-ejecutar');
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Borrando...';
-
-            // Eliminar solo de la sección activa
             surveysList = surveysList.filter(s => s.rama !== activeDashboardSection);
-
             document.getElementById('modal-reset-confirm').classList.add('hidden');
-            lanzarAlert("✅ Datos Eliminados", `Todos los datos de la sección ${activeDashboardSection} han sido borrados localmente.`);
+            lanzarAlert("✅ Datos Eliminados", `Los datos de ${activeDashboardSection} han sido borrados.`);
             actualizarDashboardSeccionUI();
             renderReportesValidadosLista();
             renderTablaRespuestas();
@@ -1082,40 +667,16 @@
 
         function ejecutarEmpezarEncuesta(rama) {
             seccionActiva = rama;
-            respuestasSesion = {
-                rama: rama,
-                p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: "", 
-                p11: 5, p12: 5, p13: "", p14: "",
-                p15: 5, p16: 5, p17: 5, p18: 5, p19: "", p20: ""
-            };
+            respuestasSesion = { rama: rama, p1: "", p2: 5, p3: "", p4: "", p5: 3, p6: "", p7: "", p8: "", p9: "", p10: "", p11: 5, p12: 5, p13: "", p14: "", p15: 5, p16: 5, p17: 5, p18: 5, p19: "", p20: "" };
             preguntaActual = 0;
             totalPreguntas = bancoPreguntas[rama].length;
-
             const body = document.body;
             const logoImg = document.getElementById('seccion-logo-activo');
-
-            if(rama === 'Manada') {
-                body.style.backgroundColor = '#fffbeb';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = '#ffb703';
-                logoImg.src = 'Logo 2.png';
-            } else if(rama === 'Tropa') {
-                body.style.backgroundColor = '#f0fdf4';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = '#06d6a0';
-                logoImg.src = 'Logo 3.png';
-            } else if(rama === 'Comunidad') {
-                body.style.backgroundColor = '#ecfeff';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = '#118ab2';
-                logoImg.src = 'Logo 4.png';
-            } else if(rama === 'Clan') {
-                body.style.backgroundColor = '#fff5f5';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = '#ef476f';
-                logoImg.src = 'Logo 5.png';
-            } else if(rama === 'Dirigencia') {
-                body.style.backgroundColor = '#f8fafc';
-                document.getElementById('badge-seccion-activa').style.backgroundColor = '#475569';
-                logoImg.src = 'Logo 1.png';
-            }
-
+            if(rama === 'Manada') { body.style.backgroundColor = '#fffbeb'; document.getElementById('badge-seccion-activa').style.backgroundColor = '#ffb703'; logoImg.src = 'Logo 2.png'; }
+            else if(rama === 'Tropa') { body.style.backgroundColor = '#f0fdf4'; document.getElementById('badge-seccion-activa').style.backgroundColor = '#06d6a0'; logoImg.src = 'Logo 3.png'; }
+            else if(rama === 'Comunidad') { body.style.backgroundColor = '#ecfeff'; document.getElementById('badge-seccion-activa').style.backgroundColor = '#118ab2'; logoImg.src = 'Logo 4.png'; }
+            else if(rama === 'Clan') { body.style.backgroundColor = '#fff5f5'; document.getElementById('badge-seccion-activa').style.backgroundColor = '#ef476f'; logoImg.src = 'Logo 5.png'; }
+            else if(rama === 'Dirigencia') { body.style.backgroundColor = '#f8fafc'; document.getElementById('badge-seccion-activa').style.backgroundColor = '#475569'; logoImg.src = 'Logo 1.png'; }
             document.getElementById('badge-seccion-activa').innerText = rama;
             mostrarSeccion('contenedor-encuesta');
             renderPreguntaActiva();
@@ -1124,48 +685,26 @@
         function toggleDirigenciaPasswordVisibility() {
             const passInput = document.getElementById('dirigencia-pass-input');
             const eyeIcon = document.getElementById('dirigencia-pass-eye');
-            if (passInput.type === "password") {
-                passInput.type = "text";
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            } else {
-                passInput.type = "password";
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
-            }
+            if (passInput.type === "password") { passInput.type = "text"; eyeIcon.classList.remove('fa-eye'); eyeIcon.classList.add('fa-eye-slash'); }
+            else { passInput.type = "password"; eyeIcon.classList.remove('fa-eye-slash'); eyeIcon.classList.add('fa-eye'); }
         }
         window.toggleDirigenciaPasswordVisibility = toggleDirigenciaPasswordVisibility;
 
-        function cancelarPasswordDirigencia() {
-            document.getElementById('modal-password-dirigencia').classList.add('hidden');
-            pendingSurveyRama = "";
-        }
+        function cancelarPasswordDirigencia() { document.getElementById('modal-password-dirigencia').classList.add('hidden'); pendingSurveyRama = ""; }
         window.cancelarPasswordDirigencia = cancelarPasswordDirigencia;
 
         function confirmarPasswordDirigencia() {
             const pass = document.getElementById('dirigencia-pass-input').value.trim();
-            if (pass === '000') {
-                document.getElementById('modal-password-dirigencia').classList.add('hidden');
-                ejecutarEmpezarEncuesta(pendingSurveyRama);
-                pendingSurveyRama = "";
-            } else {
-                lanzarAlert("Acceso Denegado", "Clave de Dirigencia incorrecta.");
-            }
+            if (pass === '000') { document.getElementById('modal-password-dirigencia').classList.add('hidden'); ejecutarEmpezarEncuesta(pendingSurveyRama); pendingSurveyRama = ""; }
+            else { lanzarAlert("Acceso Denegado", "Clave incorrecta."); }
         }
         window.confirmarPasswordDirigencia = confirmarPasswordDirigencia;
 
         function toggleAdminPasswordVisibility() {
             const passInput = document.getElementById('admin-pass');
             const eyeIcon = document.getElementById('admin-pass-eye');
-            if (passInput.type === "password") {
-                passInput.type = "text";
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            } else {
-                passInput.type = "password";
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
-            }
+            if (passInput.type === "password") { passInput.type = "text"; eyeIcon.classList.remove('fa-eye'); eyeIcon.classList.add('fa-eye-slash'); }
+            else { passInput.type = "password"; eyeIcon.classList.remove('fa-eye-slash'); eyeIcon.classList.add('fa-eye'); }
         }
         window.toggleAdminPasswordVisibility = toggleAdminPasswordVisibility;
 
@@ -1173,239 +712,89 @@
             const container = document.getElementById('formulario-preguntas');
             const listaPreguntas = bancoPreguntas[seccionActiva];
             const q = listaPreguntas[preguntaActual];
-
             let html = "";
             const numLabel = `Pregunta 0${q.id}`.slice(-10);
 
             if (q.type === "select") {
-                html = `
-                    <div class="pregunta-tarjeta block">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            ${q.options.map(opt => {
-                                const selectedClass = (respuestasSesion.p1 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
-                                return `
-                                    <button onclick="registrarP(1, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 shadow-sm hover:shadow-md transition-apple text-center btn-respuesta ${selectedClass}">
-                                        <span class="text-4xl block mb-3">${opt.icon}</span>
-                                        <span class="font-bold text-sm text-gray-600">${opt.text}</span>
-                                    </button>
-                                `;
-                            }).join('')}
-                        </div>
-                    </div>
-                `;
+                html = `<div class="pregunta-tarjeta block"><span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span><h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2><div class="grid grid-cols-2 md:grid-cols-4 gap-4">${q.options.map(opt => { const selectedClass = (respuestasSesion.p1 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white'; return `<button onclick="registrarP(1, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 shadow-sm hover:shadow-md transition-apple text-center btn-respuesta ${selectedClass}"><span class="text-4xl block mb-3">${opt.icon}</span><span class="font-bold text-sm text-gray-600">${opt.text}</span></button>`; }).join('')}</div></div>`;
             } else if (q.type === "range") {
                 const currentVal = respuestasSesion[`p${q.id}`] || q.def;
-                html = `
-                    <div class="pregunta-tarjeta block">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
-                        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-6">
-                            <input type="range" min="${q.min}" max="${q.max}" value="${currentVal}" id="slider-dinamico" oninput="actualizarFeedbackRango(${q.id}, this.value)" class="apple-range mb-4">
-                            <div class="flex justify-between font-bold text-xs text-gray-400">
-                                <span>${q.left}</span>
-                                <span>${q.right}</span>
-                            </div>
-                        </div>
-                        <p class="text-center font-extrabold text-indigo-600 text-lg" id="feedback-slider-dinamico">Calificación: ${currentVal}</p>
-                    </div>
-                `;
-            } else if (q.type === "list") {
-                html = `
-                    <div class="pregunta-tarjeta block">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
-                        <div class="flex flex-col gap-4">
-                            ${q.options.map(opt => {
-                                const selectedClass = (respuestasSesion.p3 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
-                                return `
-                                    <button onclick="registrarP(3, '${opt.val}', this)" class="p-5 rounded-2xl border-2 hover:border-indigo-500 text-left font-bold transition-apple flex items-center gap-4 btn-respuesta ${selectedClass}">
-                                        <div class="w-10 h-10 rounded-full bg-${opt.color}-100 flex items-center justify-center text-${opt.color}-600"><i class="fa-solid ${opt.icon}"></i></div>
-                                        <div>
-                                            <span class="block text-gray-700">${opt.title}</span>
-                                            <span class="text-xs text-gray-400 font-normal">${opt.desc}</span>
-                                        </div>
-                                    </button>
-                                `;
-                            }).join('')}
-                        </div>
-                    </div>
-                `;
+                html = `<div class="pregunta-tarjeta block"><span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span><h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2><div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-6"><input type="range" min="${q.min}" max="${q.max}" value="${currentVal}" id="slider-dinamico" oninput="actualizarFeedbackRango(${q.id}, this.value)" class="apple-range mb-4"><div class="flex justify-between font-bold text-xs text-gray-400"><span>${q.left}</span><span>${q.right}</span></div></div><p class="text-center font-extrabold text-indigo-600 text-lg" id="feedback-slider-dinamico">Calificación: ${currentVal}</p></div>`;
             } else if (q.type === "grid") {
-                html = `
-                    <div class="pregunta-tarjeta block">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            ${q.options.map(opt => {
-                                const selectedClass = (respuestasSesion[`p${q.id}`] === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white';
-                                return `
-                                    <button onclick="registrarP(${q.id}, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta ${selectedClass}">
-                                        <span class="text-3xl">${opt.icon}</span>
-                                        <span class="text-gray-700">${opt.title}</span>
-                                        <p class="text-xs font-normal text-gray-400">${opt.desc}</p>
-                                    </button>
-                                `;
-                            }).join('')}
-                        </div>
-                    </div>
-                `;
+                html = `<div class="pregunta-tarjeta block"><span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span><h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4">${q.options.map(opt => { const selectedClass = (respuestasSesion[`p${q.id}`] === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white'; return `<button onclick="registrarP(${q.id}, '${opt.val}', this)" class="p-6 rounded-2xl border-2 hover:border-indigo-500 font-bold transition-apple text-center flex flex-col items-center gap-2 btn-respuesta ${selectedClass}"><span class="text-3xl">${opt.icon}</span><span class="text-gray-700">${opt.title}</span><p class="text-xs font-normal text-gray-400">${opt.desc}</p></button>`; }).join('')}</div></div>`;
             } else if (q.type === "textarea") {
                 const currentText = respuestasSesion[`p${q.id}`] || "";
-                html = `
-                    <div class="pregunta-tarjeta block">
-                        <span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2>
-                        <div class="relative">
-                            <textarea id="texto-textarea-dinamico" rows="4" oninput="registrarTextoDinamico(${q.id}, this.value)" class="w-full rounded-2xl border-2 border-gray-200 focus:border-indigo-500 bg-white p-5 font-medium outline-none transition-apple shadow-inner resize-none" placeholder="${q.placeholder || 'Escribe tu respuesta aquí...'}">${currentText}</textarea>
-                        </div>
-                    </div>
-                `;
+                html = `<div class="pregunta-tarjeta block"><span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span><h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2><div class="relative"><textarea id="texto-textarea-dinamico" rows="4" oninput="registrarTextoDinamico(${q.id}, this.value)" class="w-full rounded-2xl border-2 border-gray-200 focus:border-indigo-500 bg-white p-5 font-medium outline-none transition-apple shadow-inner resize-none" placeholder="${q.placeholder || 'Escribe tu respuesta aquí...'}">${currentText}</textarea></div></div>`;
+            } else if (q.type === "list") {
+                html = `<div class="pregunta-tarjeta block"><span class="text-gray-400 font-bold text-xs uppercase tracking-widest block mb-2">${numLabel}</span><h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-8">${q.title}</h2><div class="flex flex-col gap-4">${q.options.map(opt => { const selectedClass = (respuestasSesion.p3 === opt.val) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 bg-white'; return `<button onclick="registrarP(3, '${opt.val}', this)" class="p-5 rounded-2xl border-2 hover:border-indigo-500 text-left font-bold transition-apple flex items-center gap-4 btn-respuesta ${selectedClass}"><div class="w-10 h-10 rounded-full bg-${opt.color}-100 flex items-center justify-center text-${opt.color}-600"><i class="fa-solid ${opt.icon}"></i></div><div><span class="block text-gray-700">${opt.title}</span><span class="text-xs text-gray-400 font-normal">${opt.desc}</span></div></button>`; }).join('')}</div></div>`;
             }
-
             container.innerHTML = html;
             document.getElementById('contador-progreso').innerText = `Pregunta ${preguntaActual + 1} de ${totalPreguntas}`;
-
             const pct = ((preguntaActual) / (totalPreguntas - 1)) * 100;
             document.getElementById('progreso-barra').style.width = pct + '%';
             document.getElementById('token-scout').style.left = pct + '%';
-
             const token = document.getElementById('token-scout');
             token.style.transform = 'scale(1.3) translateX(-40%)';
-            setTimeout(() => {
-                token.style.transform = 'scale(1) translateX(-50%)';
-            }, 300);
-
+            setTimeout(() => { token.style.transform = 'scale(1) translateX(-50%)'; }, 300);
             document.getElementById('btn-anterior').disabled = (preguntaActual === 0);
-            
-            if (preguntaActual === totalPreguntas - 1) {
-                document.getElementById('btn-siguiente').innerHTML = 'Terminar Aventura <i class="fa-solid fa-circle-check ml-2"></i>';
-            } else {
-                document.getElementById('btn-siguiente').innerHTML = 'Siguiente <i class="fa-solid fa-arrow-right ml-2"></i>';
-            }
+            if (preguntaActual === totalPreguntas - 1) document.getElementById('btn-siguiente').innerHTML = 'Terminar Aventura <i class="fa-solid fa-circle-check ml-2"></i>';
+            else document.getElementById('btn-siguiente').innerHTML = 'Siguiente <i class="fa-solid fa-arrow-right ml-2"></i>';
         }
 
         function registrarP(pregunta, valor, btn) {
             respuestasSesion[`p${pregunta}`] = valor;
-            
             if (btn) {
                 const container = btn.parentNode;
                 const buttons = container.querySelectorAll('.btn-respuesta');
-                buttons.forEach(b => {
-                    b.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
-                    b.classList.add('border-gray-200', 'bg-white');
-                });
+                buttons.forEach(b => { b.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-600'); b.classList.add('border-gray-200', 'bg-white'); });
                 btn.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
                 btn.classList.remove('border-gray-200', 'bg-white');
             }
         }
         window.registrarP = registrarP;
 
-        function registrarTextoDinamico(id, val) {
-            respuestasSesion[`p${id}`] = val;
-        }
+        function registrarTextoDinamico(id, val) { respuestasSesion[`p${id}`] = val; }
         window.registrarTextoDinamico = registrarTextoDinamico;
 
         function actualizarFeedbackRango(id, val) {
             respuestasSesion[`p${id}`] = parseInt(val);
             const feedbackEl = document.getElementById('feedback-slider-dinamico');
-            if (feedbackEl) {
-                let extra = "";
-                if (id === 2 || id === 11 || id === 12 || id === 15 || id === 16 || id === 17 || id === 18) {
-                    if (val <= 3) extra = "- Crítico";
-                    else if (val <= 6) extra = "- Regular";
-                    else if (val <= 8) extra = "- Bueno";
-                    else extra = "- ¡Excelente!";
-                }
-                feedbackEl.innerText = `Calificación: ${val} ${extra}`;
-            }
+            if (feedbackEl) { let extra = ""; if (val <= 3) extra = "- Crítico"; else if (val <= 6) extra = "- Regular"; else if (val <= 8) extra = "- Bueno"; else extra = "- ¡Excelente!"; feedbackEl.innerText = `Calificación: ${val} ${extra}`; }
         }
         window.actualizarFeedbackRango = actualizarFeedbackRango;
 
         function cambiarP(direccion) {
             const txtArea = document.getElementById('texto-textarea-dinamico');
-            if (txtArea) {
-                const qList = bancoPreguntas[seccionActiva];
-                const q = qList[preguntaActual];
-                respuestasSesion[`p${q.id}`] = txtArea.value;
-            }
-
+            if (txtArea) { const qList = bancoPreguntas[seccionActiva]; const q = qList[preguntaActual]; respuestasSesion[`p${q.id}`] = txtArea.value; }
             preguntaActual += direccion;
-
-            if (preguntaActual >= totalPreguntas) {
-                procesarEncuestaCompleta();
-                return;
-            }
-
+            if (preguntaActual >= totalPreguntas) { procesarEncuestaCompleta(); return; }
             renderPreguntaActiva();
         }
         window.cambiarP = cambiarP;
 
-        function regresarAlInicio() {
-            mostrarSeccion('pantalla-inicio');
-            document.body.style.backgroundColor = '#f4f7f6';
-        }
+        function regresarAlInicio() { mostrarSeccion('pantalla-inicio'); document.body.style.backgroundColor = '#f4f7f6'; }
         window.regresarAlInicio = regresarAlInicio;
 
         async function procesarEncuestaCompleta() {
             const btnSig = document.getElementById('btn-siguiente');
-            if (btnSig) {
-                btnSig.disabled = true;
-                btnSig.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
-            }
-
-            const docData = {
-                rama: respuestasSesion.rama,
-                p1: respuestasSesion.p1 || "Divertida",
-                p2: Number(respuestasSesion.p2 || 5),
-                p3: respuestasSesion.p3 || "Fuerte",
-                p4: respuestasSesion.p4 || "Si",
-                p5: Number(respuestasSesion.p5 || 3),
-                p6: respuestasSesion.p6 || "Supervivencia",
-                p7: respuestasSesion.p7 || "",
-                p8: respuestasSesion.p8 || "Bien",
-                p9: respuestasSesion.p9 || "Excelente",
-                p10: respuestasSesion.p10 || "",
-                p11: Number(respuestasSesion.p11 || 5),
-                p12: Number(respuestasSesion.p12 || 5),
-                p13: respuestasSesion.p13 || "",
-                p14: respuestasSesion.p14 || "",
-                p15: Number(respuestasSesion.p15 || 5),
-                p16: Number(respuestasSesion.p16 || 5),
-                p17: Number(respuestasSesion.p17 || 5),
-                p18: Number(respuestasSesion.p18 || 5),
-                p19: respuestasSesion.p19 || "",
-                p20: respuestasSesion.p20 || "",
-                timestamp: new Date().toISOString()
-            };
-
+            if (btnSig) { btnSig.disabled = true; btnSig.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>'; }
+            const docData = { rama: respuestasSesion.rama, p1: respuestasSesion.p1 || "Divertida", p2: Number(respuestasSesion.p2 || 5), p3: respuestasSesion.p3 || "Fuerte", p4: respuestasSesion.p4 || "Si", p5: Number(respuestasSesion.p5 || 3), p6: respuestasSesion.p6 || "Supervivencia", p7: respuestasSesion.p7 || "", p8: respuestasSesion.p8 || "Bien", p9: respuestasSesion.p9 || "Excelente", p10: respuestasSesion.p10 || "", p11: Number(respuestasSesion.p11 || 5), p12: Number(respuestasSesion.p12 || 5), p13: respuestasSesion.p13 || "", p14: respuestasSesion.p14 || "", p15: Number(respuestasSesion.p15 || 5), p16: Number(respuestasSesion.p16 || 5), p17: Number(respuestasSesion.p17 || 5), p18: Number(respuestasSesion.p18 || 5), p19: respuestasSesion.p19 || "", p20: respuestasSesion.p20 || "", timestamp: new Date().toISOString() };
             try {
-                const firestoreSavePromise = addDoc(surveysCollectionRef, docData);
-                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 2000));
-                await Promise.race([firestoreSavePromise, timeoutPromise]);
-                lanzarAlert("¡Aventura Completada! ⛺", `Tu registro para la sección de ${seccionActiva} ha sido enviado de manera segura.`);
-            } catch (e) {
-                // Guardar localmente
-                surveysList.push(docData);
-                lanzarAlert("¡Aventura Completada! ⛺", "Tu registro ha sido guardado localmente de forma segura.");
-            } finally {
-                setTimeout(() => window.location.reload(), 3000);
-            }
+                const surveysCollectionRef = collection(db, 'artifacts', 'tequivoz-gpo1', 'public', 'data', 'surveys');
+                await addDoc(surveysCollectionRef, docData);
+            } catch (e) { console.warn("Guardando localmente"); }
+            surveysList.push(docData);
+            lanzarAlert("¡Aventura Completada! ⛺", `Tu registro para ${seccionActiva} ha sido guardado.`);
+            setTimeout(() => window.location.reload(), 3000);
         }
 
-        function cerrarSesionScouter() {
-            window.location.reload();
-        }
+        function cerrarSesionScouter() { window.location.reload(); }
         window.cerrarSesionScouter = cerrarSesionScouter;
 
         function mostrarModalAutenticar() {
             mostrarSeccion('puerta-autenticacion');
             const ring = document.getElementById('biometric-ring');
-            if (ring) {
-                ring.classList.add('border-emerald-500');
-                setTimeout(() => ring.classList.remove('border-emerald-500'), 2000);
-            }
+            if (ring) { ring.classList.add('border-emerald-500'); setTimeout(() => ring.classList.remove('border-emerald-500'), 2000); }
         }
         window.mostrarModalAutenticar = mostrarModalAutenticar;
 
@@ -1413,33 +802,20 @@
             const user = document.getElementById('admin-user').value;
             const pass = document.getElementById('admin-pass').value.trim();
             let loginValido = false;
-            
             let seccionSeleccionada = "Manada";
             let rolScouter = "Dirigencia";
 
-            if (user === 'manada' && pass === '100%MaNada') {
-                rolScouter = "Manada"; seccionSeleccionada = "Manada"; loginValido = true;
-            } else if (user === 'tropa' && pass === 't1') {
-                rolScouter = "Tropa"; seccionSeleccionada = "Tropa"; loginValido = true;
-            } else if (user === 'comunidad' && pass === 'Azulitos123*') {
-                rolScouter = "Comunidad"; seccionSeleccionada = "Comunidad"; loginValido = true;
-            } else if (user === 'clan' && pass === 'cl1') {
-                rolScouter = "Clan"; seccionSeleccionada = "Clan"; loginValido = true;
-            } else if (user === 'dirigencia' && pass === 'tequihua1') {
-                rolScouter = "Dirigencia"; seccionSeleccionada = "Manada"; loginValido = true;
-            }
+            if (user === 'manada' && pass === '100%MaNada') { rolScouter = "Manada"; seccionSeleccionada = "Manada"; loginValido = true; }
+            else if (user === 'tropa' && pass === 't1') { rolScouter = "Tropa"; seccionSeleccionada = "Tropa"; loginValido = true; }
+            else if (user === 'comunidad' && pass === 'Azulitos123*') { rolScouter = "Comunidad"; seccionSeleccionada = "Comunidad"; loginValido = true; }
+            else if (user === 'clan' && pass === 'cl1') { rolScouter = "Clan"; seccionSeleccionada = "Clan"; loginValido = true; }
+            else if (user === 'dirigencia' && pass === 'tequihua1') { rolScouter = "Dirigencia"; seccionSeleccionada = "Manada"; loginValido = true; }
 
             if (loginValido) {
                 currentRolScouter = rolScouter;
                 activeDashboardSection = seccionSeleccionada;
-                
-                if (currentRolScouter === "Dirigencia") {
-                    respuestasSeccionPermitida = null;
-                } else {
-                    respuestasSeccionPermitida = currentRolScouter;
-                    respuestasFiltroSeccion = currentRolScouter;
-                }
-                
+                if (currentRolScouter === "Dirigencia") respuestasSeccionPermitida = null;
+                else { respuestasSeccionPermitida = currentRolScouter; respuestasFiltroSeccion = currentRolScouter; }
                 configurarVisibilidadSegunRol();
                 seleccionarSeccionDashboard(activeDashboardSection);
                 mostrarSeccion('panel-scouter');
@@ -1447,9 +823,7 @@
                 actualizarDashboardSeccionUI();
                 actualizarFiltroRespuestas();
                 renderTablaRespuestas();
-            } else {
-                lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta.");
-            }
+            } else { lanzarAlert("Acceso Denegado", "La clave Tequihua es incorrecta."); }
         }
         window.validarCredenciales = validarCredenciales;
 
@@ -1457,7 +831,6 @@
             const select = document.getElementById('respuestas-filtro-seccion');
             if (!select) return;
             select.innerHTML = '';
-
             if (currentRolScouter === "Dirigencia") {
                 const opciones = ['Todas', 'Manada', 'Tropa', 'Comunidad', 'Clan', 'Dirigencia'];
                 opciones.forEach(opt => {
@@ -1488,18 +861,15 @@
                 if (btnDirigenciaDash) btnDirigenciaDash.classList.remove('hidden');
                 if (subtext) subtext.innerText = "Acceso Maestro Completo — Grupo 1 Tequihua";
             } else {
-                if (selectorDash) selectorDash.classList.add('hidden'); 
+                if (selectorDash) selectorDash.classList.add('hidden');
                 if (btnDirigenciaDash) btnDirigenciaDash.classList.add('hidden');
                 if (subtext) subtext.innerText = `Acceso Restringido a Jefatura de ${currentRolScouter}`;
             }
-
-            inicializarWixEditorPreguntas();
         }
 
         function seleccionarSeccionDashboard(seccion) {
             if (currentRolScouter !== "Dirigencia" && currentRolScouter !== seccion) return;
             activeDashboardSection = seccion;
-            
             const secciones = ["Manada", "Tropa", "Comunidad", "Clan", "Dirigencia"];
             secciones.forEach((s) => {
                 const btn = document.getElementById(`dash-btn-${s}`);
@@ -1513,20 +883,20 @@
                     }
                 }
             });
-
             actualizarDashboardSeccionUI();
-            inicializarWixEditorPreguntas();
             renderReportesValidadosLista();
             renderTablaRespuestas();
         }
         window.seleccionarSeccionDashboard = seleccionarSeccionDashboard;
 
         // ============================================================
-        // ACTUALIZAR DASHBOARD
+        // ACTUALIZAR DASHBOARD - CON DATOS SIMULADOS
         // ============================================================
         function actualizarDashboardSeccionUI() {
             const filteredSurveys = surveysList.filter(s => s.rama === activeDashboardSection);
             const total = filteredSurveys.length;
+
+            console.log(`📊 Actualizando dashboard ${activeDashboardSection}: ${total} registros`);
 
             const dashSeccion = document.getElementById('dash-seccion');
             if (dashSeccion) {
@@ -1534,7 +904,6 @@
                 const colorMap = { 'Manada': '#ffb703', 'Tropa': '#06d6a0', 'Comunidad': '#118ab2', 'Clan': '#ef476f', 'Dirigencia': '#475569' };
                 dashSeccion.style.backgroundColor = colorMap[activeDashboardSection] || '#475569';
             }
-            
             const totalRegistros = document.getElementById('dash-total-registros');
             if (totalRegistros) totalRegistros.innerText = total;
 
@@ -1546,36 +915,37 @@
                 if (promEco) promEco.innerText = "Sin Datos";
                 if (prefAct) prefAct.innerText = "Sin Datos";
                 actualizarBarrasGrafica(0, 0, 0, 0, 0);
-                setKPICardValue("isp", 0);
-                setKPICardValue("ics", 0);
-                setKPICardValue("iap", 0);
-                setKPICardValue("isg", 0);
-                setKPICardValue("ive", 0);
+                setKPICardValue("isp", 0); setKPICardValue("ics", 0); setKPICardValue("iap", 0); setKPICardValue("isg", 0); setKPICardValue("ive", 0);
                 return;
             }
 
-            // Calcular promedios
             let funSum = 0, supportSum = 0, teamworkSum = 0, progressionSum = 0, safetySum = 0, economySum = 0;
             let sugerenciasCambio = [];
 
             if (activeDashboardSection === "Dirigencia") {
                 let sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0, sum5 = 0, sum6 = 0, sum7 = 0, sum8 = 0;
                 filteredSurveys.forEach(s => {
-                    sum1 += Number(s.p1 || 5); sum2 += Number(s.p2 || 5); sum3 += Number(s.p3 || 5);
-                    sum4 += Number(s.p4 || 5); sum5 += Number(s.p5 || 5); sum6 += Number(s.p6 || 5);
-                    sum7 += Number(s.p7 || 5); sum8 += Number(s.p8 || 5);
+                    sum1 += Number(s.p1 || 5); sum2 += Number(s.p2 || 5); sum3 += Number(s.p3 === "Excelente" ? 10 : (s.p3 === "Bueno" ? 7 : 4));
+                    sum4 += Number(s.p4 === "Excelente" ? 10 : (s.p4 === "Bueno" ? 7 : 4)); sum5 += Number(s.p5 === "Excelente" ? 10 : (s.p5 === "Bueno" ? 7 : 4));
+                    sum6 += Number(s.p6 || 5); sum7 += Number(s.p7 || 5); sum8 += Number(s.p8 || 5);
                     if (s.p9 && s.p9.trim() !== "") sugerenciasCambio.push(s.p9);
                     if (s.p10 && s.p10.trim() !== "") sugerenciasCambio.push(s.p10);
                 });
                 const a1 = sum1/total, a2 = sum2/total, a3 = sum3/total, a4 = sum4/total, a5 = sum5/total, a6 = sum6/total, a7 = sum7/total, a8 = sum8/total;
-                
+
                 actualizarBarrasGrafica((a1/10)*100, (a2/10)*100, (a3/10)*100, (a4/10)*100, (a5/10)*100);
-                
                 setKPICardValue("isp", Math.round((a1/10)*100));
                 setKPICardValue("ics", Math.round((a2/10)*100));
                 setKPICardValue("iap", Math.round((a3/10)*100));
                 setKPICardValue("isg", Math.round((a4/10)*100));
                 setKPICardValue("ive", Math.round((a6/10)*100));
+
+                const promDiv = document.getElementById('dash-promedio-diversion');
+                const promEco = document.getElementById('dash-promedio-economia');
+                const prefAct = document.getElementById('dash-preferencia-actividades');
+                if (promDiv) promDiv.innerText = a1 >= 8 ? "Excelente" : (a1 >= 6 ? "Buena" : "Regular");
+                if (promEco) promEco.innerText = `${a6.toFixed(1)} / 10`;
+                if (prefAct) prefAct.innerText = "Campamentos";
 
                 const iaDiag = document.getElementById('ia-diagnostico-kpi');
                 const iaAcc = document.getElementById('ia-accion-kpi');
@@ -1598,15 +968,34 @@
             }
 
             filteredSurveys.forEach(s => {
+                // P1 - Diversión
                 if (s.p1 === "Excelente" || s.p1 === 10) funSum += 10;
                 else if (s.p1 === "Divertido" || s.p1 === "Divertida" || s.p1 === 8) funSum += 8;
                 else if (s.p1 === "Regular" || s.p1 === 5) funSum += 5;
                 else funSum += 3;
 
+                // P2 - Soporte
                 supportSum += Number(s.p2 || 5);
-                teamworkSum += Number(s.p3 === "Excelente" ? 10 : (s.p3 === "Fuerte" ? 10 : (s.p3 === "Buena" ? 7 : 4)));
-                progressionSum += Number(s.p4 === "Si" ? 10 : (s.p4 === "MuyFacil" ? 10 : (s.p4 === "Facil" ? 7 : 4)));
-                safetySum += Number(s.p5 === "MuySeguro" ? 10 : (s.p5 === "Seguro" ? 8 : 5));
+
+                // P3 - Unión
+                if (s.p3 === "Excelente" || s.p3 === "Fuerte") teamworkSum += 10;
+                else if (s.p3 === "Buena" || s.p3 === "Buenas") teamworkSum += 8;
+                else if (s.p3 === "Regular") teamworkSum += 5;
+                else teamworkSum += 3;
+
+                // P4 - Progresión
+                if (s.p4 === "Si" || s.p4 === "MuyFacil" || s.p4 === "MuyEficiente" || s.p4 === "Excelente") progressionSum += 10;
+                else if (s.p4 === "Facil" || s.p4 === "Eficiente" || s.p4 === "Casi") progressionSum += 8;
+                else if (s.p4 === "Regular" || s.p4 === "Algunos") progressionSum += 5;
+                else progressionSum += 3;
+
+                // P5 - Seguridad
+                if (s.p5 === "MuySeguro" || s.p5 === "Excelente") safetySum += 10;
+                else if (s.p5 === "Seguro" || s.p5 === "Bien") safetySum += 8;
+                else if (s.p5 === "Regular") safetySum += 5;
+                else safetySum += 3;
+
+                // P8 - Economía
                 economySum += Number(s.p8 || 5);
             });
 
@@ -1625,7 +1014,6 @@
             if (prefAct) prefAct.innerText = "Campamentos";
 
             actualizarBarrasGrafica(avgFun, avgSupport, avgTeamwork, avgProgression, avgSafety);
-
             setKPICardValue("isp", Math.round((avgFun + avgSupport) / 2));
             setKPICardValue("ics", Math.round((avgTeamwork + avgSupport) / 2));
             setKPICardValue("iap", Math.round(avgProgression));
@@ -1644,7 +1032,6 @@
             const barTeamwork = document.getElementById('chart-teamwork');
             const barProgression = document.getElementById('chart-progression');
             const barSafety = document.getElementById('chart-safety');
-
             if (barFun) { barFun.style.height = Math.min(fun, 100) + '%'; barFun.innerText = Math.round(Math.min(fun, 100)) + '%'; }
             if (barSupport) { barSupport.style.height = Math.min(support, 100) + '%'; barSupport.innerText = Math.round(Math.min(support, 100)) + '%'; }
             if (barTeamwork) { barTeamwork.style.height = Math.min(teamwork, 100) + '%'; barTeamwork.innerText = Math.round(Math.min(teamwork, 100)) + '%'; }
@@ -1656,38 +1043,24 @@
             const card = document.getElementById(`kpi-card-${kpiId}`);
             const valContainer = document.getElementById(`kpi-val-${kpiId}`);
             if (!card || !valContainer) return;
-
             valContainer.innerText = `${val}%`;
             card.className = "border rounded-2xl p-4 flex flex-col justify-between items-center text-center transition-all duration-300 ";
             valContainer.className = "w-16 h-16 rounded-full flex items-center justify-center border-4 text-lg font-black transition-all duration-300 ";
-
-            if (val < 60) {
-                card.classList.add("bg-rose-50", "border-rose-200", "text-rose-900");
-                valContainer.classList.add("border-rose-400", "text-rose-600", "bg-white");
-            } else if (val < 80) {
-                card.classList.add("bg-amber-50", "border-amber-200", "text-amber-900");
-                valContainer.classList.add("border-amber-400", "text-amber-600", "bg-white");
-            } else {
-                card.classList.add("bg-emerald-50", "border-emerald-200", "text-emerald-900");
-                valContainer.classList.add("border-emerald-400", "text-emerald-600", "bg-white");
-            }
+            if (val < 60) { card.classList.add("bg-rose-50", "border-rose-200", "text-rose-900"); valContainer.classList.add("border-rose-400", "text-rose-600", "bg-white"); }
+            else if (val < 80) { card.classList.add("bg-amber-50", "border-amber-200", "text-amber-900"); valContainer.classList.add("border-amber-400", "text-amber-600", "bg-white"); }
+            else { card.classList.add("bg-emerald-50", "border-emerald-200", "text-emerald-900"); valContainer.classList.add("border-emerald-400", "text-emerald-600", "bg-white"); }
         }
 
         function validarDiagnosticoSemanal() {
             const scouterNote = document.getElementById('scouter-context-note');
             if (!scouterNote) return;
             const notaContexto = scouterNote.value.trim();
-            if (notaContexto === "") {
-                lanzarAlert("Falta Contexto", "Por favor ingresa una breve nota de contexto.");
-                return;
-            }
-
+            if (notaContexto === "") { lanzarAlert("Falta Contexto", "Ingresa una nota de contexto."); return; }
             const ispEl = document.getElementById('kpi-val-isp');
             const icsEl = document.getElementById('kpi-val-ics');
             const iapEl = document.getElementById('kpi-val-iap');
             const isgEl = document.getElementById('kpi-val-isg');
             const iveEl = document.getElementById('kpi-val-ive');
-
             const nuevoReporte = {
                 rama: activeDashboardSection,
                 fecha: new Date().toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
@@ -1698,10 +1071,8 @@
                 ive: iveEl ? iveEl.innerText : "0%",
                 contexto: notaContexto
             };
-
             reportesValidadosHistorico.unshift(nuevoReporte);
             localStorage.setItem('tequivoz_reportes_kpi_validados', JSON.stringify(reportesValidadosHistorico));
-
             lanzarAlert("¡Reporte Guardado! ⚜️", `El diagnóstico para ${activeDashboardSection} ha quedado registrado.`);
             scouterNote.value = "";
             renderReportesValidadosLista();
@@ -1712,10 +1083,7 @@
             const listContainer = document.getElementById('reportes-validados-lista');
             if (!listContainer) return;
             const filtrados = reportesValidadosHistorico.filter(r => r.rama === activeDashboardSection);
-            if (filtrados.length === 0) {
-                listContainer.innerHTML = `<p class="text-xs text-gray-400 italic text-center py-6">Aún no se ha validado ningún reporte para esta sección.</p>`;
-                return;
-            }
+            if (filtrados.length === 0) { listContainer.innerHTML = `<p class="text-xs text-gray-400 italic text-center py-6">Aún no se ha validado ningún reporte para esta sección.</p>`; return; }
             listContainer.innerHTML = filtrados.map((rep) => `
                 <div class="p-4 bg-white rounded-xl border border-gray-100 shadow-sm space-y-2">
                     <div class="flex justify-between items-center border-b pb-2">
@@ -1729,9 +1097,7 @@
                         <div>ISG: <span class="text-rose-600 block">${rep.isg}</span></div>
                         <div>IVE: <span class="text-sky-600 block">${rep.ive}</span></div>
                     </div>
-                    <div class="text-[11px] text-gray-500 font-medium leading-relaxed italic bg-gray-50/50 p-2 rounded border border-dashed">
-                        "<b>Nota:</b> ${rep.contexto}"
-                    </div>
+                    <div class="text-[11px] text-gray-500 font-medium leading-relaxed italic bg-gray-50/50 p-2 rounded border border-dashed">"<b>Nota:</b> ${rep.contexto}"</div>
                 </div>
             `).join('');
         }
@@ -1739,86 +1105,39 @@
         function renderTablaRespuestas() {
             const tbody = document.getElementById('respuestas-tbody');
             if (!tbody) return;
-
             let filtered = surveysList;
-            if (currentRolScouter !== "Dirigencia") {
-                filtered = filtered.filter(s => s.rama === currentRolScouter);
-            } else {
-                if (respuestasFiltroSeccion !== "Todas") {
-                    filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
-                }
-            }
+            if (currentRolScouter !== "Dirigencia") filtered = filtered.filter(s => s.rama === currentRolScouter);
+            else if (respuestasFiltroSeccion !== "Todas") filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
 
             const total = filtered.length;
             document.getElementById('respuestas-contador').innerText = `Total: ${total} registros`;
 
-            if (total === 0) {
-                tbody.innerHTML = `<tr><td colspan="13" class="text-center text-gray-400 py-8 text-sm italic">No hay respuestas registradas para esta sección.</td></tr>`;
-                return;
-            }
+            if (total === 0) { tbody.innerHTML = `<tr><td colspan="13" class="text-center text-gray-400 py-8 text-sm italic">No hay respuestas para esta sección.</td></tr>`; return; }
 
             let html = '';
             filtered.forEach((s, index) => {
                 const fecha = s.timestamp ? new Date(s.timestamp).toLocaleDateString('es-MX') : 'Sin fecha';
                 const rama = s.rama || 'N/A';
                 const badgeClass = `badge-${rama.toLowerCase()}`;
-                html += `
-                    <tr>
-                        <td class="font-bold text-gray-500 text-center">${index + 1}</td>
-                        <td><span class="badge-rama ${badgeClass}">${rama}</span></td>
-                        <td class="text-xs text-gray-500">${fecha}</td>
-                        <td>${s.p1 || '-'}</td>
-                        <td>${s.p2 || '-'}</td>
-                        <td>${s.p3 || '-'}</td>
-                        <td>${s.p4 || '-'}</td>
-                        <td>${s.p5 || '-'}</td>
-                        <td>${s.p6 || '-'}</td>
-                        <td class="max-w-[80px] truncate" title="${s.p7 || ''}">${s.p7 || '-'}</td>
-                        <td>${s.p8 || '-'}</td>
-                        <td>${s.p9 || '-'}</td>
-                        <td class="max-w-[80px] truncate" title="${s.p10 || ''}">${s.p10 || '-'}</td>
-                    </tr>
-                `;
+                html += `<tr><td class="font-bold text-gray-500 text-center">${index + 1}</td><td><span class="badge-rama ${badgeClass}">${rama}</span></td><td class="text-xs text-gray-500">${fecha}</td><td>${s.p1 || '-'}</td><td>${s.p2 || '-'}</td><td>${s.p3 || '-'}</td><td>${s.p4 || '-'}</td><td>${s.p5 || '-'}</td><td>${s.p6 || '-'}</td><td class="max-w-[80px] truncate" title="${s.p7 || ''}">${s.p7 || '-'}</td><td>${s.p8 || '-'}</td><td>${s.p9 || '-'}</td><td class="max-w-[80px] truncate" title="${s.p10 || ''}">${s.p10 || '-'}</td></tr>`;
             });
             tbody.innerHTML = html;
         }
 
-        function filtrarRespuestasPorSeccion(seccion) {
-            respuestasFiltroSeccion = seccion;
-            renderTablaRespuestas();
-        }
+        function filtrarRespuestasPorSeccion(seccion) { respuestasFiltroSeccion = seccion; renderTablaRespuestas(); }
         window.filtrarRespuestasPorSeccion = filtrarRespuestasPorSeccion;
 
         function exportarRespuestasCSV() {
             let filtered = surveysList;
-            if (currentRolScouter !== "Dirigencia") {
-                filtered = filtered.filter(s => s.rama === currentRolScouter);
-            } else if (respuestasFiltroSeccion !== "Todas") {
-                filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
-            }
-
-            if (filtered.length === 0) {
-                lanzarAlert("Sin Datos", "No hay respuestas para exportar.");
-                return;
-            }
-
+            if (currentRolScouter !== "Dirigencia") filtered = filtered.filter(s => s.rama === currentRolScouter);
+            else if (respuestasFiltroSeccion !== "Todas") filtered = filtered.filter(s => s.rama === respuestasFiltroSeccion);
+            if (filtered.length === 0) { lanzarAlert("Sin Datos", "No hay respuestas para exportar."); return; }
             const headers = ['#', 'Sección', 'Fecha', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10'];
             let csvRows = [headers.join(',')];
-
             filtered.forEach((s, index) => {
                 const fecha = s.timestamp ? new Date(s.timestamp).toLocaleDateString('es-MX') : 'Sin fecha';
-                const row = [
-                    index + 1, s.rama || 'N/A', fecha,
-                    s.p1 || '', s.p2 || '', s.p3 || '', s.p4 || '', s.p5 || '',
-                    `"${(s.p6 || '').replace(/"/g, '""')}"`,
-                    `"${(s.p7 || '').replace(/"/g, '""')}"`,
-                    `"${(s.p8 || '').replace(/"/g, '""')}"`,
-                    `"${(s.p9 || '').replace(/"/g, '""')}"`,
-                    `"${(s.p10 || '').replace(/"/g, '""')}"`
-                ];
-                csvRows.push(row.join(','));
+                csvRows.push([index + 1, s.rama || 'N/A', fecha, s.p1 || '', s.p2 || '', s.p3 || '', s.p4 || '', s.p5 || '', `"${(s.p6 || '').replace(/"/g, '""')}"`, `"${(s.p7 || '').replace(/"/g, '""')}"`, `"${(s.p8 || '').replace(/"/g, '""')}"`, `"${(s.p9 || '').replace(/"/g, '""')}"`, `"${(s.p10 || '').replace(/"/g, '""')}"`].join(','));
             });
-
             const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.setAttribute('href', URL.createObjectURL(blob));
@@ -1837,14 +1156,10 @@
             const vistaAnalytics = document.getElementById('vista-scouter-analytics');
             const vistaEditor = document.getElementById('vista-scouter-editor');
             const vistaRespuestas = document.getElementById('vista-scouter-respuestas');
-
-            [btnAnalytics, btnEditor, btnRespuestas].forEach(btn => {
-                if (btn) btn.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple border-b-2 border-transparent";
-            });
+            [btnAnalytics, btnEditor, btnRespuestas].forEach(btn => { if (btn) btn.className = "pb-4 px-2 font-bold text-sm text-gray-400 hover:text-gray-700 transition-apple border-b-2 border-transparent"; });
             if (vistaAnalytics) vistaAnalytics.classList.add('hidden');
             if (vistaEditor) vistaEditor.classList.add('hidden');
             if (vistaRespuestas) vistaRespuestas.classList.add('hidden');
-
             if (tab === 'analytics') {
                 if (btnAnalytics) btnAnalytics.className = "pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple";
                 if (vistaAnalytics) vistaAnalytics.classList.remove('hidden');
@@ -1852,7 +1167,6 @@
             } else if (tab === 'editor') {
                 if (btnEditor) btnEditor.className = "pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple";
                 if (vistaEditor) vistaEditor.classList.remove('hidden');
-                inicializarWixEditorPreguntas();
             } else if (tab === 'respuestas') {
                 if (btnRespuestas) btnRespuestas.className = "pb-4 px-2 font-bold text-sm text-indigo-600 border-b-2 border-indigo-600 transition-apple";
                 if (vistaRespuestas) vistaRespuestas.classList.remove('hidden');
@@ -1861,80 +1175,21 @@
         }
         window.cambiarTabScouter = cambiarTabScouter;
 
-        function inicializarWixEditorPreguntas() {
-            const listaPreguntas = bancoPreguntas[activeDashboardSection];
-            const listContainer = document.getElementById('editor-selector-preguntas-lista');
-            if (!listContainer) return;
-            listContainer.innerHTML = "";
-
-            listaPreguntas.forEach((q, idx) => {
-                const btn = document.createElement('button');
-                btn.onclick = () => cargarPreguntaEnEditor(idx);
-                const activeClass = (idx === editorPreguntaIndexSeleccionada) ? "bg-indigo-600 text-white shadow-md border-indigo-700" : "bg-white text-slate-700 hover:bg-slate-50 border-slate-200";
-                btn.className = `w-full text-left p-3 rounded-xl border text-xs font-bold transition-apple flex justify-between items-center ${activeClass}`;
-                btn.innerHTML = `<span>Q${q.id}: ${q.title.slice(0, 30)}...</span><span class="text-[10px] opacity-75 capitalize">(${q.type})</span>`;
-                listContainer.appendChild(btn);
-            });
-            cargarPreguntaEnEditor(editorPreguntaIndexSeleccionada);
-        }
-
-        function cargarPreguntaEnEditor(idx) {
-            editorPreguntaIndexSeleccionada = idx;
-            const q = bancoPreguntas[activeDashboardSection][idx];
-            const lblSel = document.getElementById('editor-pregunta-label-seleccionada');
-            const inpTit = document.getElementById('editor-pregunta-titulo');
-            const selTip = document.getElementById('editor-pregunta-tipo');
-            if (lblSel) lblSel.innerText = `Pregunta ${q.id}`;
-            if (inpTit) inpTit.value = q.title;
-            if (selTip) selTip.value = q.type;
-            alternarCamposOpcionesEditor(q.type);
-        }
-        window.cargarPreguntaEnEditor = cargarPreguntaEnEditor;
-
-        function alternarCamposOpcionesEditor(type) {
-            const container = document.getElementById('editor-campos-dinamicos-opciones');
-            if (!container) return;
-            container.innerHTML = "<p class='text-xs text-gray-400 italic p-4'>Editor en modo demostración. Las preguntas se pueden editar en el código fuente.</p>";
-        }
-        window.alternarCamposOpcionesEditor = alternarCamposOpcionesEditor;
-
-        function guardarPreguntaModificada() {
-            lanzarAlert("Modo Demostración", "El editor está en modo demostración. Los cambios se guardan localmente.");
-        }
-        window.guardarPreguntaModificada = guardarPreguntaModificada;
-
-        function restablecerPreguntasPredeterminadas() {
-            if (confirm("¿Restablecer todas las preguntas a sus valores por defecto?")) {
-                bancoPreguntas = JSON.parse(JSON.stringify(bancoPreguntasPredeterminado));
-                localStorage.setItem('bancoPreguntas_tequivoz', JSON.stringify(bancoPreguntas));
-                lanzarAlert("¡Restaurado!", "Las preguntas han sido restablecidas.");
-                inicializarWixEditorPreguntas();
-            }
-        }
-        window.restablecerPreguntasPredeterminadas = restablecerPreguntasPredeterminadas;
-
         async function generarReportePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'mm', 'a4');
-            
             const PRIMARY_COLOR = [20, 54, 38];
             const SECONDARY_COLOR = [229, 169, 59];
             const WHITE = [255, 255, 255];
-            const DARK = [30, 30, 30];
-            const GRAY = [80, 80, 80];
-            
             const filteredSurveys = surveysList.filter(s => s.rama === activeDashboardSection);
             const total = filteredSurveys.length;
-            
             const fechaActual = new Date();
             const fechaCorta = fechaActual.toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            
+
             doc.setFillColor(...PRIMARY_COLOR);
             doc.rect(0, 0, 210, 297, "F");
-            
             doc.setFillColor(...SECONDARY_COLOR);
             doc.rect(15, 20, 180, 2, "F");
-            
             doc.setFont("helvetica", "bold");
             doc.setTextColor(...WHITE);
             doc.setFontSize(18);
@@ -1942,75 +1197,66 @@
             doc.setFontSize(16);
             doc.text("Grupo Uno Tequihua", 105, 65, { align: 'center' });
             doc.text('"Una vez Scout, Siempre Scout"', 105, 78, { align: 'center' });
-            
             doc.setFontSize(42);
             doc.text("⚜️", 105, 120, { align: 'center' });
-            
             doc.setFontSize(24);
             doc.text("REPORTE DE EVALUACIÓN", 105, 155, { align: 'center' });
-            
             doc.setFontSize(20);
             doc.setTextColor(...SECONDARY_COLOR);
             doc.text(activeDashboardSection.toUpperCase(), 105, 180, { align: 'center' });
-            
             doc.setDrawColor(...SECONDARY_COLOR);
             doc.setLineWidth(1);
             doc.line(15, 195, 195, 195);
-            
             doc.setFont("helvetica", "normal");
             doc.setFontSize(11);
             doc.setTextColor(220, 220, 220);
             doc.text(`San Luis Potosí, S.L.P. A ${fechaCorta}`, 105, 220, { align: 'center' });
-            
             doc.setTextColor(...WHITE);
             doc.setFontSize(12);
             doc.text("Rafael Magaña Rangel", 105, 255, { align: 'center' });
             doc.setFontSize(10);
             doc.text("Representante Juvenil", 105, 268, { align: 'center' });
-            
+
             doc.addPage();
             doc.setFillColor(250, 250, 252);
             doc.rect(0, 0, 210, 297, "F");
-            
             doc.setFont("helvetica", "bold");
-            doc.setTextColor(...DARK);
+            doc.setTextColor(30, 30, 30);
             doc.setFontSize(18);
             doc.text("Resumen de Resultados", 15, 25);
-            
             doc.setFont("helvetica", "normal");
             doc.setFontSize(11);
-            doc.setTextColor(...GRAY);
-            doc.text(`Total de encuestas procesadas para ${activeDashboardSection}: ${total}`, 15, 45);
+            doc.setTextColor(80, 80, 80);
+            doc.text(`Total de encuestas procesadas: ${total}`, 15, 45);
             doc.text(`Fecha de emisión: ${fechaCorta}`, 15, 55);
-            
+
             const ispEl = document.getElementById('kpi-val-isp');
             const icsEl = document.getElementById('kpi-val-ics');
             const iapEl = document.getElementById('kpi-val-iap');
             const isgEl = document.getElementById('kpi-val-isg');
             const iveEl = document.getElementById('kpi-val-ive');
-            
-            const kpiData = [
-                ["ISP (Programa)", ispEl ? ispEl.innerText : "0%"],
-                ["ICS (Cohesión)", icsEl ? icsEl.innerText : "0%"],
-                ["IAP (Avance)", iapEl ? iapEl.innerText : "0%"],
-                ["ISG (Seguridad)", isgEl ? isgEl.innerText : "0%"],
-                ["IVE (Economía)", iveEl ? iveEl.innerText : "0%"]
-            ];
-            
+
             doc.autoTable({
                 startY: 70,
                 head: [['Indicador', 'Calificación']],
-                body: kpiData,
+                body: [
+                    ["ISP (Programa)", ispEl ? ispEl.innerText : "0%"],
+                    ["ICS (Cohesión)", icsEl ? icsEl.innerText : "0%"],
+                    ["IAP (Avance)", iapEl ? iapEl.innerText : "0%"],
+                    ["ISG (Seguridad)", isgEl ? isgEl.innerText : "0%"],
+                    ["IVE (Economía)", iveEl ? iveEl.innerText : "0%"]
+                ],
                 theme: 'grid',
                 headStyles: { fillColor: PRIMARY_COLOR, textColor: WHITE }
             });
-            
+
             doc.save(`Reporte_${activeDashboardSection}_${fechaActual.toISOString().slice(0, 10)}.pdf`);
         }
         window.generarReportePDF = generarReportePDF;
-        
+
         window.onload = function () {
             mostrarSeccion('pantalla-inicio');
+            console.log("🚀 TequiVoz iniciado. Datos simulados listos.");
         }
     </script>
 
